@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102a43">
+<title>Scam Lens – Betrug erkennen</title>
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#172b4d;background:#f3f6fa}
+*{box-sizing:border-box}
+body{margin:0}
+header{background:#102a43;color:white;padding:24px 18px}
+.wrap{max-width:850px;margin:auto}
+.brand{font-size:27px;font-weight:800;letter-spacing:-.5px}
+.brand span{color:#60d6bb}
+header p{margin:8px 0 0;color:#d9e6f2;line-height:1.5}
+main{padding:24px 16px 45px}
+.card{background:white;border:1px solid #dce4ed;border-radius:15px;padding:22px;margin:0 0 18px;box-shadow:0 4px 16px #102a4309}
+h1{font-size:26px;margin:0 0 10px}
+h2{font-size:19px;margin:0 0 15px}
+p{line-height:1.6}
+.muted{color:#526579;font-size:14px}
+label{display:block;font-weight:700;margin:17px 0 8px}
+textarea,input{font:inherit;width:100%;padding:13px;border:1px solid #b9c8d8;border-radius:9px;background:white;color:#172b4d}
+textarea{min-height:170px;resize:vertical;line-height:1.5}
+button{font:inherit;font-weight:700;cursor:pointer;border:0;border-radius:9px;padding:13px 18px}
+.primary{background:#087f70;color:white;width:100%;margin-top:14px}
+.primary:hover{background:#06685c}
+.secondary{background:#eaf1f7;color:#17324d}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid #48a9e0;outline-offset:2px}
+.examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.examples button{font-size:13px}
+.result{display:none}
+.result-head{padding:15px;border-radius:10px;background:#eef3f8;margin-bottom:16px}
+.result-head strong{display:block;font-size:21px;margin-bottom:5px}
+.score{font-size:14px}
+ul{padding-left:22px;line-height:1.7}
+.notice{background:#fff7df;border:1px solid #f0d78a;padding:13px;border-radius:9px;font-size:14px;line-height:1.55}
+footer{text-align:center;color:#526579;font-size:13px;padding:0 18px 28px;line-height:1.6}
+.tag{display:inline-block;border-radius:30px;padding:5px 10px;background:#e5f5f1;color:#076b5c;font-size:12px;font-weight:bold;margin-bottom:12px}
+@media(min-width:650px){.primary{width:auto;min-width:220px}.actions{display:flex;align-items:center;gap:12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">SCAM <span>LENS</span></div>
+    <p>Verdächtige Nachrichten erkennen. Risiken verstehen. Sicherer entscheiden.</p>
+  </div>
+</header>
+<main class="wrap">
+  <section class="card">
+    <span class="tag">DEMO · Version 0.1</span>
+    <h1>Ist diese Nachricht betrügerisch?</h1>
+    <p>Füge eine verdächtige E-Mail, SMS oder Chatnachricht ein. Scam Lens sucht nach typischen Warnsignalen und erklärt dir, worauf du achten solltest.</p>
+    <label for="message">Nachricht hier einfügen</label>
+    <textarea id="message" maxlength="20000" placeholder="Füge hier den Text einer verdächtigen Nachricht ein …"></textarea>
+    <div class="examples">
+      <button class="secondary" id="sample">Beispiel laden</button>
+      <button class="secondary" id="clear">Eingabe löschen</button>
+    </div>
+    <button class="primary" id="analyze">Nachricht überprüfen</button>
+    <p class="muted">Diese Demo analysiert den eingegebenen Text lokal in deinem Browser. Es wird dabei kein KI-Dienst aufgerufen.</p>
+  </section>
+
+  <section class="card result" id="result" aria-live="polite" aria-atomic="true">
+    <h2>Ergebnis der Prüfung</h2>
+    <div class="result-head">
+      <strong id="level">Einschätzung</strong>
+      <span class="score" id="score"></span>
+    </div>
+    <h2>Erkannte Warnsignale</h2>
+    <ul id="findings"></ul>
+    <h2>Was du jetzt tun solltest</h2>
+    <ul id="actions"></ul>
+    <div class="notice" id="caveat"></div>
+  </section>
+
+  <section class="card">
+    <h2>So schützt du dich</h2>
+    <ul>
+      <li>Öffne keine Links, wenn du der Nachricht nicht vertraust.</li>
+      <li>Gib keine Passwörter, TANs oder Bestätigungscodes weiter.</li>
+      <li>Kontaktiere die angebliche Organisation über ihre offizielle Website oder Telefonnummer.</li>
+      <li>Bei Geldforderungen: Halte inne und prüfe die Forderung über einen zweiten Kanal.</li>
+    </ul>
+  </section>
+</main>
+<footer class="wrap">
+  Scam Lens ist eine Entscheidungshilfe, kein zertifizierter Sicherheitsdienst.
+  Ein unauffälliges Ergebnis bedeutet nicht, dass eine Nachricht sicher ist.
+  <br>Diese Demo speichert oder überträgt den eingegebenen Text nicht absichtlich.
+</footer>
+<script>
+const message = document.getElementById("message");
+const result = document.getElementById("result");
+const level = document.getElementById("level");
+const score = document.getElementById("score");
+const findings = document.getElementById("findings");
+const actions = document.getElementById("actions");
+const caveat = document.getElementById("caveat");
+
+document.getElementById("sample").addEventListener("click", () => {
+  message.value = "Ihre Bankkarte wird heute gesperrt. Bestätigen Sie sofort Ihre Zugangsdaten unter http://example.invalid/login, um Ihr Konto zu retten.";
+  message.focus();
+});
+document.getElementById("clear").addEventListener("click", () => {
+  message.value = "";
+  result.style.display = "none";
+  message.focus();
+});
+
+document.getElementById("analyze").addEventListener("click", () => {
+  const text = message.value.trim();
+  if (!text) {
+    alert("Bitte füge zuerst eine Nachricht ein.");
+    message.focus();
+    return;
+  }
+
+  const t = text.toLowerCase();
+  const found = [];
+  let points = 0;
+
+  function check(pattern, title, detail, weight) {
+    if (pattern.test(t)) {
+      found.push({title, detail});
+      points += weight;
+    }
+  }
+
+  check(/sofort|unverzüglich|innerhalb von \d+ stunden|letzte warnung|läuft heute ab|dringend|jetzt handeln/,
+    "Zeitdruck", "Du sollst schnell handeln. Betrüger erzeugen häufig Druck, damit du weniger prüfst.", 2);
+  check(/passwort|zugangsdaten|tan\b|pin\b|bestätigungscode|kreditkartendaten|sicherheitscode/,
+    "Sensible Daten", "Die Nachricht erwähnt Zugangsdaten oder vertrauliche Sicherheitsinformationen. Gib solche Daten nicht über einen Nachrichtenlink preis.", 3);
+  check(/konto gesperrt|karte gesperrt|konto wird geschlossen|verdächtige aktivität|konto eingeschränkt/,
+    "Drohung mit Kontosperre", "Eine angebliche Sperre soll dich möglicherweise dazu bringen, unüberlegt zu reagieren.", 2);
+  check(/gewonnen|gewinn|lotterie|preis erhalten|gratis geschenk|auszahlung/,
+    "Unerwarteter Gewinn oder Vorteil", "Unerwartete Gewinne können Köder sein, insbesondere wenn Gebühren oder persönliche Daten verlangt werden.", 2);
+  check(/geschenkkarte|krypto|bitcoin|überweisung|gebühr bezahlen|zahlung bestätigen/,
+    "Aufforderung zu Zahlung oder Geldtransfer", "Prüfe die Forderung über einen unabhängig bekannten Kontaktweg.", 2);
+  check(/klicken sie|klicke hier|link öffnen|hier bestätigen|jetzt verifizieren|anmelden unter/,
+    "Aufforderung, einen Link zu öffnen", "Öffne den Link nicht ungeprüft. Rufe den bekannten offiziellen Webauftritt selbst auf.", 1);
+  check(/http:\/\/|https:\/\/|www\./,
+    "Webadresse enthalten", "Eine URL ist enthalten. Das allein beweist keinen Betrug; kontrolliere die genaue Domain, ohne den Link zu öffnen.", 1);
+  check(/geheim halten|niemandem sagen|nicht mit ihrer bank sprechen|nicht auflegen/,
+    "Geheimhaltung oder Isolation", "Aufforderungen, mit niemandem zu sprechen, sind ein Warnsignal und verdienen eine unabhängige Prüfung.", 2);
+  check(/gesendet von meinem iphone|no-reply|noreply/,
+    "Automatisierter Absenderhinweis", "Dieser Hinweis ist allein kein Beweis für Betrug. Prüfe die tatsächliche Absenderadresse und den Kontext.", 0);
+
+  if (found.length === 0) {
+    found.push({
+      title:"Keine typischen Warnsignale erkannt",
+      detail:"Die einfachen Prüfregeln haben keine bekannten Muster gefunden. Das ist keine Bestätigung, dass die Nachricht echt ist."
+    });
+  }
+
+  let rating, advice;
+  if (points >= 5) {
+    rating = "Hohes Risiko";
+    advice = [
+      "Nicht auf Links klicken und keine Anhänge öffnen.",
+      "Keine Passwörter, Codes oder Zahlungsdaten eingeben.",
+      "Den Absender über einen unabhängig gefundenen Kontaktweg überprüfen.",
+      "Wenn du bereits bezahlt oder Daten geteilt hast, kontaktiere umgehend deine Bank bzw. den betroffenen Dienst."
+    ];
+  } else if (points >= 2) {
+    rating = "Auffälligkeiten gefunden";
+    advice = [
+      "Reagiere nicht unter Zeitdruck.",
+      "Überprüfe Absender und Forderung über einen unabhängigen Kanal.",
+      "Gib vorerst keine sensiblen Daten preis."
+    ];
+  } else {
+    rating = "Nicht ausreichend prüfbar";
+    advice = [
+      "Vertraue nicht allein auf dieses Ergebnis.",
+      "Prüfe Absender, Kontext und mögliche Forderungen.",
+      "Nutze im Zweifel die offiziellen Kontaktdaten der angeblichen Organisation."
+    ];
+  }
+
+  level.textContent = rating;
+  score.textContent = "Regelbasierter Demo-Wert: " + points + " Punkte";
+  findings.replaceChildren();
+  found.forEach(item => {
+    const li = document.createElement("li");
+    const strong = document.createElement("strong");
+    strong.textContent = item.title + ": ";
+    li.append(strong, document.createTextNode(item.detail));
+    findings.appendChild(li);
+  });
+
+  actions.replaceChildren();
+  advice.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    actions.appendChild(li);
+  });
+
+  caveat.textContent = "Grenzen der Prüfung: Dies ist eine einfache lokale Mustererkennung, keine echte KI-Analyse und keine Live-Prüfung von Absendern, Links oder Anhängen. Falsche Warnungen und übersehene Betrugsversuche sind möglich.";
+  result.style.display = "block";
+  result.scrollIntoView({behavior:"smooth", block:"start"});
+});
+</script>
+</body>
+</html>
