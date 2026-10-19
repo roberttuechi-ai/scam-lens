@@ -1034,6 +1034,64 @@ header .wrap{width:min(1120px,calc(100% - 28px))!important;padding:18px 0!import
   main.wrap#app .source-grid{grid-template-columns:minmax(0,1fr)!important}
 }
 /* Keep orientation automatic: responsive layout follows actual viewport, no forced rotation. */
+
+/* Version 5.7: stronger hierarchy, aligned header controls, centered hero/actions, collapsed plans */
+header{padding:22px 18px!important}
+header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!important}
+.header-row{display:flex!important;flex-direction:column!important;align-items:center!important;gap:18px!important}
+.header-brand{text-align:center!important;width:100%!important}
+.header-brand .brand{font-size:clamp(34px,4.2vw,54px)!important;line-height:1.08!important;letter-spacing:.4px!important;justify-content:center!important;text-align:center!important}
+.header-brand>p{font-size:16px!important;margin-top:8px!important}
+.header-tools{width:100%!important;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 58px minmax(0,.8fr)!important;align-items:stretch!important;gap:12px!important}
+.header-tools .language-control{display:flex!important;flex-direction:column!important;justify-content:flex-end!important;gap:5px!important;min-width:0!important}
+.header-tools .language-control label{font-size:14px!important;font-weight:800!important}
+.header-tools .language-control select,.header-tools .usage-guide-button,.header-tools .upgrade-button,.header-tools .operator-top>summary{height:58px!important;min-height:58px!important;max-height:58px!important;width:100%!important;box-sizing:border-box!important;border-radius:15px!important;font-size:16px!important}
+.header-tools .language-control select{padding:8px 12px!important;background:#fff!important;color:#123765!important;border:2px solid #c4d9ee!important}
+.header-tools .usage-guide-button,.header-tools .upgrade-button{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;line-height:1.25!important;padding:8px 12px!important;white-space:normal!important}
+.header-tools .operator-top{width:58px!important;min-width:58px!important;max-width:58px!important;align-self:end!important}
+.header-tools .operator-top>summary{display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important;background:#fff!important;border:2px solid #c4d9ee!important}
+#app{max-width:1500px!important;width:min(1500px,calc(100% - 32px))!important}
+#app>.card:first-child{width:100%!important}
+.mascot-hero{min-height:500px!important;display:grid!important;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr)!important;align-items:center!important;gap:24px!important;padding:clamp(24px,4vw,56px)!important;border-radius:28px!important;overflow:hidden!important}
+.mascot-hero .hero-copy{align-self:center!important;max-width:650px!important}
+.mascot-hero .hero-copy h1{font-size:clamp(44px,5.2vw,76px)!important;line-height:1.04!important;letter-spacing:-1.5px!important;margin:0 0 20px!important;text-align:left!important}
+.mascot-hero .hero-copy>p{font-size:clamp(22px,2.3vw,32px)!important;line-height:1.35!important;max-width:620px!important}
+.mascot-hero .mascot-speech{font-size:clamp(17px,1.5vw,21px)!important;line-height:1.5!important;padding:18px 22px!important;max-width:620px!important}
+.mascot-hero .mascot-stage{transform:scale(1.18)!important;transform-origin:center!important}
+.guided-steps{max-width:1100px!important;margin:28px auto 34px!important}
+#app>section.card:first-child>h2{font-size:clamp(26px,3vw,36px)!important;line-height:1.2!important;text-align:center!important;margin:28px auto 20px!important}
+.source-grid{max-width:1100px!important;margin-inline:auto!important}
+.voice-welcome{max-width:1100px!important;margin:18px auto 24px!important}
+.analysis-grid,.analysis-actions{max-width:1100px!important;margin:18px auto!important;width:100%!important}
+.analysis-actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important;align-items:stretch!important}
+.analysis-actions>button{min-height:124px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:12px!important;text-align:center!important;padding:20px!important;border-radius:20px!important;font-size:19px!important;line-height:1.35!important}
+.analysis-actions>button .action-icon{font-size:32px!important;flex:0 0 auto!important}
+.analysis-actions>button strong{font-size:clamp(18px,1.5vw,22px)!important}
+.analysis-actions>button small{display:block!important;font-size:15px!important;line-height:1.4!important;margin-top:6px!important}
+#subscriptionPanel[hidden]{display:none!important}
+#subscriptionPanel:not([hidden]){max-width:1240px!important;width:calc(100% - 32px)!important;margin:28px auto!important;padding:clamp(18px,3vw,36px)!important;border-radius:24px!important;box-shadow:0 14px 38px #15395a22!important}
+@media(max-width:900px){
+ header .wrap{width:calc(100% - 24px)!important}
+ .header-tools{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:10px!important}
+ .header-tools .language-control{grid-column:1;grid-row:1}
+ .header-tools .usage-guide-button{grid-column:2;grid-row:1;align-self:end}
+ .header-tools .operator-top{grid-column:1;grid-row:2;width:100%!important;min-width:0!important;max-width:none!important}
+ .header-tools .operator-top>summary{width:100%!important}
+ .header-tools .upgrade-button{grid-column:2;grid-row:2}
+ .mascot-hero{grid-template-columns:minmax(0,1fr) minmax(180px,.7fr)!important;min-height:400px!important}
+ .analysis-actions{grid-template-columns:minmax(0,1fr)!important}
+ .analysis-actions>button{min-height:90px!important;flex-direction:row!important;text-align:left!important;justify-content:flex-start!important}
+}
+@media(max-width:560px){
+ .header-tools{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+ .header-tools .operator-top>summary{height:50px!important;min-height:50px!important;max-height:50px!important}
+ .header-tools .language-control select,.header-tools .usage-guide-button,.header-tools .upgrade-button{height:50px!important;min-height:50px!important;max-height:50px!important;font-size:14px!important}
+ .mascot-hero{grid-template-columns:minmax(0,1fr)!important;min-height:0!important;padding:24px!important}
+ .mascot-hero .hero-copy h1{text-align:center!important;font-size:clamp(38px,10vw,52px)!important}
+ .mascot-hero .hero-copy>p{text-align:center!important;font-size:21px!important}
+ .mascot-hero .mascot-stage{transform:none!important;max-width:260px!important;margin:0 auto!important}
+ .mascot-hero .mascot-speech{font-size:16px!important}
+}
 </style>
 </head>
 <body>
@@ -1049,7 +1107,7 @@ header .wrap{width:min(1120px,calc(100% - 28px))!important;padding:18px 0!import
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 5.6</span>
+<span class="tag">SCAM LENS · TESTVERSION 5.7</span>
 
 
 <div class="mascot-hero">
@@ -1181,7 +1239,7 @@ header .wrap{width:min(1120px,calc(100% - 28px))!important;padding:18px 0!import
   <p class="method">Diese Links führen zu externen offiziellen bzw. etablierten Hilfsangeboten. Scam Lens übermittelt ihnen keine Daten automatisch.</p>
 </section>
 </main>
-<section class="subscription-panel wrap" id="subscriptionPanel" aria-labelledby="subscriptionTitle">
+<section class="subscription-panel wrap" id="subscriptionPanel" hidden aria-labelledby="subscriptionTitle">
 <div class="subscription-heading"><div><span class="tag">SCAM LENS PLUS</span><h2 id="subscriptionTitle">Mehr Schutz mit Upgrade</h2><p>Wähle das passende Paket. Zahlungen sind in dieser Vorbereitungs-Version noch nicht aktiviert.</p></div><button class="secondary" id="closePlans" type="button">Schließen</button></div>
 <div class="plan-grid">
 <article class="plan-card"><h3>Gratis</h3><p class="plan-price">€ 0 <span>/ Monat</span></p><ul><li>1 Sicherheits-Check pro Monat</li><li>Manuelle Prüfung von Texten und Screenshots</li><li>Lokale Erstbewertung</li></ul><p class="plan-note">Grundversion</p></article>
