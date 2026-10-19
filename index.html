@@ -1027,7 +1027,7 @@ header .wrap{width:min(1120px,calc(100% - 28px))!important;padding:18px 0!import
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 5.3</span>
+<span class="tag">SCAM LENS · TESTVERSION 5.4</span>
 
 
 <div class="mascot-hero">
@@ -1241,8 +1241,8 @@ Object.assign(SL_TRANSLATIONS.hu,{"Hohes Risiko":"Magas kockázat","Auffälligke
 const languageSelect=$("appLanguage");try{const savedLang=localStorage.getItem("scamLensLanguage")||"de";languageSelect.value=languageLabels[savedLang]?savedLang:"de";}catch(e){}
 slApplyLanguage(languageSelect.value);
 languageSelect.addEventListener("change",()=>slApplyLanguage(languageSelect.value));
-const slDynamicObserver=new MutationObserver(records=>{if(slCurrentLanguage==="de")return;records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===Node.TEXT_NODE){if(!node.parentElement?.closest("script,style,option"))slTranslateTextNode(node,SL_TRANSLATIONS[slCurrentLanguage]||{});}else if(node.nodeType===Node.ELEMENT_NODE)slTranslateAddedNodes(node);}));});
-slDynamicObserver.observe(document.body,{childList:true,subtree:true});
+const slDynamicObserver=new MutationObserver(records=>{if(slCurrentLanguage==="de")return;records.forEach(record=>{if(record.type==="characterData"){const node=record.target;if(!node.parentElement?.closest("script,style,option"))slTranslateTextNode(node,SL_TRANSLATIONS[slCurrentLanguage]||{});}record.addedNodes?.forEach(node=>{if(node.nodeType===Node.TEXT_NODE){if(!node.parentElement?.closest("script,style,option"))slTranslateTextNode(node,SL_TRANSLATIONS[slCurrentLanguage]||{});}else if(node.nodeType===Node.ELEMENT_NODE)slTranslateAddedNodes(node);});});});
+slDynamicObserver.observe(document.body,{childList:true,characterData:true,subtree:true});
 
 $("upgradeTop").addEventListener("click",()=>{const p=$("subscriptionPanel");p.hidden=false;p.scrollIntoView({behavior:"smooth",block:"start"});});
 $("closePlans").addEventListener("click",()=>{$("subscriptionPanel").hidden=true;$("upgradeTop").focus();});
