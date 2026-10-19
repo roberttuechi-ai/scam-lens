@@ -542,7 +542,7 @@ body.accessible .report-voice-controls button,body.accessible-xl .report-voice-c
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 2.6</span>
+<span class="tag">SCAM LENS · TESTVERSION 2.7</span>
 <div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div>
 <div class="mascot-hero">
   <div class="hero-copy"><h1>Ist diese Nachricht sicher?</h1><p>Hallo! Ich helfe dir, Betrugsnachrichten zu erkennen. Wähle eine Nachricht aus – wir prüfen sie gemeinsam Schritt für Schritt.</p><div class="mascot-speech">🔎 Wir gehen Schritt für Schritt vor. Ich erkläre dir, was auffällt und was du als Nächstes tun kannst.</div></div>
@@ -659,8 +659,7 @@ body.accessible .report-voice-controls button,body.accessible-xl .report-voice-c
 const $=id=>document.getElementById(id);let chosenFile=null,objectUrl=null,lastReport="";
 $("access").onclick=()=>{const xl=document.body.classList.contains("accessible-xl");document.body.classList.toggle("accessible",true);document.body.classList.remove("accessible-xl");$("access").setAttribute("aria-pressed","true");$("accessMore").setAttribute("aria-pressed","false");$("access").textContent="A+ Große Schrift aktiv";$("accessMore").textContent="A++ Noch größer";};
 $("accessMore").onclick=()=>{const xl=document.body.classList.contains("accessible-xl");document.body.classList.toggle("accessible",true);document.body.classList.toggle("accessible-xl",!xl);$("access").setAttribute("aria-pressed","true");$("accessMore").setAttribute("aria-pressed",String(!xl));$("access").textContent="A+ Große Schrift aktiv";$("accessMore").textContent=!xl?"A++ Sehr große Schrift aktiv":"A++ Noch größer";};
-$("speak").onclick=()=>{if(!("speechSynthesis"in window)){alert("Vorlesen wird in diesem Browser nicht unterstützt.");return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(lastReport||"Noch kein Bericht vorhanden.");u.lang="de-AT";speechSynthesis.speak(u)};
-$("stop").onclick=()=>{if("speechSynthesis"in window)speechSynthesis.cancel()};
+/* Vorlese-Handler werden direkt im Sicherheitsbericht registriert. */
 $("sample").onclick=()=>{$("msg").value="Ihre Bankkarte wird heute gesperrt. Bestätigen Sie sofort Ihre Zugangsdaten unter http://example.invalid/login, um Ihr Konto zu retten."};
 $("clear").onclick=()=>{$("msg").value="";$("file").value="";chosenFile=null;$("report").style.display="none";$("fileStatus").textContent="Eingabe gelöscht.";if(objectUrl)URL.revokeObjectURL(objectUrl);$("preview").style.display="none";$("preview").removeAttribute("src")};
 
