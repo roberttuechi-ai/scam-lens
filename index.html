@@ -526,6 +526,14 @@ body.accessible-xl .report-lensi p{font-size:1.15rem!important}
 }
 </style>
 
+<style id="scam-lens-version-2-6">
+.report-voice-controls{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 18px}
+.report-voice-controls[hidden]{display:none!important}
+.report-voice-controls button{flex:1 1 220px;min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.35}
+body.accessible .report-voice-controls,body.accessible-xl .report-voice-controls{display:grid;grid-template-columns:minmax(0,1fr)}
+body.accessible .report-voice-controls button,body.accessible-xl .report-voice-controls button{width:100%;min-width:0}
+</style>
+
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div><div class="brand">SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
@@ -534,8 +542,8 @@ body.accessible-xl .report-lensi p{font-size:1.15rem!important}
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 2.5</span>
-<div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button><button class="secondary" id="speak" hidden>🔊 Bericht vorlesen</button><button class="secondary" id="stop" hidden>⏹ Vorlesen stoppen</button></div>
+<span class="tag">SCAM LENS · TESTVERSION 2.6</span>
+<div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div>
 <div class="mascot-hero">
   <div class="hero-copy"><h1>Ist diese Nachricht sicher?</h1><p>Hallo! Ich helfe dir, Betrugsnachrichten zu erkennen. Wähle eine Nachricht aus – wir prüfen sie gemeinsam Schritt für Schritt.</p><div class="mascot-speech">🔎 Wir gehen Schritt für Schritt vor. Ich erkläre dir, was auffällt und was du als Nächstes tun kannst.</div></div>
   <div class="mascot-stage" role="img" aria-label="Scam Lens, ein freundlicher kleiner Sicherheitsroboter mit Schild">
@@ -609,6 +617,7 @@ body.accessible-xl .report-lensi p{font-size:1.15rem!important}
 
 <section class="card report" id="report" aria-live="polite" aria-atomic="true">
 <h2>Dein Sicherheitsbericht</h2>
+<div class="report-voice-controls" id="reportVoiceControls" hidden><button class="secondary" id="reportSpeak" type="button">🔊 Bericht vorlesen</button><button class="secondary" id="reportStop" type="button" hidden>⏹ Vorlesen stoppen</button></div>
 <div id="riskbox" class="riskbox risk-unknown"><div class="scorecircle"><strong id="score">?</strong><span>von 10</span></div><div><h2 id="riskTitle">Noch nicht geprüft</h2><p id="riskText">Füge eine Nachricht ein und starte die Prüfung.</p></div></div>
 <div id="analysisSource" class="source-local" role="status">Lokale Regelprüfung – keine KI verwendet</div>
 <div class="report-lensi" id="reportLensi" role="status" aria-live="polite"><span class="report-lensi-icon" aria-hidden="true">🤖</span><p id="lensiResultText">Ich erkläre dir das Ergebnis und die nächsten Schritte.</p></div>
@@ -986,15 +995,13 @@ $("aiStart").addEventListener("click", async () => {
   finally{$("aiStart").disabled=false;$("aiStart").querySelector("strong").textContent="KI-Analyse starten"}
 });
 
-/* Accessibility and result-only controls */
+/* Accessibility and result-only controls — version 2.6 */
 const originalRenderReport = renderReport;
 renderReport = function(data) {
   originalRenderReport(data);
-  $("speak").hidden = false;
-  $("riskLegend").hidden = false;
+  $("reportVoiceControls").hidden = false;
 };
-$("stop").hidden = true;
-$("speak").addEventListener("click", () => {
+$("reportSpeak").addEventListener("click", () => {
   if (!("speechSynthesis" in window)) {
     alert("Die Vorlesefunktion wird von diesem Browser nicht unterstützt. Bitte verwende die Vorlesefunktion deines Geräts.");
     return;
@@ -1004,13 +1011,12 @@ $("speak").addEventListener("click", () => {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "de-AT";
   utterance.rate = 0.88;
-  utterance.onstart = () => { $("stop").hidden = false; };
-  utterance.onend = utterance.onerror = () => { $("stop").hidden = true; };
+  utterance.onstart = () => { $("reportStop").hidden = false; };
+  utterance.onend = utterance.onerror = () => { $("reportStop").hidden = true; };
   window.speechSynthesis.speak(utterance);
 });
-$("stop").addEventListener("click", () => {
+$("reportStop").addEventListener("click", () => {
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-  $("stop").hidden = true;
+  $("reportStop").hidden = true;
 });
-
 </script></body></html>
