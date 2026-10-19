@@ -306,7 +306,7 @@ $("file").addEventListener("change", async () => {
       if (data.senderName || data.senderEmail) parts.push("Absender: " + [data.senderName, data.senderEmail].filter(Boolean).join(" <") + (data.senderEmail && data.senderName ? ">" : ""));
       if (data.recipients?.length) parts.push("Empfänger: " + data.recipients.map(r => r.name || r.email || "").filter(Boolean).join(", "));
       parts.push("", data.body || "");
-      const emailText = parts.join("\\n").trim();
+      const emailText = parts.join("\n").trim();
       if (!emailText) throw new Error("In der Outlook-Datei wurde kein lesbarer Nachrichtentext gefunden.");
       $("msg").value = emailText.slice(0, 30000);
       $("fileStatus").textContent = "Outlook-Datei lokal eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.";
@@ -331,7 +331,7 @@ $("file").addEventListener("change", async () => {
         const content = await page.getTextContent();
         pages.push(content.items.map(item => item.str || "").join(" "));
       }
-      const extracted = pages.join("\\n\\n").trim();
+      const extracted = pages.join("\n\n").trim();
       if (!extracted) throw new Error("Kein auswählbarer Text gefunden; möglicherweise ist das PDF ein Scan. OCR ist nicht verfügbar.");
       $("msg").value = extracted.slice(0, 30000);
       $("fileStatus").textContent = "PDF-Text lokal eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.";
@@ -341,11 +341,11 @@ $("file").addEventListener("change", async () => {
   if (/\.(mht|mhtml)$/.test(name)) {
     try {
       const raw = await chosenFile.text();
-      const match = raw.match(/Content-Type:\\s*text\\/html[^\\r\\n]*[\\r\\n]+(?:Content-Transfer-Encoding:\\s*([^\\r\\n]+)[\\r\\n]+)?[\\r\\n]+([\\s\\S]*?)(?=\\r?\\n--[^\\r\\n]+--?\\s*$)/i);
+      const match = raw.match(/Content-Type:\s*text\/html[^\r\n]*[\r\n]+(?:Content-Transfer-Encoding:\s*([^\r\n]+)[\r\n]+)?[\r\n]+([\s\S]*?)(?=\r?\n--[^\r\n]+--?\s*$)/i);
       if (!match) throw new Error("HTML-Inhalt im MHTML-Archiv nicht gefunden.");
       let html = match[2];
-      if ((match[1] || "").toLowerCase().includes("quoted-printable")) html = html.replace(/=\\r?\\n/g, "").replace(/=([0-9A-F]{2})/gi, (_, h) => String.fromCharCode(parseInt(h,16)));
-      if ((match[1] || "").toLowerCase().includes("base64")) html = new TextDecoder().decode(Uint8Array.from(atob(html.replace(/\\s/g,"")), c=>c.charCodeAt(0)));
+      if ((match[1] || "").toLowerCase().includes("quoted-printable")) html = html.replace(/=\r?\n/g, "").replace(/=([0-9A-F]{2})/gi, (_, h) => String.fromCharCode(parseInt(h,16)));
+      if ((match[1] || "").toLowerCase().includes("base64")) html = new TextDecoder().decode(Uint8Array.from(atob(html.replace(/\s/g,"")), c=>c.charCodeAt(0)));
       const doc = new DOMParser().parseFromString(html, "text/html");
       $("msg").value = (doc.body.innerText || doc.body.textContent || "").slice(0,30000);
       if (!$("msg").value.trim()) throw new Error("Kein lesbarer Nachrichtentext gefunden.");
@@ -356,7 +356,7 @@ $("file").addEventListener("change", async () => {
   if (/\.(mbox|ics|vcf)$/.test(name)) {
     try {
       let t = await chosenFile.text();
-      if (/\.ics$/.test(name)) t = t.replace(/\\r?\\n[ \\t]/g, "").replace(/\\r?\\n/g, "\\n");
+      if (/\.ics$/.test(name)) t = t.replace(/\r?\n[ \t]/g, "").replace(/\r?\n/g, "\n");
       if (/\.vcf$/.test(name)) t = t.replace(/\\r?\\n[ \\t]/g, "");
       $("msg").value = t.slice(0,30000);
       $("fileStatus").textContent = "Datei lokal als Text eingelesen. Noch keine Prüfung gestartet; kontrolliere den Inhalt vor der Analyse.";
