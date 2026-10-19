@@ -4,7 +4,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#102a43"><title>Scam Lens 6.9 – Security check</title>
+<meta name="theme-color" content="#102a43"><title>Scam Lens 7.4 – Security check</title>
 <style>
 :root{font:18px/1.6 Arial,Helvetica,sans-serif;color:#17324d;background:#eef4fb;--navy:#102a43;--blue:#3155d9;--teal:#087f70;--red:#c62828;--orange:#a66300;--green:#237747}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eaf4ff 0,#f5f7fb 280px,#f3f6fa 100%);line-height:1.6}
@@ -278,7 +278,7 @@ img,svg,video,canvas{max-width:100%;height:auto}
 }
 
 
-/* Version 6.9: transparent analysis progress and downloadable source guide */
+/* Version 7.4: Outlook drag-and-drop import improvements */
 .analysis-progress{display:none;margin:16px 0 22px;padding:18px;border:1px solid #b9d6ef;border-radius:16px;background:#f4f9ff}
 .analysis-progress.active{display:block}
 .analysis-progress-head{display:flex;justify-content:space-between;gap:12px;align-items:center;font-weight:800}
@@ -1321,7 +1321,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · VERSION 6.9</span>
+<span class="tag">SCAM LENS · VERSION 7.4</span>
 
 
 <div class="mascot-hero">
@@ -2190,7 +2190,7 @@ $("usageGuideClose").addEventListener("click", () => {
 
 $("downloadUserGuide").addEventListener("click",()=>{
  const en=document.documentElement.lang==="en";
- const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 6.9)
+ const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 7.4)
 ========================================================
 
 THREE ANALYSIS METHODS
@@ -2218,7 +2218,7 @@ OTHER NOTES
 - The app does not automatically open destination links.
 - Availability, results, data retention and privacy practices of external providers are controlled by those providers; review their current policies before use.
 - No source list can truthfully claim that all websites worldwide and all languages are searched. This version only uses the specific sources described above.
-` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 6.9)
+` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 7.4)
 ========================================================
 
 DREI ANALYSEVERFAHREN
@@ -2247,7 +2247,7 @@ WEITERE HINWEISE
 - Verfügbarkeit, Ergebnisse, Datenspeicherung und Datenschutz externer Anbieter werden von diesen Anbietern bestimmt. Prüfe deren aktuelle Datenschutzinformationen.
 - Eine Quellenliste, die behauptet, alle Websites weltweit und alle Sprachen zu durchsuchen, wäre nicht zutreffend. Diese Version verwendet nur die oben beschriebenen Quellen.
 `;
- const blob=new Blob([guide],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=en?"Scam-Lens-User-Guide-v6.9.txt":"Scam-Lens-Gebrauchsanweisung-v6.9.txt";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ const blob=new Blob([guide],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=en?"Scam-Lens-User-Guide-v7.4.txt":"Scam-Lens-Gebrauchsanweisung-v7.4.txt";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 
 $("usageGuideSpeak").addEventListener("click", () => {
