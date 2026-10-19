@@ -331,10 +331,11 @@ report.method="Nur lokale Regelprüfung (automatisch, ohne Datenübertragung)";
 renderReport(report)}
 $("check").onclick=()=>runLocalReport($("msg").value.trim());
 $("checkBackend").addEventListener("click", async () => {
-  const base = $("backend").value.trim().replace(/\\/+$/, "");
+  let base = $("backend").value.trim();
+  while (base.endsWith("/")) base = base.slice(0, -1);
   const status = $("backendStatus");
   status.style.display = "block";
-  if (!/^https?:\\/\\//i.test(base)) {
+  if (!(base.startsWith("https://") || base.startsWith("http://"))) {
     status.textContent = "Bitte zuerst die aktuelle Backend-Adresse ohne /health eintragen.";
     return;
   }
