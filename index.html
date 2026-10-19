@@ -716,16 +716,121 @@ footer{max-width:760px!important;color:#61768b!important;font-size:13px!importan
  .voice-welcome p{font-size:13px!important}
 }
 </style>
+<style id="scam-lens-reference-visual">
+/* Version 3.2 — genaue visuelle Annäherung an die vom Nutzer gelieferte Referenz */
+:root{font-family:Arial,Helvetica,sans-serif!important;font-size:18px!important;color:#092f6a!important;background:#7fc4f7!important}
+html,body{margin:0!important;min-height:100%!important;background:linear-gradient(90deg,#70b9f0,#a4d9ff 50%,#70b9f0)!important;color:#082f6a!important}
+header{background:transparent!important;color:#0b3676!important;padding:14px 14px 10px!important;box-shadow:none!important;border:0!important}
+header .wrap{max-width:1000px!important}
+.header-row{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important}
+.brand{display:flex!important;align-items:center!important;gap:7px!important;font-size:29px!important;font-weight:900!important;letter-spacing:-.5px!important;color:#073c91!important}
+.brand span:not(.brand-shield){color:#073c91!important}
+.brand-shield{font-size:32px!important}
+header p{font-size:16px!important;color:#193c6c!important;margin:2px 0 0 40px!important}
+.header-tools{display:flex!important;align-items:center!important;gap:10px!important}
+.accessibility-toolbar{display:flex!important;gap:8px!important;margin:0!important}
+.accessibility-toolbar button{background:#f8fcff!important;border:1px solid #a9d0ff!important;border-radius:13px!important;color:#0752b4!important;padding:12px 14px!important;font-size:16px!important;white-space:nowrap!important}
+.settings-icon{display:grid!important;place-items:center!important;width:54px!important;height:54px!important;border:1px solid #a9d0ff!important;background:#f8fcff!important;border-radius:13px!important;font-size:27px!important;color:#0752b4!important}
+.operator-top{position:absolute!important;right:12px!important;top:78px!important;z-index:5!important;font-size:12px!important}
+.operator-top summary{font-size:0!important;padding:0!important;width:1px!important;height:1px!important;overflow:hidden!important;opacity:.02!important}
+.operator-top[open] summary{font-size:13px!important;width:auto!important;height:auto!important;opacity:1!important}
+.operator-panel{background:white!important;padding:14px!important;border:1px solid #c6dcf3!important;border-radius:14px!important;box-shadow:0 8px 25px #10396320!important}
+main.wrap,#app{max-width:540px!important;width:calc(100% - 24px)!important;margin:0 auto!important;padding:16px 0 28px!important}
+#app>section:first-child{background:linear-gradient(180deg,#fff 0%,#fbfdff 100%)!important;border:1px solid #d1e5f7!important;border-radius:25px!important;padding:24px!important;box-shadow:0 10px 30px #134c7c18!important}
+#app>section:first-child>.tag{display:none!important}
+.mascot-hero{display:grid!important;grid-template-columns:minmax(0,1.12fr) minmax(170px,.88fr)!important;align-items:center!important;gap:10px!important;margin:0 0 18px!important;padding:12px 0 14px!important;border:0!important;border-radius:0!important;background:linear-gradient(135deg,#f1f8ff 0%,#fff 58%,#edf8f5 100%)!important}
+.hero-copy h1{font-size:clamp(36px,5vw,48px)!important;line-height:1.04!important;letter-spacing:-1.2px!important;margin:6px 0 13px!important;color:#062d68!important}
+.hero-copy>p{font-size:21px!important;line-height:1.4!important;color:#112f5c!important;margin:0 0 12px!important}
+.mascot-speech{font-size:16px!important;line-height:1.42!important;color:#06429a!important;background:#f5faff!important;border:1.5px solid #9ccaff!important;border-radius:18px!important;padding:14px!important}
+.mascot-stage{width:100%!important;max-width:230px!important;margin:auto!important}
+.scam-mascot{display:block!important;width:100%!important;max-height:260px!important;height:auto!important}
+.mascot-name{display:block!important;text-align:center!important;font-size:18px!important;color:#073c91!important;font-weight:800!important}
+.mascot-name span{display:block!important;font-size:13px!important;color:#5a7595!important;font-weight:500!important}
+.guided-steps{display:none!important}
+#app>section:first-child>h2{font-size:22px!important;line-height:1.25!important;color:#093776!important;margin:18px 0 13px!important}
+.source-grid{display:flex!important;flex-direction:column!important;gap:11px!important;margin:12px 0 18px!important}
+.source-grid .source-button{display:grid!important;grid-template-columns:76px minmax(0,1fr) 28px!important;grid-template-rows:auto auto!important;align-items:center!important;justify-items:start!important;gap:0 14px!important;width:100%!important;min-height:126px!important;padding:15px 17px!important;border:1.5px solid #b9d9fa!important;border-radius:23px!important;background:linear-gradient(115deg,#d9edff,#e8f5ff)!important;color:#062d68!important;text-align:left!important;font-size:28px!important;font-weight:800!important;box-shadow:none!important}
+.source-grid .source-button .source-icon{grid-column:1!important;grid-row:1/3!important;display:grid!important;place-items:center!important;width:70px!important;height:70px!important;border-radius:50%!important;background:#0878ed!important;color:#fff!important;font-size:35px!important}
+.source-grid .source-button>span:not(.source-icon){grid-column:2!important;grid-row:1!important;align-self:end!important}
+.source-grid .source-button small{grid-column:2!important;grid-row:2!important;align-self:start!important;font-size:20px!important;line-height:1.32!important;font-weight:400!important;color:#123c72!important;margin-top:2px!important}
+.source-grid .source-button:after{content:"›"!important;grid-column:3!important;grid-row:1/3!important;align-self:center!important;justify-self:center!important;font-size:44px!important;font-weight:400!important;color:#062d68!important}
+.source-grid #sourceCamera{background:linear-gradient(115deg,#ffe0df,#ffe9e8)!important;border-color:#ffc4c2!important}
+.source-grid #sourceCamera .source-icon{background:#d9332c!important}
+.source-grid #sourcePhoto{background:linear-gradient(115deg,#eee2ff,#f3eaff)!important;border-color:#dac4ff!important}
+.source-grid #sourcePhoto .source-icon{background:#7044d6!important}
+.source-grid #sourceFile{background:linear-gradient(115deg,#d9f2df,#e6f7e9)!important;border-color:#bde8c6!important}
+.source-grid #sourceFile .source-icon{background:#08794d!important}
+.source-grid #sourceEmail{background:linear-gradient(115deg,#ffedb8,#fff3d1)!important;border-color:#f5dda0!important}
+.source-grid #sourceEmail .source-icon{background:#77500b!important}
+.voice-welcome{display:grid!important;grid-template-columns:120px minmax(0,1fr)!important;align-items:center!important;gap:18px!important;width:100%!important;margin:18px 0 8px!important;padding:20px!important;border:0!important;border-radius:25px!important;background:linear-gradient(120deg,#e5f3ff,#eff8ff)!important;color:#073b8c!important}
+.voice-welcome-icon{display:grid!important;place-items:center!important;width:108px!important;height:108px!important;border-radius:50%!important;background:#0878ed!important;color:#fff!important;font-size:34px!important;box-shadow:0 5px 18px #0878ed30!important}
+.voice-welcome strong{font-size:23px!important;color:#073b8c!important}
+.voice-welcome p{font-size:19px!important;line-height:1.4!important;color:#163c70!important;margin:5px 0 0!important}
+#messageEditor{padding:18px!important;border-radius:20px!important;background:#f8fbff!important;border:1px solid #c9e0f7!important}
+#app .card{border-radius:25px!important}
+#report{margin-top:20px!important;background:#fff!important;padding:24px!important}
+#report>h2{font-size:30px!important;color:#0a3476!important}
+.report-voice-controls button{width:100%!important;min-height:66px!important;font-size:22px!important;background:#0878ed!important;color:#fff!important;border-color:#0878ed!important;border-radius:18px!important}
+.riskbox{position:relative!important;display:grid!important;grid-template-columns:86px minmax(0,1fr)!important;align-items:center!important;gap:15px!important;padding:25px!important;border-radius:25px!important}
+.riskbox.risk-high{background:linear-gradient(110deg,#ff4c4c,#ff6666)!important;color:#fff!important;border:0!important}
+.riskbox.risk-high h2,.riskbox.risk-high p{color:#fff!important}
+.riskbox.risk-medium{background:linear-gradient(110deg,#ffb43f,#ffe0a0)!important;color:#5a3200!important}
+.risk-alert-symbol{display:none!important}
+.riskbox.risk-high .risk-alert-symbol{display:grid!important;place-items:center!important;width:76px!important;height:76px!important;border:6px solid white!important;border-radius:50%!important;color:white!important;font-size:58px!important;font-weight:900!important;grid-column:1!important;grid-row:1!important}
+.riskbox .scorecircle{grid-column:1!important;grid-row:1!important;width:76px!important;height:76px!important;min-width:76px!important}
+.riskbox.risk-high .scorecircle{display:none!important}
+.riskbox.risk-high>div:last-child{grid-column:2!important;grid-row:1!important}
+#riskTitle{font-size:30px!important;line-height:1.12!important}
+#riskText{font-size:20px!important;line-height:1.35!important}
+.result-action{border-radius:22px!important;padding:20px!important;font-size:19px!important}
+.report-lensi{background:#edf6ff!important;border:0!important;border-radius:22px!important;padding:20px!important}
+.report-lensi p{font-size:19px!important}
+#evidence li,#steps li{font-size:19px!important;margin:8px 0!important}
+footer{max-width:540px!important;color:#234c78!important;font-size:14px!important;padding:0 0 30px!important}
+@media(max-width:600px){
+ header{padding:12px 10px 8px!important}
+ .header-row{gap:8px!important}
+ .brand{font-size:22px!important;gap:4px!important}
+ .brand-shield{font-size:23px!important}
+ header p{font-size:11px!important;margin-left:28px!important}
+ .header-tools{gap:5px!important}
+ .accessibility-toolbar button{font-size:12px!important;padding:9px 8px!important}
+ .settings-icon{width:36px!important;height:36px!important;font-size:20px!important}
+ .operator-top{top:55px!important;right:8px!important}
+ main.wrap,#app{width:calc(100% - 16px)!important;padding:10px 0 20px!important}
+ #app>section:first-child{padding:15px!important;border-radius:20px!important}
+ .mascot-hero{grid-template-columns:minmax(0,1fr) 42%!important;gap:5px!important;padding:8px 0 14px!important}
+ .hero-copy h1{font-size:clamp(28px,7vw,39px)!important;letter-spacing:-.7px!important}
+ .hero-copy>p{font-size:16px!important}
+ .mascot-speech{font-size:13px!important;padding:9px!important}
+ .mascot-stage{max-width:200px!important}
+ .mascot-name{font-size:15px!important}
+ .source-grid .source-button{grid-template-columns:58px minmax(0,1fr) 20px!important;min-height:94px!important;padding:11px!important;gap:0 10px!important;font-size:21px!important;border-radius:19px!important}
+ .source-grid .source-button .source-icon{width:54px!important;height:54px!important;font-size:27px!important}
+ .source-grid .source-button small{font-size:15px!important}
+ .source-grid .source-button:after{font-size:34px!important}
+ .voice-welcome{grid-template-columns:72px minmax(0,1fr)!important;padding:13px!important;gap:11px!important;border-radius:20px!important}
+ .voice-welcome-icon{width:68px!important;height:68px!important;font-size:25px!important}
+ .voice-welcome strong{font-size:17px!important}
+ .voice-welcome p{font-size:14px!important}
+ #report{padding:15px!important}
+ #riskTitle{font-size:24px!important}
+ #riskText{font-size:16px!important}
+ .riskbox{grid-template-columns:55px minmax(0,1fr)!important;padding:15px!important;gap:10px!important}
+ .riskbox.risk-high .risk-alert-symbol{width:48px!important;height:48px!important;border-width:4px!important;font-size:35px!important}
+ .riskbox .scorecircle{width:50px!important;height:50px!important;min-width:50px!important}
+}
+</style>
 </head>
 <body>
-<header><div class="wrap"><div class="header-row"><div><div class="brand">🛡️ SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
+<header><div class="wrap"><div class="header-row"><div><div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><div class="header-tools"><div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div><span class="settings-icon" aria-hidden="true">⚙</span></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
 
 
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 3.1</span>
-<div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div>
+<span class="tag">SCAM LENS · TESTVERSION 3.2</span>
+
 <div class="mascot-hero">
   <div class="hero-copy"><h1>Hallo!<br>Ich bin Lensi.</h1><p>Ich helfe dir, verdächtige Nachrichten einfach und sicher zu prüfen.</p><div class="mascot-speech">Du musst kein Technikprofi sein. Wir gehen alles in Ruhe durch. Du kannst dir den fertigen Bericht auch vorlesen lassen.</div></div>
   <div class="mascot-stage" role="img" aria-label="Scam Lens, ein freundlicher kleiner Sicherheitsroboter mit Schild">
@@ -764,13 +869,13 @@ footer{max-width:760px!important;color:#61768b!important;font-size:13px!importan
 </div>
 <h2>📥 Schritt 1: Wähle deine Nachricht</h2>
 <div class="source-grid" role="group" aria-label="Quelle der Nachricht auswählen">
-  <button class="source-button" id="sourceText" type="button"><span class="source-icon" aria-hidden="true">⌨</span><span>Text eingeben</span></button>
+  <button class="source-button" id="sourceText" type="button"><span class="source-icon" aria-hidden="true">▤</span><span>Text eingeben</span><small>Nachricht hier einfügen oder selbst schreiben</small></button>
   <button class="source-button camera-button" id="sourceCamera" type="button"><span class="source-icon" aria-hidden="true">📷</span><span>Kamera nutzen</span><small>Foto direkt aufnehmen</small></button>
-  <button class="source-button" id="sourcePhoto" type="button"><span class="source-icon" aria-hidden="true">▧</span><span>Foto / Screenshot</span></button>
-  <button class="source-button" id="sourceFile" type="button"><span class="source-icon" aria-hidden="true">▤</span><span>Datei hochladen</span></button>
-  <button class="source-button" id="sourceEmail" type="button"><span class="source-icon" aria-hidden="true">✉</span><span>E-Mail-Datei</span><small>EML / PDF / TXT</small></button>
+  <button class="source-button" id="sourcePhoto" type="button"><span class="source-icon" aria-hidden="true">▧</span><span>Foto / Screenshot</span><small>Bild aus Galerie auswählen</small></button>
+  <button class="source-button" id="sourceFile" type="button"><span class="source-icon" aria-hidden="true">↑</span><span>Datei hochladen</span><small>PDF, Bild oder Textdatei</small></button>
+  <button class="source-button" id="sourceEmail" type="button"><span class="source-icon" aria-hidden="true">✉</span><span>E-Mail-Datei</span><small>E-Mail-Datei (z. B. .eml)</small></button>
 </div>
-<div class="voice-welcome" id="voiceWelcome" aria-label="Hilfe zum Vorlesen"><div class="voice-welcome-icon" aria-hidden="true">🔊</div><div><strong>Lieber zuhören als lesen?</strong><p>Scam Lens kann dir den fertigen Sicherheitsbericht vorlesen. Starte zuerst eine Prüfung und nutze dann „Bericht vorlesen“ im Ergebnis.</p></div></div>
+<div class="voice-welcome" id="voiceWelcome" aria-label="Hilfe zum Vorlesen"><div class="voice-welcome-icon" aria-hidden="true">◖))</div><div><strong>Lieber zuhören als lesen?</strong><p>Hier kannst du dir später den vollständigen Sicherheitsbericht vorlesen lassen.</p></div></div>
 
 <section id="messageEditor" class="message-editor" hidden aria-live="polite">
   <div class="editor-heading"><span class="editor-bubble">✍️</span><div><h2 id="editorTitle">Deine Nachricht</h2><p id="editorHint">Kontrolliere den Inhalt und starte anschließend die Prüfung.</p></div></div>
@@ -803,7 +908,7 @@ footer{max-width:760px!important;color:#61768b!important;font-size:13px!importan
 <h2>Dein Sicherheitsbericht</h2>
 <div class="report-voice-controls" id="reportVoiceControls" hidden><button class="secondary" id="reportSpeak" type="button">🔊 Bericht vorlesen</button><button class="secondary" id="reportStop" type="button" hidden>⏹ Vorlesen stoppen</button></div>
 <div id="resultAction" class="result-action result-action-unknown" aria-live="polite"><strong id="resultActionTitle">Noch keine Prüfung</strong><p id="resultActionText">Wähle eine Nachricht und starte einen Sicherheits-Check. Danach steht hier direkt, was du tun solltest.</p></div>
-<div id="riskbox" class="riskbox risk-unknown"><div class="scorecircle"><strong id="score">?</strong><span>von 10</span></div><div><h2 id="riskTitle">Noch nicht geprüft</h2><p id="riskText">Füge eine Nachricht ein und starte die Prüfung.</p></div></div>
+<div id="riskbox" class="riskbox risk-unknown"><div class="risk-alert-symbol" aria-hidden="true">!</div><div class="scorecircle"><strong id="score">?</strong><span>von 10</span></div><div><h2 id="riskTitle">Noch nicht geprüft</h2><p id="riskText">Füge eine Nachricht ein und starte die Prüfung.</p></div></div>
 <div id="analysisSource" class="source-local" role="status">Lokale Regelprüfung – keine KI verwendet</div>
 <div class="report-lensi" id="reportLensi" role="status" aria-live="polite"><span class="report-lensi-icon" aria-hidden="true">🤖</span><p id="lensiResultText">Ich erkläre dir das Ergebnis und die nächsten Schritte.</p></div>
 <h3>Warum diese Einschätzung?</h3><ul id="evidence"></ul>
