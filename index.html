@@ -168,6 +168,17 @@ footer{color:#60758b!important;padding:0 18px 30px!important}
 @media(max-width:360px){.mascot-hero{grid-template-columns:minmax(0,1fr) 100px!important}.mascot-stage{width:100px!important}.hero-copy h1{font-size:27px!important}}
 
 
+/* Email drag-and-drop import */
+.email-drop-zone{display:grid;grid-template-columns:48px minmax(0,1fr) auto;align-items:center;gap:10px;margin:12px 0 16px;padding:16px;border:2px dashed #9bbbd8;border-radius:17px;background:#f7fbff;color:#173b61;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s}
+.email-drop-zone:focus-visible{outline:4px solid #ffbf47;outline-offset:3px}
+.email-drop-zone.is-dragover{background:#e8f5ff;border-color:#1769c2;box-shadow:0 0 0 4px #1769c21c}
+.email-drop-zone.is-error{background:#fff1f1;border-color:#c62828}
+.email-drop-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#1769c2;color:#fff;font-size:24px}
+.email-drop-copy strong,.email-drop-copy span{display:block}
+.email-drop-copy strong{font-size:17px}
+.email-drop-copy span{font-size:14px;line-height:1.4;color:#526b82}
+.email-drop-status{grid-column:1/-1;margin:0;font-size:14px;color:#526b82}
+@media(max-width:520px){.email-drop-zone{grid-template-columns:42px minmax(0,1fr);padding:12px}.email-drop-icon{width:40px;height:40px}.email-drop-zone #emailDropBrowse{grid-column:1/-1;width:100%}}
 /* v3.7 user guide and six uniform help tiles */
 .header-row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.header-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}#openGuide{order:-1;white-space:nowrap;background:#fff;color:#244b79;border-color:#d3e5f5}.guide-card[hidden]{display:none!important}.guide-card{border:2px solid #b8d8f5!important;background:#fafdff!important}.guide-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.guide-card ol{padding-left:25px}.guide-card li{margin-bottom:10px}
 .help-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch;gap:10px!important}.help-item{min-width:0;min-height:100px;border:1px solid #d8e6f2;border-radius:15px;overflow:hidden;background:#f7fbff!important}.help-item summary{display:flex;align-items:center;gap:8px;min-height:100px;height:100%;padding:12px!important;list-style:none;cursor:pointer;background:transparent!important;color:#173b61!important}.help-item summary::-webkit-details-marker{display:none}.help-item summary:after{content:'＋';margin-left:auto;font-size:20px}.help-item[open] summary:after{content:'−'}.help-item summary strong{font-size:16px;line-height:1.25;overflow-wrap:anywhere}.help-item .help-icon{font-size:25px;flex:0 0 28px}.help-details{padding:0 14px 14px;font-size:15px;line-height:1.5}.help-details a{font-weight:700;color:#1769c2;overflow-wrap:anywhere}.help-red{background:#fff1f3!important;border-color:#ffc0cf!important}.help-blue{background:#eaf3ff!important;border-color:#b8d2ff!important}.help-purple{background:#f3edff!important;border-color:#d0baff!important}.help-orange{background:#fff6e6!important;border-color:#f4d58c!important}.help-green{background:#e8f9ef!important;border-color:#a7e7ca!important}@media(max-width:520px){.header-row{align-items:flex-start}.header-tools{width:100%;justify-content:space-between}.accessibility-toolbar{display:none!important}#openGuide{width:auto!important}.help-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.help-item,.help-item summary{min-height:100px}.help-item summary{padding:9px!important;gap:6px}.help-item summary strong{font-size:14px}.help-item .help-icon{font-size:22px;flex-basis:24px}}@media(max-width:340px){.help-grid{grid-template-columns:1fr!important}}
@@ -1391,6 +1402,12 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
   <textarea id="msg" maxlength="30000" placeholder="E-Mail, SMS oder Chatnachricht hier einfügen …"></textarea>
   <div class="toolbar editor-actions"><button class="secondary" id="sample" type="button">Testbeispiel laden</button><button class="secondary" id="clear" type="button">Zurücksetzen</button></div>
 </section>
+<section id="emailDropZone" class="email-drop-zone" tabindex="0" role="button" aria-label="E-Mail-Datei hier ablegen oder auswählen">
+  <div class="email-drop-icon" aria-hidden="true">✉</div>
+  <div class="email-drop-copy"><strong>E-Mail hierher ziehen</strong><span>Lege eine .eml-, .msg-, .txt- oder .html-Datei hier ab – oder wähle sie aus.</span></div>
+  <button type="button" id="emailDropBrowse" class="secondary">Datei auswählen</button>
+  <p id="emailDropStatus" class="email-drop-status" aria-live="polite">Die Datei wird lokal eingelesen. Die Analyse startet erst, wenn du sie selbst startest.</p>
+</section>
 <input id="file" type="file" accept="image/*,.txt,.eml,.html,.htm" hidden>
 <details class="photo-details" id="photoDetails"><summary>Originalbild und Erkennungsdetails anzeigen</summary><img id="preview" class="preview" alt="Vorschau des ausgewählten Bildes"><p id="photoExtractDetails" class="muted">Hier erscheinen Hinweise zur Texterkennung.</p></details><p id="fileStatus" class="muted" aria-live="polite">Noch keine Datei ausgewählt.</p>
 <div class="drop" id="importHelp" hidden><p class="muted">TXT-, EML- und HTML-Dateien werden lokal eingelesen. Bei Fotos versucht Scam Lens automatisch, den Text per OCR (Deutsch und Englisch) zu erkennen. Der erkannte Text wird übernommen, aber nicht automatisch analysiert. Beim ersten Einsatz werden OCR-Bibliothek und Sprachdaten aus dem Internet geladen.</p></div>
@@ -1643,6 +1660,60 @@ $("sourceEmail").addEventListener("click", () => {
   openMessageEditor("E-Mail importieren", "Nach dem Einlesen kannst du den Inhalt prüfen und analysieren.", false);
   cameraMode = false;
   $("file").accept = ".eml,.msg,.oft,.mbox,.mht,.mhtml,.pdf,.txt,.html,.htm,.ics,.vcf,message/rfc822,application/pdf,text/plain";
+  $("file").removeAttribute("capture");
+  $("file").click();
+});
+
+/* Accessible drag-and-drop for email files; reuse the existing import pipeline. */
+const emailDropZone = $("emailDropZone");
+const emailDropStatus = $("emailDropStatus");
+const emailExtensions = /\\.(eml|msg|oft|mbox|mht|mhtml|txt|html|htm|pdf)$/i;
+function slHandleDroppedEmailFiles(fileList) {
+  const files = Array.from(fileList || []);
+  if (!files.length) return;
+  if (files.length > 1) {
+    emailDropZone.classList.add("is-error");
+    emailDropStatus.textContent = "Bitte lege jeweils nur eine E-Mail-Datei ab, damit der Inhalt eindeutig zugeordnet wird.";
+    return;
+  }
+  const file = files[0];
+  if (!emailExtensions.test(file.name) && !/^(message\\/rfc822|text\\/plain|text\\/html|application\\/pdf)$/i.test(file.type)) {
+    emailDropZone.classList.add("is-error");
+    emailDropStatus.textContent = "Dateityp nicht unterstützt. Verwende .eml, .msg, .oft, .mbox, .mht, .mhtml, .txt, .html oder PDF.";
+    return;
+  }
+  if (file.size > 15 * 1024 * 1024) {
+    emailDropZone.classList.add("is-error");
+    emailDropStatus.textContent = "Datei zu groß. Maximal 15 MB pro Datei.";
+    return;
+  }
+  emailDropZone.classList.remove("is-error");
+  emailDropStatus.textContent = "Datei übernommen: " + file.name + " – Inhalt wird eingelesen …";
+  openMessageEditor("E-Mail importieren", "Bitte kontrolliere den importierten Inhalt. Die Analyse startet nicht automatisch.", false);
+  cameraMode = false;
+  $("file").accept = ".eml,.msg,.oft,.mbox,.mht,.mhtml,.pdf,.txt,.html,.htm,message/rfc822,application/pdf,text/plain";
+  $("file").removeAttribute("capture");
+  try {
+    const transfer = new DataTransfer();
+    transfer.items.add(file);
+    $("file").files = transfer.files;
+    $("file").dispatchEvent(new Event("change", {bubbles:true}));
+  } catch (err) {
+    emailDropStatus.textContent = "Die Datei konnte nicht direkt übernommen werden. Bitte klicke auf „Datei auswählen“ und wähle sie manuell.";
+    emailDropZone.classList.add("is-error");
+  }
+}
+emailDropZone.addEventListener("dragenter", event => { event.preventDefault(); emailDropZone.classList.add("is-dragover"); });
+emailDropZone.addEventListener("dragover", event => { event.preventDefault(); if(event.dataTransfer) event.dataTransfer.dropEffect = "copy"; emailDropZone.classList.add("is-dragover"); });
+emailDropZone.addEventListener("dragleave", event => { if(!emailDropZone.contains(event.relatedTarget)) emailDropZone.classList.remove("is-dragover"); });
+emailDropZone.addEventListener("drop", event => { event.preventDefault(); emailDropZone.classList.remove("is-dragover"); slHandleDroppedEmailFiles(event.dataTransfer && event.dataTransfer.files); });
+emailDropZone.addEventListener("click", event => { if(event.target.closest("button")) return; $("emailDropBrowse").click(); });
+emailDropZone.addEventListener("keydown", event => { if(event.key==="Enter" || event.key===" "){event.preventDefault();$("emailDropBrowse").click();} });
+$("emailDropBrowse").addEventListener("click", event => {
+  event.stopPropagation();
+  openMessageEditor("E-Mail importieren", "Nach dem Einlesen kannst du den Inhalt prüfen und analysieren.", false);
+  cameraMode = false;
+  $("file").accept = ".eml,.msg,.oft,.mbox,.mht,.mhtml,.pdf,.txt,.html,.htm,message/rfc822,application/pdf,text/plain";
   $("file").removeAttribute("capture");
   $("file").click();
 });
