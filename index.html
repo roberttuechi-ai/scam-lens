@@ -396,6 +396,26 @@ header{padding:18px 20px!important}
 #fileStatus{min-height:0;margin:12px 0!important;font-size:14px!important}
 @media(max-width:620px){header{padding:14px!important}.header-row{align-items:flex-start;gap:8px}.operator-top{max-width:52%;margin-top:4px}.operator-top>summary{white-space:normal;font-size:11px;padding:8px 9px}.header-row .brand{font-size:24px}.header-row p{font-size:13px;margin-bottom:0}}
 </style>
+<style id="scam-lens-accessibility-flow-v2-4">
+.accessibility-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px}
+.accessibility-toolbar #speak[hidden],.accessibility-toolbar #stop[hidden]{display:none!important}
+.accessibility-toolbar button{min-height:44px}
+.analysis-actions{display:flex;flex-direction:column;gap:14px;margin-top:20px}
+.analysis-actions .ai-action{order:1;width:100%;min-height:90px;padding:18px 20px;display:grid;grid-template-columns:52px 1fr 20px;align-items:center;text-align:left;border:2px solid #4169ee!important;border-radius:20px!important;background:linear-gradient(110deg,#286fe8,#7250e8)!important;color:#fff!important;box-shadow:0 5px 0 #2f45a31b!important}
+.analysis-actions #liveLinkCheck{order:2;width:100%;min-height:90px!important;padding:18px 20px!important;display:grid!important;grid-template-columns:52px 1fr 20px;align-items:center;text-align:left;border:2px solid #efcb78!important;border-radius:20px!important;background:linear-gradient(110deg,#fff7df,#ffedbd)!important;color:#684a08!important}
+.analysis-actions #check{order:3;width:100%;min-height:90px!important;padding:18px 20px!important;display:grid;grid-template-columns:52px 1fr 20px;align-items:center;text-align:left;border:2px solid #8adbb5!important;border-radius:20px!important;background:linear-gradient(110deg,#e2fbef,#c4f3dc)!important;color:#135b42!important}
+.analysis-actions .action-icon{font-size:32px!important;text-align:center}
+.analysis-actions strong{display:block;font-size:20px!important}
+.analysis-actions small{display:block;font-size:15px!important;line-height:1.4;margin-top:4px}
+.risk-legend[hidden]{display:none!important}
+.risk-legend:not([hidden]){display:grid!important;grid-template-columns:1fr;gap:9px;margin:16px 0}
+.risk-key{padding:13px 15px;border-radius:15px;border:2px solid;display:flex;flex-direction:column;gap:4px;line-height:1.45}
+.risk-key strong{font-size:16px}.risk-key span{font-size:14px}
+.risk-key-high{background:#fff0f3;border-color:#f09aaf;color:#74263a}
+.risk-key-medium{background:#fff6df;border-color:#efca71;color:#754800}
+.risk-key-low{background:#e7fbef;border-color:#8bd9a8;color:#145c35}
+@media(min-width:760px){.risk-legend:not([hidden]){grid-template-columns:repeat(3,minmax(0,1fr))}.analysis-actions .ai-action,.analysis-actions #liveLinkCheck,.analysis-actions #check{min-height:100px!important}}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div><div class="brand">SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
@@ -407,7 +427,7 @@ header{padding:18px 20px!important}
 <main class="wrap" id="app">
 <section class="card">
 <span class="tag">SCAM LENS · TESTVERSION 2.1</span>
-<div class="toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak">Ergebnis vorlesen</button><button class="secondary" id="stop">Vorlesen stoppen</button></div>
+<div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak" hidden>🔊 Bericht vorlesen</button><button class="secondary" id="stop" hidden>⏹ Vorlesen stoppen</button></div>
 <div class="mascot-hero">
   <div class="hero-copy"><h1>Ist diese Nachricht sicher?</h1><p>Hallo! Ich helfe dir, Betrugsnachrichten zu erkennen. Wähle eine Nachricht aus – wir prüfen sie gemeinsam Schritt für Schritt.</p><div class="mascot-speech">🔎 Gemeinsam finden wir verdächtige Hinweise!</div></div>
   <div class="mascot-stage" role="img" aria-label="Scam Lens, ein freundlicher kleiner Sicherheitsroboter mit Schild">
@@ -462,15 +482,14 @@ header{padding:18px 20px!important}
 <img id="preview" class="preview" alt="Vorschau des ausgewählten Bildes"><p id="fileStatus" class="muted" aria-live="polite">Noch keine Datei ausgewählt.</p>
 <div class="drop" id="importHelp" hidden><p class="muted">TXT-, EML- und HTML-Dateien werden lokal eingelesen. Bei Fotos versucht Scam Lens automatisch, den Text per OCR (Deutsch und Englisch) zu erkennen. Der erkannte Text wird übernommen, aber nicht automatisch analysiert. Beim ersten Einsatz werden OCR-Bibliothek und Sprachdaten aus dem Internet geladen.</p></div>
 
-<div class="risk-legend" aria-label="Erklärung der Risikostufen" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0">
-  <div style="padding:10px 8px;text-align:center;border-radius:12px;background:#fff0f0;border:2px solid #e88b8b;color:#8f1724"><strong>ROT · 10/10</strong><br><span>Hohes Risiko</span></div>
-  <div style="padding:10px 8px;text-align:center;border-radius:12px;background:#fff6e5;border:2px solid #efc46c;color:#7a4700"><strong>ORANGE · 5/10</strong><br><span>Auffällig</span></div>
-  <div style="padding:10px 8px;text-align:center;border-radius:12px;background:#e9f9ef;border:2px solid #8bd3a5;color:#17653b"><strong>GRÜN · 2/10</strong><br><span>Wenige Hinweise</span></div>
+<div id="riskLegend" class="risk-legend" aria-label="Erklärung der Risikostufen" hidden>
+  <div class="risk-key risk-key-high"><strong>ROT · Hohes Risiko</strong><span>Deutliche Warnsignale – nicht klicken und keine Daten eingeben.</span></div>
+  <div class="risk-key risk-key-medium"><strong>ORANGE · Auffällig</strong><span>Vorsicht: Absender unabhängig prüfen.</span></div>
+  <div class="risk-key risk-key-low"><strong>GRÜN · Wenige Hinweise</strong><span>Keine Garantie, dass die Nachricht sicher ist.</span></div>
 </div>
-<p class="muted">Die Werte sind vereinfachte Warnstufen und keine statistische Wahrscheinlichkeit. Auch eine grüne Bewertung garantiert keine Sicherheit.</p>
 
 <div class="analysis-grid">
-  <button class="local-action" id="check" type="button"><span class="action-icon" aria-hidden="true">🛡️</span><span><strong>Schnell-Check starten</strong><small>Privat auf diesem Gerät · keine Datenübertragung</small></span><span aria-hidden="true">›</span></button>
+  <div class="analysis-actions"></div>
   <button class="secondary" id="liveLinkCheck" type="button" style="min-height:100px;text-align:left"><span class="action-icon" aria-hidden="true">🔎</span><span><strong>Links live prüfen</strong><small>Verdächtige Webadressen abgleichen</small></span></button>
   <button class="ai-action" id="aiStart" type="button"><span class="action-icon" aria-hidden="true">✨</span><span><strong>Gründliche KI-Analyse</strong><small>Zusätzliche Einschätzung mit KI</small></span><span aria-hidden="true">›</span></button>
 </div>
@@ -855,4 +874,32 @@ $("aiStart").addEventListener("click", async () => {
   }catch(e){runLocalReport(text);$("limitations").textContent="KI-Analyse fehlgeschlagen: "+e.message+". Es wurde ausschließlich lokal geprüft; es wurde kein erfolgreiches KI-Ergebnis vorgetäuscht.";$("method").textContent="Prüfmethode: Nur lokale Prüfung (KI-Backend nicht verfügbar).";$("analysisSource").className="source-local";$("analysisSource").textContent="KI nicht verfügbar – Ergebnis stammt nur aus der lokalen Regelprüfung."}
   finally{$("aiStart").disabled=false;$("aiStart").querySelector("strong").textContent="KI-Analyse starten"}
 });
+
+/* Accessibility and result-only controls */
+const originalRenderReport = renderReport;
+renderReport = function(data) {
+  originalRenderReport(data);
+  $("speak").hidden = false;
+  $("riskLegend").hidden = false;
+};
+$("stop").hidden = true;
+$("speak").addEventListener("click", () => {
+  if (!("speechSynthesis" in window)) {
+    alert("Die Vorlesefunktion wird von diesem Browser nicht unterstützt. Bitte verwende die Vorlesefunktion deines Geräts.");
+    return;
+  }
+  const text = $("report").innerText;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "de-AT";
+  utterance.rate = 0.88;
+  utterance.onstart = () => { $("stop").hidden = false; };
+  utterance.onend = utterance.onerror = () => { $("stop").hidden = true; };
+  window.speechSynthesis.speak(utterance);
+});
+$("stop").addEventListener("click", () => {
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  $("stop").hidden = true;
+});
+
 </script></body></html>
