@@ -1049,7 +1049,7 @@ header .wrap{width:min(1120px,calc(100% - 28px))!important;padding:18px 0!import
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 5.5</span>
+<span class="tag">SCAM LENS · TESTVERSION 5.6</span>
 
 
 <div class="mascot-hero">
@@ -1239,7 +1239,7 @@ hu:{
 }};
 const SL_LANG_NAMES={de:"Deutsch",en:"English",tr:"Türkçe",bs:"Bosanski",hr:"Hrvatski",sl:"Slovenščina",ar:"العربية",uk:"Українська",ro:"Română",hu:"Magyar"};
 let slCurrentLanguage="de";
-const SL_ORIGINAL_TEXT=new WeakMap();function slTranslateTextNode(node,dict){if(!SL_ORIGINAL_TEXT.has(node))SL_ORIGINAL_TEXT.set(node,node.nodeValue);const original=SL_ORIGINAL_TEXT.get(node);if(!original||!original.trim())return;const lead=original.match(/^\\s*/)?.[0]||"";const trail=original.match(/\\s*$/)?.[0]||"";const core=original.trim();node.nodeValue=lead+(dict[core]||core)+trail;}
+const SL_ORIGINAL_TEXT=new WeakMap();function slTranslateTextNode(node,dict){if(!SL_ORIGINAL_TEXT.has(node))SL_ORIGINAL_TEXT.set(node,node.nodeValue);const original=SL_ORIGINAL_TEXT.get(node);if(!original||!original.trim())return;const lead=original.match(/^\\s*/)?.[0]||"";const trail=original.match(/\\s*$/)?.[0]||"";const core=original.trim();const translated=lead+(dict[core]||core)+trail;if(node.nodeValue!==translated)node.nodeValue=translated;}
 function slApplyLanguage(lang){slCurrentLanguage=lang||"de";const dict=SL_TRANSLATIONS[slCurrentLanguage]||{};document.documentElement.lang=slCurrentLanguage;document.documentElement.dir=slCurrentLanguage==="ar"?"rtl":"ltr";const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);nodes.forEach(n=>{if(!n.parentElement?.closest("script,style,option"))slTranslateTextNode(n,dict);});document.querySelectorAll("[placeholder]").forEach(el=>{if(el.dataset.slOriginalPlaceholder===undefined)el.dataset.slOriginalPlaceholder=el.placeholder;el.placeholder=dict[el.dataset.slOriginalPlaceholder]||el.dataset.slOriginalPlaceholder;});document.querySelectorAll("button[aria-label],summary[aria-label]").forEach(el=>{if(el.dataset.slOriginalAria===undefined)el.dataset.slOriginalAria=el.getAttribute("aria-label");el.setAttribute("aria-label",dict[el.dataset.slOriginalAria]||el.dataset.slOriginalAria);});const title=document.getElementById("usageGuideTitle");if(title&&dict["Scam Lens – einfach erklärt"])title.textContent=dict["Scam Lens – einfach erklärt"];try{localStorage.setItem("scamLensLanguage",slCurrentLanguage);}catch(e){}
 /* Translate newly rendered report/help nodes too, using the same offline dictionaries. */
 function slTranslateAddedNodes(root){if(!root)return;const dict=SL_TRANSLATIONS[slCurrentLanguage]||{};const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);nodes.forEach(n=>{if(!n.parentElement?.closest("script,style,option"))slTranslateTextNode(n,dict);});}
