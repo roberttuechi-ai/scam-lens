@@ -857,15 +857,49 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
  .operator-top[open] .operator-panel{right:0!important}
 }
 </style>
+<style id="scam-lens-version-3-7">
+/* Version 3.7: photo confirmation flow, readable guide, and equal expandable help cards */
+.header-brand{display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-width:0}
+.usage-guide-button{min-height:44px!important;padding:8px 13px!important;font-size:15px!important;background:#fff!important;color:#234b79!important;border:1px solid #c7dcf3!important;border-radius:12px!important;box-shadow:none!important}
+.usage-guide-panel{max-width:1050px;margin:12px auto 0;padding:0 14px}
+.usage-guide-panel[hidden]{display:none!important}
+.usage-guide-inner{padding:22px;background:#fff;border:2px solid #cbdcf1;border-radius:20px;box-shadow:0 8px 24px #254b7210}
+.usage-guide-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.usage-guide-heading h2{margin:0 0 6px!important}
+.usage-guide-heading p{margin:0 0 12px}
+.usage-guide-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.usage-guide-actions button{flex:1 1 220px}
+.usage-guide-close{min-width:100px}
+.photo-details{margin:12px 0;padding:12px;border:1px solid #d4e3f2;border-radius:14px;background:#f8fbff}
+.photo-details summary{cursor:pointer;font-weight:800}
+.photo-details .preview{max-width:100%;max-height:320px;object-fit:contain}
+.help-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;gap:12px!important}
+.help-item{display:flex;flex-direction:column;min-width:0;height:100%;border:2px solid #d8e5f3;border-radius:18px;overflow:hidden;background:#f8fbff}
+.help-item summary{display:flex;align-items:center;gap:10px;flex:1;min-height:90px;padding:15px!important;cursor:pointer;list-style:none;font-size:17px!important;line-height:1.3;font-weight:800;color:#19334f!important;background:transparent!important;border:0!important;border-radius:0!important}
+.help-item summary::-webkit-details-marker{display:none}
+.help-item summary::after{content:"+";margin-left:auto;font-size:24px;flex:0 0 auto;color:#486786}
+.help-item[open] summary::after{content:"−"}
+.help-item .help-icon{flex:0 0 32px;width:32px;font-size:27px}
+.help-item summary strong{min-width:0;overflow-wrap:anywhere}
+.help-content{padding:0 15px 16px;border-top:1px solid #dce7f3;font-size:15px;line-height:1.5}
+.help-content p{margin:12px 0}
+.help-content a{display:inline-block;font-weight:800;color:#175fc1;text-decoration:underline;overflow-wrap:anywhere}
+.help-item.help-red{background:#fff5f6;border-color:#f1c4cd}
+.help-item.help-blue{background:#f1f7ff;border-color:#c5dcfb}
+.help-item.help-purple{background:#f7f3ff;border-color:#d9cafa}
+.help-item.help-orange{background:#fff8ea;border-color:#f1d8a5}
+.help-item.help-green{background:#effaf3;border-color:#c4e8d0}
+.help-item.help-bank{background:#eef8f7;border-color:#b9e0dc}
+#sourceText,#sourceCamera,#sourcePhoto,#sourceFile,#sourceEmail{height:auto!important}
+@media(max-width:620px){.usage-guide-panel{padding:0 10px}.usage-guide-inner{padding:16px}.usage-guide-heading{flex-direction:column}.usage-guide-close{width:100%}.help-grid{grid-template-columns:1fr!important}.help-item summary{min-height:76px}}
+</style>
 </head>
 <body>
-<header><div class="wrap"><div class="header-row"><div><div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><div class="header-tools"><div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div><details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></div></header>
-
-
-
+<header><div class="wrap"><div class="header-row"><div class="header-brand"><button class="usage-guide-button" id="usageGuideToggle" type="button" aria-expanded="false" aria-controls="usageGuidePanel">📘 Gebrauchsanweisung</button><div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div></div><div class="header-tools"><div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div><details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></div></header>
+<section class="usage-guide-panel" id="usageGuidePanel" hidden aria-labelledby="usageGuideTitle"><div class="usage-guide-inner"><div class="usage-guide-heading"><div><h2 id="usageGuideTitle">Scam Lens – einfach erklärt</h2><p>Du kannst jeden Schritt in Ruhe durchführen. Du musst nichts anklicken, was dir unsicher vorkommt.</p></div><button class="secondary usage-guide-close" id="usageGuideClose" type="button">Schließen</button></div><div id="usageGuideText"><h3>1. Wähle eine Nachricht</h3><p>Du kannst Text einfügen, ein Foto oder einen Screenshot auswählen oder eine Datei laden. Bei einem Foto versucht Scam Lens, die Wörter im Bild zu erkennen.</p><h3>2. Kontrolliere den Text</h3><p>Vergleiche den erkannten Text mit dem Bild. Verbessere Fehler und ergänze fehlende Wörter. Wenn das Bild unscharf ist, mache ein neues Foto oder fahre bewusst mit dem erkannten Text fort.</p><h3>3. Starte die Prüfung selbst</h3><p>Die Prüfung beginnt erst, wenn du eine Prüftaste drückst. Der normale Sicherheits-Check läuft auf diesem Gerät. Für eine KI-Prüfung wird der Nachrichtentext an den eingestellten Dienst gesendet. Lies den Hinweis vorher aufmerksam.</p><h3>4. Zusätzliche Prüfungen</h3><p>Eine Live-Prüfung von Links ist freiwillig. Wenn du zustimmst, werden die geprüften Webadressen an einen externen Prüfdienst gesendet. Links werden nicht automatisch geöffnet.</p><h3>5. Verstehe das Ergebnis</h3><p>Lensi erklärt die Warnsignale und nennt nächste Schritte. Ein niedriges Risiko ist keine Garantie. Wenn du unsicher bist, klicke nicht auf den Link und kontaktiere die Organisation über eine selbst gefundene offizielle Telefonnummer.</p><h3>6. Hilfe holen</h3><p>Unter „Hilfe &amp; melden“ findest du Anlaufstellen in Österreich. Wenn du bereits Geld überwiesen oder Bankdaten eingegeben hast, kontaktiere sofort deine Bank über die offizielle App oder eine selbst gefundene Telefonnummer.</p></div><div class="usage-guide-actions"><button class="primary" id="usageGuideSpeak" type="button">🔊 Gebrauchsanweisung vorlesen</button><button class="secondary" id="usageGuideStop" type="button" hidden>⏹ Vorlesen stoppen</button></div><p class="muted" id="usageGuideStatus" role="status" aria-live="polite"></p></div></section>
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 3.6</span>
+<span class="tag">SCAM LENS · TESTVERSION 3.7</span>
 
 
 <div class="mascot-hero">
@@ -947,7 +981,7 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
   <div class="toolbar editor-actions"><button class="secondary" id="sample" type="button">Testbeispiel laden</button><button class="secondary" id="clear" type="button">Zurücksetzen</button></div>
 </section>
 <input id="file" type="file" accept="image/*,.txt,.eml,.html,.htm" hidden>
-<img id="preview" class="preview" alt="Vorschau des ausgewählten Bildes"><p id="fileStatus" class="muted" aria-live="polite">Noch keine Datei ausgewählt.</p>
+<details class="photo-details" id="photoDetails"><summary>Originalbild und Erkennungsdetails anzeigen</summary><img id="preview" class="preview" alt="Vorschau des ausgewählten Bildes"><p id="photoExtractDetails" class="muted">Hier erscheinen Hinweise zur Texterkennung.</p></details><p id="fileStatus" class="muted" aria-live="polite">Noch keine Datei ausgewählt.</p>
 <div class="drop" id="importHelp" hidden><p class="muted">TXT-, EML- und HTML-Dateien werden lokal eingelesen. Bei Fotos versucht Scam Lens automatisch, den Text per OCR (Deutsch und Englisch) zu erkennen. Der erkannte Text wird übernommen, aber nicht automatisch analysiert. Beim ersten Einsatz werden OCR-Bibliothek und Sprachdaten aus dem Internet geladen.</p></div>
 
 <div id="riskLegend" class="risk-legend" aria-label="Erklärung der Risikostufen" hidden>
@@ -985,29 +1019,20 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
 <section class="card help-card" id="melden">
   <span class="tag">HILFE & MELDEN</span>
   <h2>Wo bekommst du Hilfe?</h2>
-  <p>Wenn du einen Betrugsversuch vermutest, kannst du ihn melden oder dich beraten lassen. Öffne die offiziellen Seiten über die folgenden Links.</p>
+  <p>Öffne eine Überschrift, um die Erklärung und die Kontaktmöglichkeit zu sehen.</p>
   <div class="help-grid">
-    <a class="help-link help-red" href="https://www.polizei.gv.at/" target="_blank" rel="noopener noreferrer">
-      <span class="help-icon" aria-hidden="true">🚔</span><span><strong>Polizei</strong><small>Bei Schaden oder konkretem Betrugsverdacht Anzeige erstatten. Notruf 133 bei akuter Gefahr.</small></span><span aria-hidden="true">↗</span>
-    </a>
-    <a class="help-link help-blue" href="https://www.watchlist-internet.at/" target="_blank" rel="noopener noreferrer">
-      <span class="help-icon" aria-hidden="true">🛡️</span><span><strong>Watchlist Internet</strong><small>Betrugsversuche melden und aktuelle Warnungen nachlesen.</small></span><span aria-hidden="true">↗</span>
-    </a>
-    <a class="help-link help-purple" href="https://www.onlinesicherheit.gv.at/Themen/Erste-Hilfe/Meldestellen.html" target="_blank" rel="noopener noreferrer">
-      <span class="help-icon" aria-hidden="true">📨</span><span><strong>Meldestellen für Internetkriminalität</strong><small>Offizielle Übersicht zu passenden Meldestellen in Österreich.</small></span><span aria-hidden="true">↗</span>
-    </a>
-    <a class="help-link help-orange" href="https://www.rtr.at/TKP/was_wir_tun/telekommunikation/konsumentenservice/meldestelle_rufnummernmissbrauch/Beschwerde_Meldung.de.html" target="_blank" rel="noopener noreferrer">
-      <span class="help-icon" aria-hidden="true">📱</span><span><strong>RTR: SMS und Telefonnummern melden</strong><small>Für verdächtige SMS, belästigende Anrufe und Rufnummernmissbrauch.</small></span><span aria-hidden="true">↗</span>
-    </a>
-    <a class="help-link help-green" href="https://www.ombudsstelle.at/" target="_blank" rel="noopener noreferrer">
-      <span class="help-icon" aria-hidden="true">🤝</span><span><strong>Internet Ombudsstelle</strong><small>Kostenlose Online-Beratung bei Problemen und Schäden im Internet.</small></span><span aria-hidden="true">↗</span>
-    </a>
+    <details class="help-item help-red"><summary><span class="help-icon" aria-hidden="true">🚔</span><strong>Polizei</strong></summary><div class="help-content"><p>Bei einem konkreten Betrugsverdacht kannst du Anzeige erstatten. Bei akuter Gefahr rufe 133 an.</p><a href="https://www.polizei.gv.at/" target="_blank" rel="noopener noreferrer">Offizielle Website der Polizei öffnen ↗</a></div></details>
+    <details class="help-item help-blue"><summary><span class="help-icon" aria-hidden="true">🛡️</span><strong>Watchlist Internet</strong></summary><div class="help-content"><p>Hier findest du aktuelle Warnungen und kannst Betrugsversuche melden.</p><a href="https://www.watchlist-internet.at/" target="_blank" rel="noopener noreferrer">Watchlist Internet öffnen ↗</a></div></details>
+    <details class="help-item help-purple"><summary><span class="help-icon" aria-hidden="true">📨</span><strong>Meldestellen für Internetkriminalität</strong></summary><div class="help-content"><p>Die offizielle Übersicht hilft dir, eine passende Meldestelle in Österreich zu finden.</p><a href="https://www.onlinesicherheit.gv.at/Themen/Erste-Hilfe/Meldestellen.html" target="_blank" rel="noopener noreferrer">Meldestellen ansehen ↗</a></div></details>
+    <details class="help-item help-orange"><summary><span class="help-icon" aria-hidden="true">📱</span><strong>SMS und Telefonnummern melden</strong></summary><div class="help-content"><p>Die RTR nimmt Meldungen zu verdächtigen SMS, belästigenden Anrufen und Rufnummernmissbrauch entgegen.</p><a href="https://www.rtr.at/TKP/was_wir_tun/telekommunikation/konsumentenservice/meldestelle_rufnummernmissbrauch/Beschwerde_Meldung.de.html" target="_blank" rel="noopener noreferrer">RTR-Meldestelle öffnen ↗</a></div></details>
+    <details class="help-item help-green"><summary><span class="help-icon" aria-hidden="true">🤝</span><strong>Internet Ombudsstelle</strong></summary><div class="help-content"><p>Hier bekommst du kostenlose Online-Beratung bei Problemen und Schäden im Internet.</p><a href="https://www.ombudsstelle.at/" target="_blank" rel="noopener noreferrer">Internet Ombudsstelle öffnen ↗</a></div></details>
+    <details class="help-item help-bank"><summary><span class="help-icon" aria-hidden="true">🏦</span><strong>Bank kontaktieren</strong></summary><div class="help-content"><p>Wenn du Geld überwiesen oder Bankdaten, PIN oder TAN eingegeben hast, kontaktiere deine Bank sofort. Nutze die offizielle Banking-App oder die Telefonnummer auf deiner Bankkarte. Folge keinen Telefonnummern oder Links aus der verdächtigen Nachricht.</p></div></details>
   </div>
   <div class="notice"><strong>Schon Geld oder Daten weitergegeben?</strong><br>Kontaktiere sofort deine Bank bzw. den betroffenen Dienst. Ändere betroffene Passwörter und sichere Nachrichten sowie Zahlungsbelege. Bei konkretem Betrug kannst du Anzeige bei der Polizei erstatten.</div>
   <p class="method">Diese Links führen zu externen offiziellen bzw. etablierten Hilfsangeboten. Scam Lens übermittelt ihnen keine Daten automatisch.</p>
 </section>
 </main>
-<footer class="wrap">Scam Lens ist eine Entscheidungshilfe, kein zertifizierter Sicherheitsdienst. Die Bewertung kann falsch sein; Links werden nicht live überprüft.</footer>
+<footer class="wrap">Scam Lens ist eine Entscheidungshilfe, kein zertifizierter Sicherheitsdienst. Die Bewertung kann falsch sein; Links werden nur nach Zustimmung live geprüft.</footer>
 <script>
 const $=id=>document.getElementById(id);let chosenFile=null,objectUrl=null,lastReport="";
 $("access").onclick=()=>{const xl=document.body.classList.contains("accessible-xl");document.body.classList.toggle("accessible",true);document.body.classList.remove("accessible-xl");$("access").setAttribute("aria-pressed","true");$("accessMore").setAttribute("aria-pressed","false");$("access").textContent="A+ Große Schrift aktiv";$("accessMore").textContent="A++ Noch größer";};
@@ -1032,10 +1057,12 @@ $("sourceText").addEventListener("click", () => {
   openMessageEditor("Text eingeben", "Füge die verdächtige Nachricht hier ein. Danach kannst du sie prüfen.");
 });
 $("sourceCamera").addEventListener("click", () => {
-  openMessageEditor("Nachricht aus Foto", "Nach der Aufnahme erkennt Scam Lens den Text automatisch.", false);
-  cameraMode = true;
+  openMessageEditor("Nachricht aus Foto", "Wähle, ob du ein neues Foto aufnehmen oder ein vorhandenes Bild auswählen möchtest.", false);
+  const takePhoto = window.confirm("Foto aufnehmen?\n\nOK = Kamera öffnen\nAbbrechen = Bild aus Galerie auswählen");
+  cameraMode = takePhoto;
   $("file").accept = "image/*";
-  $("file").setAttribute("capture", "environment");
+  if (takePhoto) $("file").setAttribute("capture", "environment");
+  else $("file").removeAttribute("capture");
   $("file").click();
 });
 $("sourcePhoto").addEventListener("click", () => {
@@ -1096,12 +1123,26 @@ $("file").addEventListener("change", async () => {
       });
       const extracted = (result.data && result.data.text || "").trim();
       if (!extracted) {
-        $("fileStatus").textContent = "Kein lesbarer Text erkannt. Bitte fotografiere die Nachricht schärfer und mit besserer Beleuchtung.";
+        $("photoExtractDetails").textContent = "Es wurde kein lesbarer Text erkannt. Tipps: Halte das Handy ruhig, fotografiere bei gutem Licht und richte die Kamera gerade auf die Nachricht.";
+        $("fileStatus").textContent = "Kein lesbarer Text erkannt. Du kannst ein neues Foto aufnehmen oder Text selbst eingeben.";
+        const retry = window.confirm("Lensi: Ich konnte den Text nicht gut erkennen.\n\nMöchtest du ein neues Foto auswählen? OK = erneut versuchen, Abbrechen = später selbst Text eingeben.");
+        if (retry) $("sourceCamera").click();
       } else {
         $("msg").value = extracted.slice(0, 30000);
-        openMessageEditor("Erkannter Text aus Foto", "Bitte kontrolliere die Texterkennung, bevor du die Nachricht prüfst.", false);
-        $("fileStatus").textContent = "Text automatisch aus dem Foto erkannt und ins Textfeld übernommen. Noch keine Analyse gestartet; bitte kontrolliere den Text.";
+        openMessageEditor("Erkannter Text aus Foto", "Bitte kontrolliere und verbessere den Text. Die Prüfung startet erst, wenn du selbst eine Prüftaste drückst.", false);
+        const words = extracted.trim().split(/\s+/).filter(Boolean).length;
+        const confidence = result.data && typeof result.data.confidence === "number" ? Math.round(result.data.confidence) : null;
+        const hints = [];
+        if (words < 8) hints.push("Es wurde nur wenig Text erkannt.");
+        if (confidence !== null && confidence < 65) hints.push("Die Erkennung ist unsicher (" + confidence + "%).");
+        hints.push("Vergleiche den Text mit dem Bild. Du kannst ihn direkt bearbeiten.");
+        $("photoExtractDetails").textContent = hints.join(" ");
+        $("fileStatus").textContent = "Text erkannt. Bitte kontrolliere ihn. Noch keine Prüfung gestartet.";
         $("msg").scrollIntoView({behavior:"smooth", block:"center"});
+        if (words < 8 || (confidence !== null && confidence < 65)) {
+          const proceed = window.confirm("Lensi: Das Foto könnte unvollständig oder unscharf sein.\n\nTipp: Mehr Licht, Handy ruhig halten und die Nachricht vollständig fotografieren.\n\nOK = mit erkanntem Text fortfahren\nAbbrechen = ein neues Foto auswählen");
+          if (!proceed) $("sourceCamera").click();
+        }
       }
     } catch (err) {
       $("fileStatus").textContent = "OCR konnte nicht ausgeführt werden: " + (err.message || "Unbekannter Fehler") + ". Du kannst den Text weiterhin manuell eingeben.";
@@ -1323,10 +1364,7 @@ $("checkBackend").addEventListener("click", async () => {
 });
 $("msg").addEventListener("input",()=>{
   if ($("messageEditor").hidden) openMessageEditor("Text eingeben", "Füge die verdächtige Nachricht hier ein. Danach kannst du sie prüfen.", false);
-  clearTimeout(window.scamLensAutoTimer);
-  const text=$("msg").value.trim();
-  if(!text){$("report").style.display="none";return}
-  window.scamLensAutoTimer=setTimeout(()=>runLocalReport(text),900);
+  if (!$("msg").value.trim()) $("report").style.display="none";
 });
 $("aiStart").addEventListener("click", async () => {
   const text=$("msg").value.trim();
@@ -1334,6 +1372,8 @@ $("aiStart").addEventListener("click", async () => {
   const base=$("backend").value.trim().replace(/\/+$/,"");
   if(!/^https?:\/\//i.test(base)){alert("Bitte eine gültige Backend-Adresse eingeben.");return}
   if(location.protocol==="https:"&&base.startsWith("http://")){alert("Die HTTPS-Website kann kein unverschlüsseltes HTTP-Backend aufrufen. Verwende ein HTTPS-Backend oder teste lokal.");return}
+  const aiConsent = window.confirm("Datenschutzhinweis: Für die KI-Analyse wird der gesamte Nachrichtentext an das eingestellte Backend und den dort gewählten KI-Anbieter übertragen. Möchtest du das erlauben?");
+  if (!aiConsent) return;
   $("aiStart").disabled=true;$("aiStart").querySelector("strong").textContent="KI analysiert …";
   try{
     const res=await fetch(base+"/api/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,kind:"auto",language:"de",ruleFindings:[],urls:[]})});
@@ -1371,5 +1411,34 @@ $("reportSpeak").addEventListener("click", () => {
 $("reportStop").addEventListener("click", () => {
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   $("reportStop").hidden = true;
+});
+$("usageGuideToggle").addEventListener("click", () => {
+  const panel = $("usageGuidePanel");
+  panel.hidden = !panel.hidden;
+  $("usageGuideToggle").setAttribute("aria-expanded", String(!panel.hidden));
+  if (!panel.hidden) panel.scrollIntoView({behavior:"smooth",block:"start"});
+  else if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+});
+$("usageGuideClose").addEventListener("click", () => {
+  $("usageGuidePanel").hidden = true;
+  $("usageGuideToggle").setAttribute("aria-expanded","false");
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+});
+$("usageGuideSpeak").addEventListener("click", () => {
+  const status = $("usageGuideStatus");
+  if (!("speechSynthesis" in window)) { status.textContent = "Die Vorlesefunktion wird von diesem Browser nicht unterstützt."; return; }
+  window.speechSynthesis.cancel();
+  const text = $("usageGuideText").innerText;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "de-AT";
+  utterance.rate = 0.86;
+  utterance.onstart = () => { $("usageGuideStop").hidden = false; status.textContent = "Die Gebrauchsanweisung wird vorgelesen."; };
+  utterance.onend = utterance.onerror = () => { $("usageGuideStop").hidden = true; status.textContent = "Vorlesen beendet."; };
+  window.speechSynthesis.speak(utterance);
+});
+$("usageGuideStop").addEventListener("click", () => {
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  $("usageGuideStop").hidden = true;
+  $("usageGuideStatus").textContent = "Vorlesen gestoppt.";
 });
 </script></body></html>
