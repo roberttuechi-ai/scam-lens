@@ -161,7 +161,7 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 0.6</span>
+<span class="tag">SCAM LENS · TESTVERSION 1.3</span>
 <div class="toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak">Ergebnis vorlesen</button><button class="secondary" id="stop">Vorlesen stoppen</button></div>
 <h1>Ist diese Nachricht sicher?</h1><p>Füge den Nachrichtentext ein oder wähle eine Datei. Du erhältst einen einzigen Bericht mit Risikowert, Belegen und nächsten Schritten.</p>
 <label for="msg">Nachrichtentext</label><textarea id="msg" maxlength="30000" placeholder="E-Mail, SMS oder Chatnachricht hier einfügen …"></textarea>
@@ -182,7 +182,7 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 </div>
 <details open style="margin-top:16px"><summary style="cursor:pointer;font-weight:bold">KI-ANALYSE – Einstellungen</summary>
 <p class="muted">Mit Klick auf „KI-Analyse starten“ wird der Nachrichtentext an diese Backend-Adresse und den dort konfigurierten KI-Anbieter übertragen. Es gibt kein zusätzliches Freigabefeld.</p>
-<label for="backend">Backend-Adresse</label><input id="backend" type="url" value="https://adapted-moscow-breathing-bent.trycloudflare.com" placeholder="https://dein-backend.example">
+<label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><p class="muted" id="backendHelp">Die Backend-Adresse ist nicht fest hinterlegt, weil kostenlose Cloudflare-Quick-Tunnel-Adressen temporär sind. Starte zuerst das Backend und den Tunnel auf deinem PC und trage hier die aktuell angezeigte HTTPS-Adresse ein – ohne <code>/health</code> oder <code>/api/analyze</code>.</p>
 </details>
 
 <div class="risk-legend" aria-label="Erklärung der Risikostufen" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0">
