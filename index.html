@@ -161,7 +161,7 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 1.5</span>
+<span class="tag">SCAM LENS · TESTVERSION 1.6</span>
 <div class="toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak">Ergebnis vorlesen</button><button class="secondary" id="stop">Vorlesen stoppen</button></div>
 <h1>Ist diese Nachricht sicher?</h1><p>Füge den Nachrichtentext ein oder wähle eine Datei. Du erhältst einen einzigen Bericht mit Risikowert, Belegen und nächsten Schritten.</p>
 <label for="msg">Nachrichtentext</label><textarea id="msg" maxlength="30000" placeholder="E-Mail, SMS oder Chatnachricht hier einfügen …"></textarea>
@@ -194,9 +194,12 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 
 <div class="analysis-grid">
   <button class="local-action" id="check" type="button"><span class="action-icon" aria-hidden="true">⌕</span><span><strong>Nur lokale Prüfung</strong><small>Schnell, ohne Datenübertragung</small></span><span aria-hidden="true">›</span></button>
+  <button class="secondary" id="liveLinkCheck" type="button" style="min-height:100px;text-align:left"><span class="action-icon" aria-hidden="true">↗</span><span><strong>Links live prüfen</strong><small>Abgleich mit OpenPhish</small></span></button>
   <button class="ai-action" id="aiStart" type="button"><span class="action-icon" aria-hidden="true">✦</span><span><strong>KI-Analyse starten</strong><small>Erweiterte Erkennung</small></span><span aria-hidden="true">›</span></button>
 </div>
-<p class="muted">Beim Start der KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen. Links werden auf sichtbare Strukturmerkmale geprüft, aber nicht live abgerufen.</p>
+<p class="notice">Die Live-Linkprüfung sendet nur die gefundenen Webadressen an OpenPhish.eu, nicht den gesamten Nachrichtentext. Das geschieht erst nach deiner Bestätigung. OpenPhish erhält dadurch die geprüften URLs. Ein fehlender Treffer ist keine Sicherheitsgarantie.</p>
+<p id="liveLinkStatus" class="muted" role="status" aria-live="polite" style="display:none"></p>
+<p class="muted">Beim Start der KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen. Die Live-Linkprüfung ist separat und optional.</p>
 </section>
 
 <section class="card report" id="report" aria-live="polite" aria-atomic="true">
@@ -358,6 +361,49 @@ const local=localAnalysis(text);let report={risk:local.risk,score:local.points,s
 report.method="Nur lokale Regelprüfung (automatisch, ohne Datenübertragung)";
 renderReport(report)}
 $("check").onclick=()=>runLocalReport($("msg").value.trim());
+$("liveLinkCheck").addEventListener("click", async () => {
+  const text = $("msg").value.trim();
+  const status = $("liveLinkStatus");
+  status.style.display = "block";
+  if (!text) { status.textContent = "Bitte zuerst eine Nachricht mit mindestens einer Webadresse einfügen."; return; }
+  const extracted = inspectUrls(text).urls;
+  if (!extracted.length) { status.textContent = "In der Nachricht wurde keine Webadresse erkannt."; return; }
+  const urls = extracted.slice(0, 5);
+  const extra = extracted.length > urls.length ? " Es werden nur die ersten " + urls.length + " von " + extracted.length + " Links geprüft." : "";
+  const consent = window.confirm("Live-Linkprüfung mit OpenPhish.eu starten?\n\n" + urls.length + " URL(s) werden an OpenPhish.eu übermittelt. Der restliche Nachrichtentext wird nicht gesendet." + extra + "\n\nOpenPhish ist ein externer Dienst. Fortfahren?");
+  if (!consent) { status.textContent = "Live-Prüfung abgebrochen. Es wurden keine URLs übermittelt."; return; }
+  const button = $("liveLinkCheck");
+  button.disabled = true;
+  status.textContent = "Prüfe " + urls.length + " URL(s) bei OpenPhish.eu …";
+  const results = [];
+  try {
+    for (const url of urls) {
+      const endpoint = "https://openphish.eu/api/check?url=" + encodeURIComponent(url);
+      const response = await fetch(endpoint, {method:"GET",headers:{"Accept":"application/json"}});
+      if (!response.ok) throw new Error("OpenPhish antwortete mit HTTP " + response.status);
+      const data = await response.json();
+      results.push({url, found: data.found === true, phish: data.phish || null});
+    }
+    const local = localAnalysis(text);
+    const evidence = [...local.evidence];
+    const hit = results.some(r => r.found);
+    results.forEach(r => {
+      if (r.found) {
+        const brand = r.phish && r.phish.target_brand ? " Angegebene Zielmarke: " + r.phish.target_brand + "." : "";
+        evidence.unshift({title:"Treffer in OpenPhish",why:"Diese URL ist in der externen Phishing-Datenbank gelistet: " + r.url + "." + brand + " Öffne den Link nicht.",source:"OpenPhish.eu"});
+      } else {
+        evidence.push({title:"Kein OpenPhish-Treffer",why:"Für diese URL wurde in der abgefragten Datenbank kein Treffer gemeldet: " + r.url + ". Das beweist nicht, dass sie sicher ist.",source:"OpenPhish.eu"});
+      }
+    });
+    const risk = hit ? "high" : local.risk;
+    renderReport({risk,summary:hit?"OpenPhish meldet mindestens eine geprüfte URL als Phishing. Öffne sie nicht.": "OpenPhish meldete für die geprüften URLs keinen Treffer. Die lokale Einschätzung bleibt bestehen; unbekannte oder neue Betrugsseiten können trotzdem gefährlich sein.",evidence,steps:hit?["Öffne keine der als Phishing gemeldeten URLs.","Gib keine Zugangsdaten oder Zahlungsinformationen ein.","Wenn du bereits Daten eingegeben oder bezahlt hast, kontaktiere umgehend deine Bank bzw. den betroffenen Dienst."]:["Keinen Treffer nicht mit Sicherheit verwechseln.","Öffne verdächtige Links nicht direkt.","Prüfe Absender und Anliegen über einen unabhängig gefundenen Kontaktweg."],limitations:"Externer Abgleich mit OpenPhish.eu für maximal fünf URLs. Die Datenbank kann unvollständig oder verzögert sein. Kein Treffer bedeutet nicht, dass eine URL sicher ist.",method:"Lokale Regelprüfung + Live-Abfrage OpenPhish.eu"});
+    status.textContent = "Live-Prüfung abgeschlossen: " + results.filter(r=>r.found).length + " Treffer von " + results.length + " geprüften URL(s).";
+  } catch (err) {
+    status.textContent = "Live-Prüfung nicht möglich: " + err.message + ". Es wurde kein positives oder negatives Ergebnis vorgetäuscht. Du kannst weiterhin die lokale Prüfung verwenden.";
+  } finally {
+    button.disabled = false;
+  }
+});
 $("checkBackend").addEventListener("click", async () => {
   let base = $("backend").value.trim();
   while (base.endsWith("/")) base = base.slice(0, -1);
