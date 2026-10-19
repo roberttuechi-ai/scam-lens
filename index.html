@@ -1379,6 +1379,24 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
   .mascot-hero .mascot-stage .scam-mascot{max-height:250px!important}
 }
 </style>
+<style id="mobile-header-alignment-fix">
+/* Mobile header alignment fix: all four controls use identical row heights. */
+@media(max-width:760px){
+ .header-tools{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:58px 58px!important;align-items:stretch!important;gap:10px!important}
+ .header-tools .language-control{grid-column:1!important;grid-row:1!important;display:flex!important;align-items:stretch!important;justify-content:center!important;height:58px!important;min-height:58px!important}
+ .header-tools .language-control label{display:none!important}
+ .header-tools .language-control select{width:100%!important;height:58px!important;min-height:58px!important;max-height:58px!important;margin:0!important;align-self:stretch!important}
+ .header-tools .usage-guide-button{grid-column:2!important;grid-row:1!important;width:100%!important;height:58px!important;min-height:58px!important;max-height:58px!important;margin:0!important;align-self:stretch!important}
+ .header-tools .operator-top{grid-column:1!important;grid-row:2!important;width:100%!important;min-width:0!important;max-width:none!important;height:58px!important;min-height:58px!important;max-height:58px!important;margin:0!important;align-self:stretch!important}
+ .header-tools .operator-top>summary{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;height:58px!important;min-height:58px!important;max-height:58px!important;margin:0!important;padding:0!important;box-sizing:border-box!important}
+ .header-tools .upgrade-button{grid-column:2!important;grid-row:2!important;width:100%!important;height:58px!important;min-height:58px!important;max-height:58px!important;margin:0!important;align-self:stretch!important;box-sizing:border-box!important}
+}
+@media(max-width:480px){
+ .header-tools{grid-template-rows:58px 58px!important;gap:10px!important}
+ .header-tools .language-control select,.header-tools .usage-guide-button,.header-tools .upgrade-button{font-size:clamp(13px,3.6vw,16px)!important;line-height:1.2!important;padding:6px 8px!important}
+ .header-tools .operator-top>summary{font-size:26px!important}
+}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
