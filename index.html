@@ -945,7 +945,7 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 4.5</span>
+<span class="tag">SCAM LENS · TESTVERSION 4.6</span>
 
 
 <div class="mascot-hero">
@@ -1111,8 +1111,6 @@ try{const saved=JSON.parse(localStorage.getItem("scamLensFuturePrefs")||"null");
 $("saveAutomationPrefs").addEventListener("click",()=>{const data={};prefIds.forEach(id=>{const el=$(id);data[id]=el.type==="checkbox"?el.checked:el.value;});try{localStorage.setItem("scamLensFuturePrefs",JSON.stringify(data));$("automationPrefsStatus").textContent="Einstellungen wurden in diesem Browser gespeichert. Es wurde kein Konto verbunden und keine Prüfung aktiviert.";}catch(e){$("automationPrefsStatus").textContent="Speichern ist in diesem Browser nicht verfügbar. Deine Auswahl wurde nicht gespeichert.";} });
 
 
-$("access").onclick=()=>{const xl=document.body.classList.contains("accessible-xl");document.body.classList.toggle("accessible",true);document.body.classList.remove("accessible-xl");$("access").setAttribute("aria-pressed","true");$("accessMore").setAttribute("aria-pressed","false");$("access").textContent="A+ Große Schrift aktiv";$("accessMore").textContent="A++ Noch größer";};
-$("accessMore").onclick=()=>{const xl=document.body.classList.contains("accessible-xl");document.body.classList.toggle("accessible",true);document.body.classList.toggle("accessible-xl",!xl);$("access").setAttribute("aria-pressed","true");$("accessMore").setAttribute("aria-pressed",String(!xl));$("access").textContent="A+ Große Schrift aktiv";$("accessMore").textContent=!xl?"A++ Sehr große Schrift aktiv":"A++ Noch größer";};
 /* Vorlese-Handler werden direkt im Sicherheitsbericht registriert. */
 $("sample").onclick=()=>{$("msg").value="Ihre Bankkarte wird heute gesperrt. Bestätigen Sie sofort Ihre Zugangsdaten unter http://example.invalid/login, um Ihr Konto zu retten."};
 $("clear").onclick=()=>{$("msg").value="";$("file").value="";chosenFile=null;$("report").style.display="none";$("fileStatus").textContent="Eingabe gelöscht.";if(objectUrl)URL.revokeObjectURL(objectUrl);$("preview").style.display="none";$("preview").removeAttribute("src")};
