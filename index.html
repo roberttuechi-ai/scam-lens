@@ -363,6 +363,20 @@ details summary{background:#f0f5ff!important;color:#355b91!important;border:1px 
 @media(max-width:620px){.mascot-hero{grid-template-columns:minmax(0,1fr) 112px;gap:8px;padding:17px 14px;border-radius:20px}.hero-copy h1{font-size:26px!important;line-height:1.14!important}.hero-copy p{font-size:15px;line-height:1.45}.mascot-speech{font-size:12px;padding:8px 9px}.scam-mascot{max-width:120px}.mascot-name{display:block;text-align:center;font-size:14px}.mascot-name span{display:block;font-size:10px}}
 @media(prefers-reduced-motion:reduce){.scam-mascot{animation:none}}
 </style>
+<style id="scam-lens-contextual-editor">
+.message-editor{margin:22px 0 18px;padding:20px;border:2px solid #cddfff;border-radius:22px;background:linear-gradient(145deg,#fff 0%,#f6f9ff 100%);box-shadow:0 8px 20px #3a5d8a0d;animation:editor-enter .22s ease-out}
+.message-editor[hidden]{display:none!important}
+.editor-heading{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.editor-bubble{display:flex;align-items:center;justify-content:center;flex:0 0 46px;height:46px;border-radius:15px;background:#e8efff;font-size:24px}
+.editor-heading h2{margin:0 0 3px!important;font-size:22px!important}
+.editor-heading p{margin:0;color:#617790;font-size:15px;line-height:1.45}
+.message-editor label{margin:14px 0 8px}
+.message-editor textarea{min-height:190px}
+.editor-actions{margin-bottom:0}
+@keyframes editor-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.message-editor{padding:15px;border-radius:18px}.message-editor textarea{min-height:165px}.editor-actions{display:grid;grid-template-columns:1fr 1fr}.editor-actions button{width:100%}}
+@media(prefers-reduced-motion:reduce){.message-editor{animation:none}}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="brand">SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div></header>
@@ -411,8 +425,6 @@ details summary{background:#f0f5ff!important;color:#355b91!important;border:1px 
   <div class="step-connector" aria-hidden="true"></div>
   <div class="guided-step"><span>3</span><div><strong>Sicher handeln</strong><small>Ergebnis verstehen</small></div></div>
 </div>
-<label for="msg">Nachrichtentext</label><textarea id="msg" maxlength="30000" placeholder="E-Mail, SMS oder Chatnachricht hier einfügen …"></textarea>
-<div class="toolbar"><button class="secondary" id="sample">Testbeispiel laden</button><button class="secondary" id="clear">Zurücksetzen</button></div>
 <h2>📥 Schritt 1: Wähle deine Nachricht</h2>
 <div class="source-grid" role="group" aria-label="Quelle der Nachricht auswählen">
   <button class="source-button" id="sourceText" type="button"><span class="source-icon" aria-hidden="true">⌨</span><span>Text eingeben</span></button>
@@ -421,6 +433,12 @@ details summary{background:#f0f5ff!important;color:#355b91!important;border:1px 
   <button class="source-button" id="sourceFile" type="button"><span class="source-icon" aria-hidden="true">▤</span><span>Datei hochladen</span></button>
   <button class="source-button" id="sourceEmail" type="button"><span class="source-icon" aria-hidden="true">✉</span><span>E-Mail-Datei</span><small>EML / PDF / TXT</small></button>
 </div>
+<section id="messageEditor" class="message-editor" hidden aria-live="polite">
+  <div class="editor-heading"><span class="editor-bubble">✍️</span><div><h2 id="editorTitle">Deine Nachricht</h2><p id="editorHint">Kontrolliere den Inhalt und starte anschließend die Prüfung.</p></div></div>
+  <label for="msg">Nachrichtentext</label>
+  <textarea id="msg" maxlength="30000" placeholder="E-Mail, SMS oder Chatnachricht hier einfügen …"></textarea>
+  <div class="toolbar editor-actions"><button class="secondary" id="sample" type="button">Testbeispiel laden</button><button class="secondary" id="clear" type="button">Zurücksetzen</button></div>
+</section>
 <input id="file" type="file" accept="image/*,.txt,.eml,.html,.htm" hidden>
 <img id="preview" class="preview" alt="Vorschau des ausgewählten Bildes"><p id="fileStatus" class="muted" aria-live="polite">Noch keine Datei ausgewählt.</p>
 <div class="drop">
@@ -496,26 +514,43 @@ $("sample").onclick=()=>{$("msg").value="Ihre Bankkarte wird heute gesperrt. Bes
 $("clear").onclick=()=>{$("msg").value="";$("file").value="";chosenFile=null;$("report").style.display="none";$("fileStatus").textContent="Eingabe gelöscht.";if(objectUrl)URL.revokeObjectURL(objectUrl);$("preview").style.display="none";$("preview").removeAttribute("src")};
 
 let cameraMode = false;
-$("sourceText").addEventListener("click", () => { $("msg").focus(); });
+function openMessageEditor(title, hint, focusField = true) {
+  const editor = $("messageEditor");
+  editor.hidden = false;
+  $("editorTitle").textContent = title;
+  $("editorHint").textContent = hint;
+  editor.scrollIntoView({behavior:"smooth",block:"nearest"});
+  if (focusField) setTimeout(() => $("msg").focus({preventScroll:true}), 180);
+}
+function closeMessageEditor() {
+  $("messageEditor").hidden = true;
+}
+$("sourceText").addEventListener("click", () => {
+  openMessageEditor("Text eingeben", "Füge die verdächtige Nachricht hier ein. Danach kannst du sie prüfen.");
+});
 $("sourceCamera").addEventListener("click", () => {
+  openMessageEditor("Nachricht aus Foto", "Nach der Aufnahme erkennt Scam Lens den Text automatisch.", false);
   cameraMode = true;
   $("file").accept = "image/*";
   $("file").setAttribute("capture", "environment");
   $("file").click();
 });
 $("sourcePhoto").addEventListener("click", () => {
+  openMessageEditor("Text aus Foto erkennen", "Wähle einen Screenshot oder ein Foto. Erkannter Text erscheint hier.", false);
   cameraMode = false;
   $("file").accept = "image/*";
   $("file").removeAttribute("capture");
   $("file").click();
 });
 $("sourceFile").addEventListener("click", () => {
+  openMessageEditor("Datei importieren", "Der erkannte Nachrichtentext erscheint nach dem Import hier.", false);
   cameraMode = false;
   $("file").accept = "image/*,.txt,.eml,.html,.htm,.msg";
   $("file").removeAttribute("capture");
   $("file").click();
 });
 $("sourceEmail").addEventListener("click", () => {
+  openMessageEditor("E-Mail importieren", "Nach dem Einlesen kannst du den Inhalt prüfen und analysieren.", false);
   cameraMode = false;
   $("file").accept = ".eml,.msg,.oft,.mbox,.mht,.mhtml,.pdf,.txt,.html,.htm,.ics,.vcf,message/rfc822,application/pdf,text/plain";
   $("file").removeAttribute("capture");
@@ -561,6 +596,7 @@ $("file").addEventListener("change", async () => {
         $("fileStatus").textContent = "Kein lesbarer Text erkannt. Bitte fotografiere die Nachricht schärfer und mit besserer Beleuchtung.";
       } else {
         $("msg").value = extracted.slice(0, 30000);
+        openMessageEditor("Erkannter Text aus Foto", "Bitte kontrolliere die Texterkennung, bevor du die Nachricht prüfst.", false);
         $("fileStatus").textContent = "Text automatisch aus dem Foto erkannt und ins Textfeld übernommen. Noch keine Analyse gestartet; bitte kontrolliere den Text.";
         $("msg").scrollIntoView({behavior:"smooth", block:"center"});
       }
@@ -586,6 +622,7 @@ $("file").addEventListener("change", async () => {
       const emailText = parts.join("\n").trim();
       if (!emailText) throw new Error("In der Outlook-Datei wurde kein lesbarer Nachrichtentext gefunden.");
       $("msg").value = emailText.slice(0, 30000);
+      openMessageEditor("Importierte Outlook-Nachricht", "Bitte kontrolliere den Inhalt vor der Analyse.", false);
       $("fileStatus").textContent = "Outlook-Datei lokal eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.";
     } catch (err) {
       $("fileStatus").textContent = "Outlook-Datei konnte nicht gelesen werden: " + (err.message || "Unbekannter Fehler") + ". Du kannst den Nachrichtentext alternativ aus Outlook kopieren.";
@@ -611,6 +648,7 @@ $("file").addEventListener("change", async () => {
       const extracted = pages.join("\n\n").trim();
       if (!extracted) throw new Error("Kein auswählbarer Text gefunden; möglicherweise ist das PDF ein Scan. OCR ist nicht verfügbar.");
       $("msg").value = extracted.slice(0, 30000);
+      openMessageEditor("Text aus PDF", "Bitte kontrolliere den Inhalt vor der Analyse.", false);
       $("fileStatus").textContent = "PDF-Text lokal eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.";
     } catch (err) { $("fileStatus").textContent = "PDF konnte nicht ausgelesen werden: " + (err.message || "Unbekannter Fehler"); }
     return;
@@ -626,6 +664,7 @@ $("file").addEventListener("change", async () => {
       const doc = new DOMParser().parseFromString(html, "text/html");
       $("msg").value = (doc.body.innerText || doc.body.textContent || "").slice(0,30000);
       if (!$("msg").value.trim()) throw new Error("Kein lesbarer Nachrichtentext gefunden.");
+      openMessageEditor("Importierte E-Mail", "Bitte kontrolliere den Inhalt vor der Analyse.", false);
       $("fileStatus").textContent = "MHTML-E-Mail lokal eingelesen. Noch keine Prüfung gestartet.";
     } catch (err) { $("fileStatus").textContent = "MHTML-Datei konnte nicht sicher ausgelesen werden: " + (err.message || "Unbekannter Fehler"); }
     return;
@@ -636,6 +675,7 @@ $("file").addEventListener("change", async () => {
       if (/\.ics$/.test(name)) t = t.replace(/\r?\n[ \t]/g, "").replace(/\r?\n/g, "\n");
       if (/\.vcf$/.test(name)) t = t.replace(/\\r?\\n[ \\t]/g, "");
       $("msg").value = t.slice(0,30000);
+      openMessageEditor("Importierter Nachrichtentext", "Bitte kontrolliere den Inhalt vor der Analyse.", false);
       $("fileStatus").textContent = "Datei lokal als Text eingelesen. Noch keine Prüfung gestartet; kontrolliere den Inhalt vor der Analyse.";
     } catch (err) { $("fileStatus").textContent = "Datei konnte nicht gelesen werden: " + (err.message || "Unbekannter Fehler"); }
     return;
@@ -648,6 +688,7 @@ $("file").addEventListener("change", async () => {
         t = d.body.innerText || d.body.textContent || "";
       }
       $("msg").value = t.slice(0, 30000);
+      openMessageEditor("Importierter Nachrichtentext", "Bitte kontrolliere den Inhalt vor der Analyse.", false);
       $("fileStatus").textContent = "Textdatei eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.";
     } catch (_) { $("fileStatus").textContent = "Datei konnte nicht gelesen werden."; }
     return;
@@ -777,6 +818,7 @@ $("checkBackend").addEventListener("click", async () => {
   }
 });
 $("msg").addEventListener("input",()=>{
+  if ($("messageEditor").hidden) openMessageEditor("Text eingeben", "Füge die verdächtige Nachricht hier ein. Danach kannst du sie prüfen.", false);
   clearTimeout(window.scamLensAutoTimer);
   const text=$("msg").value.trim();
   if(!text){$("report").style.display="none";return}
