@@ -1013,7 +1013,7 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .header-tools,html[dir="rt
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 5.1</span>
+<span class="tag">SCAM LENS · TESTVERSION 5.2</span>
 
 
 <div class="mascot-hero">
@@ -1203,7 +1203,7 @@ hu:{
 }};
 const SL_LANG_NAMES={de:"Deutsch",en:"English",tr:"Türkçe",bs:"Bosanski",hr:"Hrvatski",sl:"Slovenščina",ar:"العربية",uk:"Українська",ro:"Română",hu:"Magyar"};
 let slCurrentLanguage="de";
-function slTranslateTextNode(node,dict){const original=node.nodeValue;if(!original||!original.trim())return;const lead=original.match(/^\s*/)?.[0]||"";const trail=original.match(/\s*$/)?.[0]||"";const core=original.trim();if(dict[core])node.nodeValue=lead+dict[core]+trail;}
+const SL_ORIGINAL_TEXT=new WeakMap();function slTranslateTextNode(node,dict){if(!SL_ORIGINAL_TEXT.has(node))SL_ORIGINAL_TEXT.set(node,node.nodeValue);const original=SL_ORIGINAL_TEXT.get(node);if(!original||!original.trim())return;const lead=original.match(/^\\s*/)?.[0]||"";const trail=original.match(/\\s*$/)?.[0]||"";const core=original.trim();node.nodeValue=lead+(dict[core]||core)+trail;}
 function slApplyLanguage(lang){slCurrentLanguage=lang||"de";const dict=SL_TRANSLATIONS[slCurrentLanguage]||{};document.documentElement.lang=slCurrentLanguage;document.documentElement.dir=slCurrentLanguage==="ar"?"rtl":"ltr";const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);nodes.forEach(n=>{if(!n.parentElement?.closest("script,style,option"))slTranslateTextNode(n,dict);});document.querySelectorAll("[placeholder]").forEach(el=>{if(el.dataset.slOriginalPlaceholder===undefined)el.dataset.slOriginalPlaceholder=el.placeholder;el.placeholder=dict[el.dataset.slOriginalPlaceholder]||el.dataset.slOriginalPlaceholder;});document.querySelectorAll("button[aria-label],summary[aria-label]").forEach(el=>{if(el.dataset.slOriginalAria===undefined)el.dataset.slOriginalAria=el.getAttribute("aria-label");el.setAttribute("aria-label",dict[el.dataset.slOriginalAria]||el.dataset.slOriginalAria);});const title=document.getElementById("usageGuideTitle");if(title&&dict["Scam Lens – einfach erklärt"])title.textContent=dict["Scam Lens – einfach erklärt"];try{localStorage.setItem("scamLensLanguage",slCurrentLanguage);}catch(e){}}
 
 const languageLabels={de:"Deutsch",en:"English",tr:"Türkçe",bs:"Bosanski",hr:"Hrvatski",sl:"Slovenščina",ar:"العربية",uk:"Українська",ro:"Română",hu:"Magyar"};
