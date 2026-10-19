@@ -1110,6 +1110,28 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 .mascot-hero .mascot-stage{transform:scale(1.28)!important;transform-origin:center!important;justify-self:center!important;align-self:center!important;z-index:2!important}
 @media(max-width:900px){.mascot-hero{min-height:460px!important;grid-template-columns:minmax(0,1fr) minmax(220px,.8fr)!important;padding:28px!important}.mascot-hero .hero-copy h1{font-size:clamp(42px,6vw,62px)!important;letter-spacing:-1px!important}.mascot-hero .mascot-stage{transform:scale(1.08)!important}}
 @media(max-width:560px){.mascot-hero{grid-template-columns:minmax(0,1fr)!important;min-height:0!important;padding:26px 20px 38px!important;gap:22px!important}.mascot-hero .hero-copy h1{font-size:clamp(40px,11vw,54px)!important;text-align:center!important}.mascot-hero .hero-copy>p{text-align:center!important;font-size:21px!important}.mascot-hero .mascot-stage{transform:none!important;max-width:300px!important;margin:0 auto!important}.mascot-hero .mascot-speech{font-size:16px!important;padding:16px!important}.mascot-hero .landscape-art{height:42%!important}}
+
+/* Version 5.9: rules and help stacked vertically on desktop while retaining landscape desktop layout */
+@media screen and (min-width:901px) and (orientation:landscape){
+  main.wrap#app{grid-template-columns:minmax(0,1fr)!important;align-items:start!important;gap:20px!important;width:min(1320px,calc(100% - 48px))!important;max-width:1320px!important}
+  main.wrap#app>section.card:first-child{grid-column:1!important;grid-row:auto!important}
+  main.wrap#app>section.report,main.wrap#app>section.card:not(:first-child):not(.report){grid-column:1!important;grid-row:auto!important}
+  main.wrap#app>section.card:nth-of-type(2),main.wrap#app>section.card.help-card{width:100%!important;max-width:none!important}
+  main.wrap#app>section.card:nth-of-type(2)>h2,main.wrap#app>section.card.help-card>h2{text-align:center!important;font-size:clamp(26px,2.3vw,34px)!important}
+  main.wrap#app>section.card:nth-of-type(2)>ul{max-width:1000px!important;margin:18px auto!important;font-size:18px!important;line-height:1.7!important}
+  main.wrap#app>section.card.help-card>p{max-width:1000px!important;margin:12px auto 20px!important;font-size:17px!important;line-height:1.6!important}
+  main.wrap#app>section.card.help-card .help-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:1100px!important;margin:0 auto!important;gap:14px!important}
+  main.wrap#app>section.card.help-card .help-item summary{min-height:76px!important;padding:18px 22px!important;font-size:18px!important}
+  main.wrap#app>section.card.help-card .help-details{font-size:16px!important;line-height:1.6!important}
+}
+@media screen and (max-width:900px){
+  main.wrap#app{display:flex!important;flex-direction:column!important}
+  main.wrap#app>section.card:nth-of-type(2),main.wrap#app>section.card.help-card{width:100%!important}
+  main.wrap#app>section.card.help-card .help-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media screen and (max-width:520px){
+  main.wrap#app>section.card.help-card .help-grid{grid-template-columns:minmax(0,1fr)!important}
+}
 </style>
 </head>
 <body>
@@ -1125,7 +1147,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 5.8</span>
+<span class="tag">SCAM LENS · TESTVERSION 5.9</span>
 
 
 <div class="mascot-hero">
