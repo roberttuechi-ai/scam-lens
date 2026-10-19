@@ -101,6 +101,72 @@ details summary{background:#edf5fc;color:#234b79}
 footer{color:#60758b}
 @media(max-width:520px){.voice-welcome{align-items:flex-start;padding:14px}.voice-welcome-icon{flex-basis:50px;width:50px;height:50px;font-size:25px}.voice-welcome strong{font-size:18px}.voice-welcome p{font-size:15px}}
 
+
+/* Version 3.0: tatsächlicher Startseiten-Umbau nach Sprachbegleiter + ruhigem Design */
+html{scroll-behavior:smooth}
+body{background:#eef6fc!important;color:#132f58!important;font-family:Arial,Helvetica,sans-serif!important}
+header{background:linear-gradient(135deg,#fafdff 0%,#eaf5ff 65%,#eef8f5 100%)!important;color:#123765!important;border-bottom:1px solid #d8e8f5!important;box-shadow:none!important;padding:18px 16px!important}
+header .wrap{max-width:980px!important}
+.header-row{align-items:center!important}
+.brand{font-size:30px!important;letter-spacing:-.4px!important;color:#123765!important}
+.brand span{color:#1769c2!important}
+header p{color:#355777!important;font-size:16px!important}
+main.wrap{max-width:760px!important;padding:18px 14px 32px!important}
+#app>section:first-child{padding:18px!important;border:1px solid #dce9f3!important;border-radius:24px!important;background:#fff!important;box-shadow:0 8px 26px #163b5d0d!important}
+#app>section:first-child>.tag{display:inline-block!important;margin-bottom:8px!important}
+.accessibility-toolbar{justify-content:flex-end!important;margin:0 0 8px!important}
+.mascot-hero{display:grid!important;grid-template-columns:minmax(0,1.1fr) minmax(150px,.9fr)!important;align-items:center!important;gap:8px!important;margin:8px 0 16px!important;padding:14px 8px!important;border:0!important;border-radius:20px!important;background:linear-gradient(135deg,#f1f8ff 0%,#fff 70%,#f0f8f5 100%)!important}
+.hero-copy h1{font-size:clamp(30px,5vw,42px)!important;line-height:1.1!important;letter-spacing:-.7px!important;margin:8px 0 12px!important;color:#102d58!important}
+.hero-copy>p{font-size:19px!important;line-height:1.45!important;color:#243f63!important}
+.mascot-speech{font-size:16px!important;line-height:1.45!important;padding:12px 14px!important;background:#edf6ff!important;border:1px solid #c8e0f7!important;border-radius:16px!important;color:#244a77!important}
+.mascot-stage{max-width:220px!important;margin:auto!important}
+.scam-mascot{width:100%!important;height:auto!important;max-height:240px!important}
+.mascot-name{display:block!important;text-align:center!important;font-size:18px!important;color:#123765!important;font-weight:800!important}
+.mascot-name span{display:block!important;font-size:13px!important;color:#55718c!important;font-weight:500!important}
+.guided-steps{display:none!important}
+#app>section:first-child>h2{font-size:22px!important;margin:16px 0 12px!important;color:#123765!important}
+.source-grid{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;margin:12px 0 18px!important}
+.source-button{display:grid!important;grid-template-columns:58px minmax(0,1fr) 22px!important;grid-template-rows:auto auto!important;align-items:center!important;justify-items:start!important;gap:0 12px!important;min-height:82px!important;padding:13px 16px!important;text-align:left!important;border:1px solid #c9deef!important;border-radius:19px!important;background:#eaf5ff!important;color:#123765!important;box-shadow:none!important;font-size:20px!important;font-weight:800!important;transition:transform .15s ease,box-shadow .15s ease!important}
+.source-button .source-icon{grid-column:1;grid-row:1/3;display:grid!important;place-items:center!important;width:56px!important;height:56px!important;border-radius:50%!important;background:#1769c2!important;color:#fff!important;font-size:27px!important}
+.source-button>span:not(.source-icon){grid-column:2;grid-row:1;align-self:end!important}
+.source-button small{grid-column:2;grid-row:2;font-size:15px!important;line-height:1.35!important;font-weight:400!important;color:#355777!important}
+.source-button:after{content:"›";grid-column:3;grid-row:1/3;font-size:30px!important;font-weight:400!important;align-self:center!important;justify-self:center!important}
+.source-button.camera-button{background:#fff0ef!important;border-color:#f3cbc7!important}
+.source-button.camera-button .source-icon{background:#c9443d!important}
+.source-button#sourcePhoto{background:#f3efff!important;border-color:#ddd0fb!important}
+.source-button#sourcePhoto .source-icon{background:#7250cb!important}
+.source-button#sourceFile{background:#eaf8ed!important;border-color:#c5e7cb!important}
+.source-button#sourceFile .source-icon{background:#247b54!important}
+.source-button#sourceEmail{background:#fff5d9!important;border-color:#f0dfaa!important}
+.source-button#sourceEmail .source-icon{background:#79591a!important}
+.source-button:hover{transform:translateY(-1px)!important;box-shadow:0 5px 14px #183a5a12!important}
+.voice-welcome{display:grid!important;grid-template-columns:72px minmax(0,1fr)!important;align-items:center!important;gap:14px!important;padding:16px!important;margin:18px 0 8px!important;border:1px solid #d5e6f5!important;border-radius:20px!important;background:linear-gradient(120deg,#edf7ff,#f8fbff)!important;color:#173b66!important}
+.voice-welcome-icon{display:grid!important;place-items:center!important;width:70px!important;height:70px!important;border-radius:50%!important;background:#0878ed!important;color:white!important;font-size:32px!important;box-shadow:0 4px 12px #1769c226!important}
+.voice-welcome strong{display:block!important;font-size:19px!important;color:#123765!important}
+.voice-welcome p{margin:3px 0 0!important;font-size:16px!important;line-height:1.45!important}
+#messageEditor{border:1px solid #d7e5f1!important;border-radius:18px!important;background:#f9fcff!important;padding:16px!important}
+textarea,input,select{border-radius:12px!important}
+.report{border-radius:22px!important}
+.report h2{color:#123765!important}
+.report-voice-controls button{width:100%!important;min-height:52px!important;font-size:18px!important}
+#resultAction{font-size:17px!important}
+footer{color:#60758b!important;padding:0 18px 30px!important}
+@media(max-width:520px){
+  main.wrap{padding:10px 9px 24px!important}
+  #app>section:first-child{padding:14px!important;border-radius:20px!important}
+  .mascot-hero{grid-template-columns:minmax(0,1fr) 128px!important;gap:5px!important;padding:10px 0!important}
+  .hero-copy h1{font-size:30px!important}
+  .hero-copy>p{font-size:16px!important}
+  .mascot-speech{font-size:14px!important;padding:9px!important}
+  .mascot-stage{width:128px!important}
+  .source-button{grid-template-columns:50px minmax(0,1fr) 18px!important;min-height:74px!important;padding:10px 12px!important;font-size:18px!important;gap:0 10px!important}
+  .source-button .source-icon{width:48px!important;height:48px!important;font-size:23px!important}
+  .source-button small{font-size:14px!important}
+  .voice-welcome{grid-template-columns:56px minmax(0,1fr)!important;padding:13px!important;gap:11px!important}
+  .voice-welcome-icon{width:54px!important;height:54px!important;font-size:25px!important}
+}
+@media(max-width:360px){.mascot-hero{grid-template-columns:minmax(0,1fr) 100px!important}.mascot-stage{width:100px!important}.hero-copy h1{font-size:27px!important}}
+
 </style>
 <style id="scam-lens-mobile">
 /* Mobile-first improvements; desktop layout remains intact. */
@@ -585,10 +651,10 @@ body.accessible .report-voice-controls button,body.accessible-xl .report-voice-c
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 2.9</span>
+<span class="tag">SCAM LENS · TESTVERSION 3.0</span>
 <div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div>
 <div class="mascot-hero">
-  <div class="hero-copy"><h1>Ist diese Nachricht sicher?</h1><p>Dein ruhiger Helfer gegen Betrugsnachrichten. Wähle eine Nachricht aus. Ich prüfe sie und erkläre dir das Ergebnis – auf Wunsch auch zum Anhören.</p><div class="mascot-speech">Du musst kein Technikprofi sein. Wir gehen alles in Ruhe durch. Du kannst dir den fertigen Bericht auch vorlesen lassen.</div></div>
+  <div class="hero-copy"><h1>Hallo!<br>Ich bin Lensi.</h1><p>Ich helfe dir, verdächtige Nachrichten einfach und sicher zu prüfen.</p><div class="mascot-speech">Du musst kein Technikprofi sein. Wir gehen alles in Ruhe durch. Du kannst dir den fertigen Bericht auch vorlesen lassen.</div></div>
   <div class="mascot-stage" role="img" aria-label="Scam Lens, ein freundlicher kleiner Sicherheitsroboter mit Schild">
     <svg class="scam-mascot" viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs><linearGradient id="botBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dbeaff"/></linearGradient><linearGradient id="botBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#42b9ff"/><stop offset="1" stop-color="#2878ed"/></linearGradient></defs>
@@ -624,7 +690,6 @@ body.accessible .report-voice-controls button,body.accessible-xl .report-voice-c
   <div class="guided-step"><span>3</span><div><strong>Sicher handeln</strong><small>Ergebnis verstehen</small></div></div>
 </div>
 <h2>📥 Schritt 1: Wähle deine Nachricht</h2>
-<div class="voice-welcome" aria-label="Hilfe zum Vorlesen"><div class="voice-welcome-icon" aria-hidden="true">🔊</div><div><strong>Lieber zuhören als lesen?</strong><p>Scam Lens kann dir den fertigen Sicherheitsbericht vorlesen. Starte zuerst eine Prüfung und nutze dann „Bericht vorlesen“ im Ergebnis.</p></div></div>
 <div class="source-grid" role="group" aria-label="Quelle der Nachricht auswählen">
   <button class="source-button" id="sourceText" type="button"><span class="source-icon" aria-hidden="true">⌨</span><span>Text eingeben</span></button>
   <button class="source-button camera-button" id="sourceCamera" type="button"><span class="source-icon" aria-hidden="true">📷</span><span>Kamera nutzen</span><small>Foto direkt aufnehmen</small></button>
@@ -632,6 +697,8 @@ body.accessible .report-voice-controls button,body.accessible-xl .report-voice-c
   <button class="source-button" id="sourceFile" type="button"><span class="source-icon" aria-hidden="true">▤</span><span>Datei hochladen</span></button>
   <button class="source-button" id="sourceEmail" type="button"><span class="source-icon" aria-hidden="true">✉</span><span>E-Mail-Datei</span><small>EML / PDF / TXT</small></button>
 </div>
+<div class="voice-welcome" id="voiceWelcome" aria-label="Hilfe zum Vorlesen"><div class="voice-welcome-icon" aria-hidden="true">🔊</div><div><strong>Lieber zuhören als lesen?</strong><p>Scam Lens kann dir den fertigen Sicherheitsbericht vorlesen. Starte zuerst eine Prüfung und nutze dann „Bericht vorlesen“ im Ergebnis.</p></div></div>
+
 <section id="messageEditor" class="message-editor" hidden aria-live="polite">
   <div class="editor-heading"><span class="editor-bubble">✍️</span><div><h2 id="editorTitle">Deine Nachricht</h2><p id="editorHint">Kontrolliere den Inhalt und starte anschließend die Prüfung.</p></div></div>
   <label for="msg">Nachrichtentext</label>
