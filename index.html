@@ -300,8 +300,7 @@ $("file").addEventListener("change", async () => {
         t = d.body.innerText || d.body.textContent || "";
       }
       $("msg").value = t.slice(0, 30000);
-      $("fileStatus").textContent = "Textdatei automatisch eingelesen. Prüfung läuft …";
-      runLocalReport($("msg").value.trim());
+      $("fileStatus").textContent = "Textdatei eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.";
     } catch (_) { $("fileStatus").textContent = "Datei konnte nicht gelesen werden."; }
     return;
   }
