@@ -161,7 +161,7 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 1.4</span>
+<span class="tag">SCAM LENS · TESTVERSION 1.5</span>
 <div class="toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak">Ergebnis vorlesen</button><button class="secondary" id="stop">Vorlesen stoppen</button></div>
 <h1>Ist diese Nachricht sicher?</h1><p>Füge den Nachrichtentext ein oder wähle eine Datei. Du erhältst einen einzigen Bericht mit Risikowert, Belegen und nächsten Schritten.</p>
 <label for="msg">Nachrichtentext</label><textarea id="msg" maxlength="30000" placeholder="E-Mail, SMS oder Chatnachricht hier einfügen …"></textarea>
@@ -196,7 +196,7 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
   <button class="local-action" id="check" type="button"><span class="action-icon" aria-hidden="true">⌕</span><span><strong>Nur lokale Prüfung</strong><small>Schnell, ohne Datenübertragung</small></span><span aria-hidden="true">›</span></button>
   <button class="ai-action" id="aiStart" type="button"><span class="action-icon" aria-hidden="true">✦</span><span><strong>KI-Analyse starten</strong><small>Erweiterte Erkennung</small></span><span aria-hidden="true">›</span></button>
 </div>
-<p class="muted">Beim Start der KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen. Links werden nicht live geprüft.</p>
+<p class="muted">Beim Start der KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen. Links werden auf sichtbare Strukturmerkmale geprüft, aber nicht live abgerufen.</p>
 </section>
 
 <section class="card report" id="report" aria-live="polite" aria-atomic="true">
@@ -304,6 +304,33 @@ $("file").addEventListener("change", async () => {
   }
   $("fileStatus").textContent = "Dieser Dateityp wird nicht unterstützt. Bitte TXT, EML, HTML oder ein Bild verwenden.";
 });
+function inspectUrls(text){
+  const found = text.match(/(?:https?:\/\/|www\.)[^\s<>"']+/gi) || [];
+  const urls = [...new Set(found.map(s => s.replace(/[),.!?;:\]]+$/g, "")))].slice(0, 20);
+  const findings = [];
+  const shorteners = new Set(["bit.ly","tinyurl.com","t.co","is.gd","cutt.ly","rb.gy","rebrand.ly","ow.ly","buff.ly","shorturl.at"]);
+  const brandDomains = {paypal:["paypal.com"],amazon:["amazon.com","amazon.de","amazon.at"],microsoft:["microsoft.com","live.com","office.com"],apple:["apple.com","icloud.com"],google:["google.com","google.at","gmail.com"],dhl:["dhl.com","dhl.de","dhl.at"],post:["post.at"],raiffeisen:["raiffeisen.at"],sparkasse:["sparkasse.at","erstebank.at"]};
+  for (const raw of urls) {
+    let u;
+    try { u = new URL(raw.startsWith("www.") ? "https://" + raw : raw); } catch (_) {
+      findings.push({title:"Ungewöhnlich formatierter Link",why:"Die Webadresse ließ sich nicht normalisieren. Öffne sie nicht, um sie zu testen.",source:"Lokale URL-Prüfung"});
+      continue;
+    }
+    const host = u.hostname.toLowerCase().replace(/^www\./,"");
+    if (u.protocol !== "https:") findings.push({title:"Link ohne HTTPS",why:"Die Adresse verwendet kein HTTPS. Das beweist allein keinen Betrug, ist aber ein zusätzlicher Warnhinweis.",source:"Lokale URL-Prüfung"});
+    if (u.username || u.password) findings.push({title:"Link enthält Zugangsdaten vor dem Hostnamen",why:"Die URL enthält einen ungewöhnlichen Benutzerinfo-Teil, der den tatsächlichen Zielhost verschleiern kann.",source:"Lokale URL-Prüfung"});
+    if (/^\d{1,3}(?:\.\d{1,3}){3}$/.test(host) || host.startsWith("[") ) findings.push({title:"Link verwendet eine IP-Adresse",why:"Die Webadresse zeigt direkt auf eine IP-Adresse statt auf einen üblichen Domainnamen.",source:"Lokale URL-Prüfung"});
+    if (host.split(".").some(label => label.startsWith("xn--"))) findings.push({title:"Internationalisierter Domainname",why:"Die Domain enthält eine kodierte Schreibweise. Solche Domains können legitim sein, aber auch zur Nachahmung bekannter Namen dienen.",source:"Lokale URL-Prüfung"});
+    if (shorteners.has(host)) findings.push({title:"Verkürzter Link",why:"Das endgültige Ziel ist in der sichtbaren Adresse nicht erkennbar. Öffne den Link nicht direkt.",source:"Lokale URL-Prüfung"});
+    for (const [brand, domains] of Object.entries(brandDomains)) {
+      if (host.includes(brand) && !domains.some(d => host === d || host.endsWith("." + d))) {
+        findings.push({title:"Mögliche Marken-Imitation im Link",why:"Der Domainname enthält „" + brand + "“, endet aber nicht auf eine bekannte offizielle Domain aus der lokalen Prüfliste. Das ist ein Hinweis, kein endgültiger Betrugsnachweis.",source:"Lokale URL-Prüfung"});
+        break;
+      }
+    }
+  }
+  return {urls, findings};
+}
 function localAnalysis(text){let t=text.toLowerCase(),e=[],p=0;function test(re,title,why,w){if(re.test(t)){e.push({title,why,source:"Lokale Regelprüfung"});p+=w}}
 test(/sofort|unverzüglich|dringend|letzte warnung|jetzt handeln|läuft heute ab|innerhalb von \d+ stunden/,"Zeitdruck","Die Nachricht drängt zu schnellem Handeln.",2);
 test(/passwort|zugangsdaten|tan\b|pin\b|bestätigungscode|kreditkartendaten|sicherheitscode/,"Sensible Daten","Die Nachricht erwähnt vertrauliche Zugangsdaten oder Sicherheitsinformationen.",3);
@@ -311,18 +338,19 @@ test(/konto gesperrt|karte gesperrt|konto wird geschlossen|verdächtige aktivit�
 test(/gewonnen|gewinn|lotterie|preis erhalten|auszahlung/,"Unerwarteter Gewinn","Unerwartete Gewinne können Köder sein.",2);
 test(/geschenkkarte|krypto|bitcoin|überweisung|gebühr bezahlen|zahlung bestätigen/,"Zahlungsaufforderung","Prüfe die Forderung über einen unabhängigen Kontaktweg.",2);
 test(/klicken sie|klicke hier|link öffnen|hier bestätigen|jetzt verifizieren|anmelden unter/,"Link-Aufforderung","Die Nachricht fordert zum Öffnen oder Bestätigen eines Links auf.",1);
-test(/https?:\/\/|www\./,"Webadresse enthalten","Eine URL ist enthalten; sie wurde nicht live geprüft.",1);
+const urlCheck = inspectUrls(text);
+if (urlCheck.urls.length) { e.push({title:"Webadresse gefunden",why:urlCheck.urls.length + " Link(s) erkannt. Diese Version prüft nur die sichtbare URL-Struktur; sie fragt keine Live-Reputation oder Weiterleitungen ab.",source:"Lokale URL-Prüfung"}); p += 1; }
+for (const f of urlCheck.findings) { e.push(f); p += 2; }
 test(/geheim halten|niemandem sagen|nicht mit ihrer bank sprechen|nicht auflegen/,"Geheimhaltung","Die Aufforderung zur Geheimhaltung ist ein Warnsignal.",2);
 if(!e.length)e.push({title:"Keine typischen Muster erkannt",why:"Das beweist nicht, dass die Nachricht echt oder sicher ist.",source:"Lokale Regelprüfung"});
-return {points:Math.min(10,Math.round(p/1.2)),raw:p,evidence:e,risk:p>=5?"high":p>=2?"medium":"low",method:"Lokale Regelprüfung"}}
-function normaliseRisk(r){r=String(r||"").toLowerCase();if(["high","hoch","hohes risiko"].includes(r))return "high";if(["medium","mittel","auffälligkeiten gefunden"].includes(r))return "medium";if(["low","niedrig","gering"].includes(r))return "low";return "unknown"}
+return {points:Math.min(10,Math.round(p/1.2)),raw:p,evidence:e,risk:p>=5?"high":p>=2?"medium":"low",method:"Lokale Regelprüfung"}}function normaliseRisk(r){r=String(r||"").toLowerCase();if(["high","hoch","hohes risiko"].includes(r))return "high";if(["medium","mittel","auffälligkeiten gefunden"].includes(r))return "medium";if(["low","niedrig","gering"].includes(r))return "low";return "unknown"}
 function renderReport(data){let risk=data.risk||"unknown",score=risk==="high"?10:risk==="medium"?5:risk==="low"?2:"?";$("score").textContent=score;$("riskbox").className="riskbox risk-"+risk;
 const titles={high:"Hohes Risiko",medium:"Auffälligkeiten gefunden",low:"Wenige Hinweise erkannt",unknown:"Nicht ausreichend prüfbar"};
 const texts={high:"Die Nachricht enthält deutliche Betrugsmerkmale. Handle nicht über die Nachricht.",medium:"Es gibt Warnsignale. Prüfe Absender und Forderung unabhängig.",low:"Es wurden wenige Hinweise gefunden. Das ist keine Sicherheitsgarantie.",unknown:"Die Informationen reichen für eine belastbare Einschätzung nicht aus."};
 $("riskTitle").textContent=titles[risk];$("riskText").textContent=data.summary||texts[risk];
 $("evidence").replaceChildren();(data.evidence||[]).forEach(x=>{let li=document.createElement("li");let title=document.createElement("strong");title.textContent=(x.title||"Hinweis")+": ";li.append(title,document.createTextNode(x.why||x.detail||""));$("evidence").append(li)});if(!$("evidence").children.length){let li=document.createElement("li");li.textContent="Keine konkreten Belege ausgegeben."; $("evidence").append(li)}
 $("steps").replaceChildren();(data.steps||[]).forEach(x=>{let li=document.createElement("li");li.textContent=x;$("steps").append(li)});if(!$("steps").children.length){["Keine Links öffnen und keine sensiblen Daten preisgeben.","Den Absender über unabhängig gefundene Kontaktdaten prüfen."].forEach(x=>{let li=document.createElement("li");li.textContent=x;$("steps").append(li)})}
-$("limitations").textContent=data.limitations||"Diese Einschätzung kann falsch sein. Links und Absender wurden nicht live geprüft. Ein niedriger Wert bedeutet nicht, dass die Nachricht sicher ist.";
+$("limitations").textContent=data.limitations||"Diese Einschätzung kann falsch sein. Links und Absender wurden nicht live geprüft. Die URL-Prüfung untersucht nur sichtbare Strukturmerkmale. Ein niedriger Wert bedeutet nicht, dass die Nachricht sicher ist.";
 $("method").textContent="Prüfmethode: "+data.method+"."; const srcLabel=$("analysisSource"); const methodText=String(data.method||"").toLowerCase(); if(methodText.includes("ki") && !methodText.includes("nicht verfügbar") && !methodText.includes("fehlgeschlagen")){srcLabel.className="source-ai";srcLabel.textContent="KI-Analyse + lokale Prüfung";}else{srcLabel.className="source-local";srcLabel.textContent="Nur lokale Regelprüfung – keine erfolgreiche KI-Analyse";} $("report").style.display="block";$("report").scrollIntoView({behavior:"smooth",block:"start"});lastReport=$("report").innerText}
 function runLocalReport(text) {
 if(!text){return}
