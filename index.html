@@ -1200,7 +1200,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
 <div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option><option value="tr">Türkçe</option><option value="bs">Bosanski</option><option value="hr">Hrvatski</option><option value="sl">Slovenščina</option><option value="ar">العربية</option><option value="uk">Українська</option><option value="ro">Română</option><option value="hu">Magyar</option></select></div>
 <button class="usage-guide-button" id="usageGuideToggle" type="button" aria-expanded="false" aria-controls="usageGuidePanel">📘 Gebrauchsanweisung</button>
-<details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button><button class="secondary" id="testAI" type="button">KI mit Beispieltext testen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Für einen echten KI-Test muss hier ein erreichbares HTTPS-Backend stehen, dessen KI-Anbieter konfiguriert ist. Eine kostenlose Chat-Webseite stellt nicht automatisch eine API bereit. Die Adresse wird nur in diesem Browser gespeichert. Quick-Tunnel-Adressen können sich ändern.</p></div></details>
+<details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Scam Lens kann die kostenlose, anonyme Textschnittstelle von Pollinations direkt aufrufen. Es ist keine Backend-Adresse und kein API-Schlüssel nötig. Der Anbieter erhält den Text, den du ausdrücklich zur KI-Prüfung freigibst. Verwende keine Passwörter, vollständigen Zahlungsdaten oder andere Geheimnisse.</p><div class="toolbar"><button class="secondary" id="testAI" type="button">KI mit Beispieltext testen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die kostenlose Schnittstelle kann gedrosselt werden oder zeitweise ausfallen. Wenn sie nicht erreichbar ist, bleibt die lokale Prüfung verfügbar.</p></div></details>
 <button class="upgrade-button" id="upgradeTop" type="button">⭐ Upgrade</button></div></div></div></header>
 <section class="usage-guide-panel" id="usageGuidePanel" hidden aria-labelledby="usageGuideTitle"><div class="usage-guide-inner"><div class="usage-guide-heading"><div><h2 id="usageGuideTitle">Scam Lens – einfach erklärt</h2><p>Du kannst jeden Schritt in Ruhe durchführen. Du musst nichts anklicken, was dir unsicher vorkommt.</p></div><button class="secondary usage-guide-close" id="usageGuideClose" type="button">Schließen</button></div><div id="usageGuideText"><h3>1. Wähle eine Nachricht</h3><p>Du kannst Text einfügen, ein Foto oder einen Screenshot auswählen oder eine Datei laden. Bei einem Foto versucht Scam Lens, die Wörter im Bild zu erkennen.</p><h3>2. Kontrolliere den Text</h3><p>Vergleiche den erkannten Text mit dem Bild. Verbessere Fehler und ergänze fehlende Wörter. Wenn das Bild unscharf ist, mache ein neues Foto oder fahre bewusst mit dem erkannten Text fort.</p><h3>3. Starte die Prüfung selbst</h3><p>Die Prüfung beginnt erst, wenn du eine Prüftaste drückst. Der normale Sicherheits-Check läuft auf diesem Gerät. Für eine KI-Prüfung wird der Nachrichtentext an den eingestellten Dienst gesendet. Lies den Hinweis vorher aufmerksam.</p><h3>4. Zusätzliche Prüfungen</h3><p>Eine Live-Prüfung von Links ist freiwillig. Wenn du zustimmst, werden die geprüften Webadressen an einen externen Prüfdienst gesendet. Links werden nicht automatisch geöffnet.</p><h3>5. Verstehe das Ergebnis</h3><p>Lensi erklärt die Warnsignale und nennt nächste Schritte. Ein niedriges Risiko ist keine Garantie. Wenn du unsicher bist, klicke nicht auf den Link und kontaktiere die Organisation über eine selbst gefundene offizielle Telefonnummer.</p><h3>6. Hilfe holen</h3><p>Unter „Hilfe &amp; melden“ findest du Anlaufstellen in Österreich. Wenn du bereits Geld überwiesen oder Bankdaten eingegeben hast, kontaktiere sofort deine Bank über die offizielle App oder eine selbst gefundene Telefonnummer.</p></div><div class="usage-guide-actions"><button class="primary" id="usageGuideSpeak" type="button">🔊 Gebrauchsanweisung vorlesen</button><button class="secondary" id="usageGuideStop" type="button" hidden>⏹ Vorlesen stoppen</button></div><p class="muted" id="usageGuideStatus" role="status" aria-live="polite"></p></div></section>
 
@@ -1209,7 +1209,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 6.2</span>
+<span class="tag">SCAM LENS · TESTVERSION 6.3</span>
 
 
 <div class="mascot-hero">
@@ -1810,31 +1810,6 @@ $("testAI").addEventListener("click", async () => {
   }
 });
 
-$("checkBackend").addEventListener("click", async () => {
-  let base = $("backend").value.trim();
-  while (base.endsWith("/")) base = base.slice(0, -1);
-  const status = $("backendStatus");
-  status.style.display = "block";
-  if (!(base.startsWith("https://") || base.startsWith("http://"))) {
-    status.textContent = "Bitte zuerst die aktuelle Backend-Adresse ohne /health eintragen.";
-    return;
-  }
-  status.textContent = "Verbindung wird geprüft …";
-  try {
-    const res = await fetch(base + "/health", { method: "GET", headers: { "Accept": "application/json" } });
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    const data = await res.json();
-    if (data.ai_configured === true) {
-      status.textContent = "Backend erreichbar. KI-Konfiguration ist aktiv.";
-    } else if (data.ai_configured === false) {
-      status.textContent = "Backend erreichbar, aber die KI ist noch nicht konfiguriert (ai_configured: false).";
-    } else {
-      status.textContent = "Backend erreichbar. Antwort: " + JSON.stringify(data);
-    }
-  } catch (err) {
-    status.textContent = "Verbindung nicht bestätigt. Prüfe die Tunnel-Adresse, ob das Tunnel-Fenster noch läuft und ob das Backend CORS für https://roberttuechi-ai.github.io erlaubt. Details: " + err.message;
-  }
-});
 $("msg").addEventListener("input",()=>{
   if ($("messageEditor").hidden) openMessageEditor("Text eingeben", "Füge die verdächtige Nachricht hier ein. Danach kannst du sie prüfen.", false);
   if (!$("msg").value.trim()) $("report").style.display="none";
