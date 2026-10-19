@@ -1200,7 +1200,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
 <div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option><option value="tr">Türkçe</option><option value="bs">Bosanski</option><option value="hr">Hrvatski</option><option value="sl">Slovenščina</option><option value="ar">العربية</option><option value="uk">Українська</option><option value="ro">Română</option><option value="hu">Magyar</option></select></div>
 <button class="usage-guide-button" id="usageGuideToggle" type="button" aria-expanded="false" aria-controls="usageGuidePanel">📘 Gebrauchsanweisung</button>
-<details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details>
+<details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button><button class="secondary" id="testAI" type="button">KI mit Beispieltext testen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Für einen echten KI-Test muss hier ein erreichbares HTTPS-Backend stehen, dessen KI-Anbieter konfiguriert ist. Eine kostenlose Chat-Webseite stellt nicht automatisch eine API bereit. Die Adresse wird nur in diesem Browser gespeichert. Quick-Tunnel-Adressen können sich ändern.</p></div></details>
 <button class="upgrade-button" id="upgradeTop" type="button">⭐ Upgrade</button></div></div></div></header>
 <section class="usage-guide-panel" id="usageGuidePanel" hidden aria-labelledby="usageGuideTitle"><div class="usage-guide-inner"><div class="usage-guide-heading"><div><h2 id="usageGuideTitle">Scam Lens – einfach erklärt</h2><p>Du kannst jeden Schritt in Ruhe durchführen. Du musst nichts anklicken, was dir unsicher vorkommt.</p></div><button class="secondary usage-guide-close" id="usageGuideClose" type="button">Schließen</button></div><div id="usageGuideText"><h3>1. Wähle eine Nachricht</h3><p>Du kannst Text einfügen, ein Foto oder einen Screenshot auswählen oder eine Datei laden. Bei einem Foto versucht Scam Lens, die Wörter im Bild zu erkennen.</p><h3>2. Kontrolliere den Text</h3><p>Vergleiche den erkannten Text mit dem Bild. Verbessere Fehler und ergänze fehlende Wörter. Wenn das Bild unscharf ist, mache ein neues Foto oder fahre bewusst mit dem erkannten Text fort.</p><h3>3. Starte die Prüfung selbst</h3><p>Die Prüfung beginnt erst, wenn du eine Prüftaste drückst. Der normale Sicherheits-Check läuft auf diesem Gerät. Für eine KI-Prüfung wird der Nachrichtentext an den eingestellten Dienst gesendet. Lies den Hinweis vorher aufmerksam.</p><h3>4. Zusätzliche Prüfungen</h3><p>Eine Live-Prüfung von Links ist freiwillig. Wenn du zustimmst, werden die geprüften Webadressen an einen externen Prüfdienst gesendet. Links werden nicht automatisch geöffnet.</p><h3>5. Verstehe das Ergebnis</h3><p>Lensi erklärt die Warnsignale und nennt nächste Schritte. Ein niedriges Risiko ist keine Garantie. Wenn du unsicher bist, klicke nicht auf den Link und kontaktiere die Organisation über eine selbst gefundene offizielle Telefonnummer.</p><h3>6. Hilfe holen</h3><p>Unter „Hilfe &amp; melden“ findest du Anlaufstellen in Österreich. Wenn du bereits Geld überwiesen oder Bankdaten eingegeben hast, kontaktiere sofort deine Bank über die offizielle App oder eine selbst gefundene Telefonnummer.</p></div><div class="usage-guide-actions"><button class="primary" id="usageGuideSpeak" type="button">🔊 Gebrauchsanweisung vorlesen</button><button class="secondary" id="usageGuideStop" type="button" hidden>⏹ Vorlesen stoppen</button></div><p class="muted" id="usageGuideStatus" role="status" aria-live="polite"></p></div></section>
 
@@ -1209,7 +1209,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 6.1</span>
+<span class="tag">SCAM LENS · TESTVERSION 6.2</span>
 
 
 <div class="mascot-hero">
@@ -1765,6 +1765,51 @@ $("liveLinkCheck").addEventListener("click", async () => {
     button.disabled = false;
   }
 });
+
+/* Version 6.2: persist operator endpoint locally and test actual AI using synthetic, non-personal sample text. */
+const backendInput = $("backend");
+try { backendInput.value = localStorage.getItem("scamLensBackendUrl") || ""; } catch (_) {}
+backendInput.addEventListener("change", () => {
+  try { localStorage.setItem("scamLensBackendUrl", backendInput.value.trim()); } catch (_) {}
+});
+$("testAI").addEventListener("click", async () => {
+  let base = backendInput.value.trim().replace(/\/+$/, "");
+  const status = $("backendStatus");
+  status.style.display = "block";
+  if (!/^https:\/\/[^ ]+/i.test(base)) {
+    status.textContent = "Für den KI-Test bitte eine erreichbare HTTPS-Backend-Adresse eintragen. Eine lokale Adresse wie 127.0.0.1 ist von dieser veröffentlichten HTTPS-Seite aus nicht direkt erreichbar.";
+    return;
+  }
+  status.textContent = "KI-Test läuft mit einem künstlichen Beispieltext. Es wird keine deiner Nachrichten übertragen …";
+  $("testAI").disabled = true;
+  try {
+    const response = await fetch(base + "/api/analyze", {
+      method: "POST",
+      headers: {"Content-Type":"application/json","Accept":"application/json"},
+      body: JSON.stringify({
+        text: "BEISPIELTEST, keine echte Nachricht: Ihr Paket ist angehalten. Zahlen Sie sofort 1,99 EUR über http://example.invalid/zahlung, sonst wird es zurückgesendet.",
+        kind: "test",
+        language: (document.documentElement.lang || "de").slice(0,2),
+        ruleFindings: [],
+        urls: []
+      })
+    });
+    let data = {};
+    try { data = await response.json(); } catch (_) {}
+    if (!response.ok) throw new Error(data.detail || ("HTTP " + response.status));
+    if (!data.summary && !Array.isArray(data.findings) && !data.risk) {
+      throw new Error("Backend antwortete, aber die Antwort enthält keine erkennbaren KI-Ergebnisse.");
+    }
+    const risk = data.risk ? " Risiko: " + data.risk + "." : "";
+    const summary = data.summary ? " Ergebnis: " + String(data.summary).slice(0,500) : "";
+    status.textContent = "KI-Test erfolgreich. Anbieter: " + (data.provider || "nicht angegeben") + "." + risk + summary + " Es wurde nur der künstliche Beispieltext gesendet.";
+  } catch (error) {
+    status.textContent = "KI-Test fehlgeschlagen: " + error.message + ". Prüfe, ob die Backend-Adresse stimmt, /api/analyze erreichbar ist, CORS GitHub Pages erlaubt und ein KI-Anbieter konfiguriert ist. Es wurde kein erfolgreiches KI-Ergebnis vorgetäuscht.";
+  } finally {
+    $("testAI").disabled = false;
+  }
+});
+
 $("checkBackend").addEventListener("click", async () => {
   let base = $("backend").value.trim();
   while (base.endsWith("/")) base = base.slice(0, -1);
