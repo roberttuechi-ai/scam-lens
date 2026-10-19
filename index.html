@@ -821,6 +821,15 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
  .riskbox .scorecircle{width:50px!important;height:50px!important;min-width:50px!important}
 }
 </style>
+<style id="scam-lens-landscape-v33">
+/* Version 3.3: illustrated alpine mountains and pine forest behind the welcome hero */
+#app>section:first-child{position:relative!important;overflow:hidden!important}
+.landscape-art{position:absolute!important;z-index:0!important;left:0!important;right:0!important;top:205px!important;height:245px!important;overflow:hidden!important;pointer-events:none!important;opacity:.96!important;mask-image:linear-gradient(to bottom,#000 0%,#000 67%,transparent 100%)!important;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 67%,transparent 100%)!important}
+.landscape-art svg{display:block!important;width:100%!important;height:100%!important}
+.mascot-hero{position:relative!important;z-index:1!important;background:linear-gradient(to bottom,rgba(255,255,255,.82),rgba(255,255,255,.30) 70%,rgba(255,255,255,.72))!important}
+.hero-copy,.mascot-stage{position:relative!important;z-index:2!important}
+@media(max-width:600px){.landscape-art{top:185px!important;height:205px!important}}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div><div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><div class="header-tools"><div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div><span class="settings-icon" aria-hidden="true">⚙</span></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
@@ -829,8 +838,34 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 3.2</span>
+<span class="tag">SCAM LENS · TESTVERSION 3.3</span>
 
+<div class="landscape-art" aria-hidden="true">
+<svg viewBox="0 0 900 310" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="skyFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8e7ff"/><stop offset=".72" stop-color="#edf7ff"/><stop offset="1" stop-color="#fff"/></linearGradient>
+<linearGradient id="mountainBack" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a6d4f3"/><stop offset="1" stop-color="#d7edfa"/></linearGradient>
+<linearGradient id="mountainFront" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#76b7e5"/><stop offset="1" stop-color="#c3e2f5"/></linearGradient>
+<linearGradient id="forest" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#559f91"/><stop offset="1" stop-color="#8fc6b3"/></linearGradient>
+<linearGradient id="snow" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#edf8ff"/></linearGradient>
+</defs>
+<rect width="900" height="310" fill="url(#skyFade)"/>
+<circle cx="720" cy="58" r="29" fill="#fff" opacity=".55"/>
+<path d="M0 204 L100 103 155 153 235 52 323 165 385 97 490 198 560 118 646 194 739 82 830 178 900 120 V310 H0Z" fill="url(#mountainBack)"/>
+<path d="M0 215 L100 103 138 145 235 52 286 119 323 165 385 97 436 154 490 198 560 118 612 171 646 194 739 82 789 135 830 178 900 120 V310 H0Z" fill="#b4dff8" opacity=".8"/>
+<path d="M70 137 L100 103 138 145 117 135 101 118 88 137Z M199 93 L235 52 286 119 254 99 235 69 222 91Z M358 125 L385 97 436 154 407 135 386 111 374 127Z M709 117 L739 82 789 135 760 116 739 95 725 116Z" fill="url(#snow)"/>
+<path d="M0 243 L111 162 191 222 298 125 389 214 470 156 558 229 661 141 760 222 840 157 900 203 V310 H0Z" fill="url(#mountainFront)"/>
+<path d="M0 243 L111 162 146 190 191 222 298 125 342 169 389 214 470 156 516 194 558 229 661 141 705 180 760 222 840 157 870 181 900 203 V310 H0Z" fill="#9dceee" opacity=".8"/>
+<path d="M270 151 L298 125 342 169 317 156 299 139 286 153Z M443 181 L470 156 516 194 487 178 471 168 458 182Z M630 166 L661 141 705 180 678 164 662 151 649 166Z" fill="#f8fdff"/>
+<path d="M0 258 Q100 228 195 253 T395 254 T600 246 T900 250 V310 H0Z" fill="#eaf7ff"/>
+<g fill="url(#forest)">
+<path d="M12 282 L38 218 64 282Z M32 288 L58 226 84 288Z M67 290 L94 220 121 290Z M102 292 L128 235 154 292Z M142 295 L168 225 194 295Z M181 296 L207 241 233 296Z M222 294 L248 221 274 294Z M265 296 L292 238 319 296Z M310 297 L335 227 360 297Z M355 298 L381 242 407 298Z M404 297 L431 223 458 297Z M451 297 L476 237 501 297Z M497 298 L523 226 549 298Z M543 297 L570 242 597 297Z M591 297 L618 222 645 297Z M641 298 L667 237 693 298Z M689 297 L715 226 741 297Z M736 298 L762 241 788 298Z M785 298 L812 221 839 298Z M834 298 L860 238 886 298Z"/>
+</g>
+<g fill="#3d8e80" opacity=".82">
+<path d="M0 301 L26 244 52 301Z M48 305 L75 250 102 305Z M115 306 L141 247 167 306Z M190 306 L216 251 242 306Z M275 306 L301 247 327 306Z M365 306 L391 251 417 306Z M460 306 L486 246 512 306Z M555 306 L581 251 607 306Z M650 306 L676 246 702 306Z M745 306 L771 251 797 306Z M840 306 L866 246 892 306Z"/>
+</g>
+<rect y="294" width="900" height="16" fill="#fff" opacity=".38"/>
+</svg></div>
 <div class="mascot-hero">
   <div class="hero-copy"><h1>Hallo!<br>Ich bin Lensi.</h1><p>Ich helfe dir, verdächtige Nachrichten einfach und sicher zu prüfen.</p><div class="mascot-speech">Du musst kein Technikprofi sein. Wir gehen alles in Ruhe durch. Du kannst dir den fertigen Bericht auch vorlesen lassen.</div></div>
   <div class="mascot-stage" role="img" aria-label="Scam Lens, ein freundlicher kleiner Sicherheitsroboter mit Schild">
