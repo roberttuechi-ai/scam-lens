@@ -1408,6 +1408,20 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
  .header-tools .upgrade-button{grid-column:1 / -1!important;grid-row:2!important;width:100%!important;height:58px!important;min-height:58px!important;max-height:58px!important}
 }
 </style>
+<style id="risk-percentage-readability">
+/* Risk percentage badge: keep 50%, 80% and the label fully readable on narrow phones. */
+#riskbox{grid-template-columns:94px minmax(0,1fr)!important;align-items:start!important;gap:14px!important}
+#riskbox .scorecircle{width:88px!important;height:88px!important;min-width:88px!important;max-width:88px!important;flex-shrink:0!important;grid-column:1!important;grid-row:1!important;display:flex!important;align-self:start!important;justify-self:center!important;overflow:visible!important;padding:5px!important}
+#riskbox .scorecircle strong{font-size:25px!important;line-height:1.1!important;white-space:nowrap!important;max-width:none!important}
+#riskbox .scorecircle span{font-size:12px!important;line-height:1.2!important;text-align:center!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important}
+#riskbox>div:last-child{grid-column:2!important;grid-row:1!important;min-width:0!important;width:100%!important}
+#riskbox h2,#riskbox p{overflow-wrap:anywhere}
+@media(max-width:480px){
+ #riskbox{grid-template-columns:94px minmax(0,1fr)!important;gap:12px!important;padding:14px!important}
+ #riskbox .scorecircle{width:88px!important;height:88px!important;min-width:88px!important;max-width:88px!important}
+ #riskbox .scorecircle strong{font-size:24px!important}
+}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
@@ -2076,7 +2090,7 @@ for (const f of urlCheck.findings) { add(f.title||"URL-Warnhinweis",f.why||f.det
 if(!e.length)e.push({title:"Keine typischen Muster erkannt",why:"Das beweist nicht, dass die Nachricht echt oder sicher ist.",source:"Lokale Regelprüfung"});
 const strongThreat=/password|passwort|login credentials|verification code|bestätigungscode|konto gesperrt|account suspended|account locked|keep this confidential|geheim halten|gift card|geschenkkarte|bitcoin|crypto|krypto|overpayment|überzahlung|refund to|rückerstattung an|pay immediately|sofort bezahlen/i.test(text);const risk=strongThreat&&p>=5?"high":p>=3?"medium":"low";
 return {points:Math.min(10,Math.round(p)),raw:p,evidence:e,risk,method:"Lokale Regel- und Kontextprüfung"}}function normaliseRisk(r){r=String(r||"").toLowerCase();if(["high","hoch","hohes risiko"].includes(r))return "high";if(["medium","mittel","auffälligkeiten gefunden"].includes(r))return "medium";if(["low","niedrig","gering"].includes(r))return "low";return "unknown"}
-function renderReport(data){let risk=data.risk||"unknown";const riskPercent={high:85,medium:55,low:20,unknown:null};const methodName=String(data.method||"").toLowerCase();const rawScore=Number(data.score);const hasScore=data.score!==null&&data.score!==undefined&&data.score!==""&&Number.isFinite(rawScore);const percent=hasScore?Math.max(0,Math.min(100,Math.round(methodName.includes("phishunt")||methodName.includes("/100")?rawScore:rawScore*10))):riskPercent[risk];$("score").textContent=percent===null||percent===undefined?"—":percent+"%";$("scoreUnit").textContent="Risikoindikator";$("scoreNote").textContent="Orientierungswert anhand erkannter Warnsignale – keine statistisch gemessene Betrugswahrscheinlichkeit. Niedrig bedeutet nicht automatisch sicher."; $("riskbox").className="riskbox risk-"+risk;
+function renderReport(data){let risk=data.risk||"unknown";const riskPercent={high:85,medium:55,low:20,unknown:null};const methodName=String(data.method||"").toLowerCase();const rawScore=Number(data.score);const hasScore=data.score!==null&&data.score!==undefined&&data.score!==""&&Number.isFinite(rawScore);const percent=hasScore?Math.max(0,Math.min(100,Math.round(methodName.includes("phishunt")||methodName.includes("/100")?rawScore:rawScore*10))):riskPercent[risk];$("score").textContent=percent===null||percent===undefined?"—":percent+"%";$("scoreUnit").textContent="Risiko";$("scoreNote").textContent="Orientierungswert anhand erkannter Warnsignale – keine statistisch gemessene Betrugswahrscheinlichkeit. Niedrig bedeutet nicht automatisch sicher."; $("riskbox").className="riskbox risk-"+risk;
 const titles={high:"Hohes Risiko",medium:"Auffälligkeiten gefunden",low:"Wenige Hinweise erkannt",unknown:"Nicht ausreichend prüfbar"};
 const texts={high:"Die Nachricht enthält deutliche Betrugsmerkmale. Handle nicht über die Nachricht.",medium:"Es gibt Warnsignale. Prüfe Absender und Forderung unabhängig.",low:"Es wurden wenige Hinweise gefunden. Das ist keine Sicherheitsgarantie.",unknown:"Die Informationen reichen für eine belastbare Einschätzung nicht aus."};
 const actions={high:["Nicht klicken, nicht antworten und kein Geld überweisen.","Beende den Kontakt über diese Nachricht. Prüfe den angeblichen Absender über eine selbst gefundene offizielle Telefonnummer oder Website."],medium:["Erst prüfen – noch nicht reagieren.","Öffne keine Links und gib keine Daten ein, bis du Absender und Forderung über einen unabhängigen Kontaktweg bestätigt hast."],low:["Trotzdem aufmerksam bleiben.","Es wurden wenige typische Warnsignale erkannt. Das beweist nicht, dass die Nachricht echt ist. Prüfe unerwartete Forderungen unabhängig."],unknown:["Vorsicht: keine sichere Einschätzung möglich.","Verlasse dich nicht auf diese Prüfung allein. Öffne keine Links und kontaktiere den angeblichen Absender über offizielle Kontaktdaten."]};
