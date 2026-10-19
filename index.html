@@ -270,7 +270,7 @@ $("sourceFile").addEventListener("click", () => {
 });
 $("sourceEmail").addEventListener("click", () => {
   cameraMode = false;
-  $("file").accept = ".eml,.msg,.pdf,.txt,.html,.htm,message/rfc822,application/pdf,text/plain";
+  $("file").accept = ".eml,.msg,.oft,.mbox,.mht,.mhtml,.pdf,.txt,.html,.htm,.ics,.vcf,message/rfc822,application/pdf,text/plain";
   $("file").removeAttribute("capture");
   $("file").click();
 });
@@ -292,10 +292,10 @@ $("file").addEventListener("change", async () => {
     $("fileStatus").textContent = "Bild geladen. Ohne OCR bitte den sichtbaren Nachrichtentext in das Textfeld kopieren.";
     return;
   }
-  if (/\.msg$/.test(name)) {
+  if (/\.(msg|oft)$/.test(name)) {
     try {
       $("fileStatus").textContent = "Outlook-Datei wird lokal ausgelesen …";
-      const module = await import("https://cdn.jsdelivr.net/npm/@kenjiuno/msgreader-web-ng@0.2.0-alpha1/+esm");
+      const module = await import("https://esm.sh/@kenjiuno/msgreader-web-ng@0.2.0-alpha1");
       const MsgReader = module.MsgReader || module.default?.MsgReader || module.default;
       if (typeof MsgReader !== "function") throw new Error("MSG-Lesemodul konnte nicht geladen werden.");
       const buffer = await chosenFile.arrayBuffer();
@@ -309,10 +309,58 @@ $("file").addEventListener("change", async () => {
       const emailText = parts.join("\\n").trim();
       if (!emailText) throw new Error("In der Outlook-Datei wurde kein lesbarer Nachrichtentext gefunden.");
       $("msg").value = emailText.slice(0, 30000);
-      $("fileStatus").textContent = "Outlook-.MSG-Datei lokal eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.";
+      $("fileStatus").textContent = "Outlook-Datei lokal eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.";
     } catch (err) {
       $("fileStatus").textContent = "Outlook-Datei konnte nicht gelesen werden: " + (err.message || "Unbekannter Fehler") + ". Du kannst den Nachrichtentext alternativ aus Outlook kopieren.";
     }
+    return;
+  }
+  if (/\.(pst|ost)$/.test(name)) {
+    $("fileStatus").textContent = "Outlook-Archivdateien (.pst/.ost) enthalten viele E-Mails und können hier nicht direkt verarbeitet werden. Bitte exportiere eine einzelne E-Mail als .msg oder .eml.";
+    return;
+  }
+  if (/\.pdf$/.test(name)) {
+    try {
+      $("fileStatus").textContent = "PDF wird lokal ausgelesen …";
+      const pdfjs = await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs");
+      pdfjs.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
+      const pdf = await pdfjs.getDocument({data: await chosenFile.arrayBuffer()}).promise;
+      const pages = [];
+      for (let p = 1; p <= pdf.numPages; p++) {
+        const page = await pdf.getPage(p);
+        const content = await page.getTextContent();
+        pages.push(content.items.map(item => item.str || "").join(" "));
+      }
+      const extracted = pages.join("\\n\\n").trim();
+      if (!extracted) throw new Error("Kein auswählbarer Text gefunden; möglicherweise ist das PDF ein Scan. OCR ist nicht verfügbar.");
+      $("msg").value = extracted.slice(0, 30000);
+      $("fileStatus").textContent = "PDF-Text lokal eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.";
+    } catch (err) { $("fileStatus").textContent = "PDF konnte nicht ausgelesen werden: " + (err.message || "Unbekannter Fehler"); }
+    return;
+  }
+  if (/\.(mht|mhtml)$/.test(name)) {
+    try {
+      const raw = await chosenFile.text();
+      const match = raw.match(/Content-Type:\\s*text\\/html[^\\r\\n]*[\\r\\n]+(?:Content-Transfer-Encoding:\\s*([^\\r\\n]+)[\\r\\n]+)?[\\r\\n]+([\\s\\S]*?)(?=\\r?\\n--[^\\r\\n]+--?\\s*$)/i);
+      if (!match) throw new Error("HTML-Inhalt im MHTML-Archiv nicht gefunden.");
+      let html = match[2];
+      if ((match[1] || "").toLowerCase().includes("quoted-printable")) html = html.replace(/=\\r?\\n/g, "").replace(/=([0-9A-F]{2})/gi, (_, h) => String.fromCharCode(parseInt(h,16)));
+      if ((match[1] || "").toLowerCase().includes("base64")) html = new TextDecoder().decode(Uint8Array.from(atob(html.replace(/\\s/g,"")), c=>c.charCodeAt(0)));
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      $("msg").value = (doc.body.innerText || doc.body.textContent || "").slice(0,30000);
+      if (!$("msg").value.trim()) throw new Error("Kein lesbarer Nachrichtentext gefunden.");
+      $("fileStatus").textContent = "MHTML-E-Mail lokal eingelesen. Noch keine Prüfung gestartet.";
+    } catch (err) { $("fileStatus").textContent = "MHTML-Datei konnte nicht sicher ausgelesen werden: " + (err.message || "Unbekannter Fehler"); }
+    return;
+  }
+  if (/\.(mbox|ics|vcf)$/.test(name)) {
+    try {
+      let t = await chosenFile.text();
+      if (/\.ics$/.test(name)) t = t.replace(/\\r?\\n[ \\t]/g, "").replace(/\\r?\\n/g, "\\n");
+      if (/\.vcf$/.test(name)) t = t.replace(/\\r?\\n[ \\t]/g, "");
+      $("msg").value = t.slice(0,30000);
+      $("fileStatus").textContent = "Datei lokal als Text eingelesen. Noch keine Prüfung gestartet; kontrolliere den Inhalt vor der Analyse.";
+    } catch (err) { $("fileStatus").textContent = "Datei konnte nicht gelesen werden: " + (err.message || "Unbekannter Fehler"); }
     return;
   }
   if (/\.(txt|eml|html?)$/.test(name)) {
@@ -327,7 +375,7 @@ $("file").addEventListener("change", async () => {
     } catch (_) { $("fileStatus").textContent = "Datei konnte nicht gelesen werden."; }
     return;
   }
-  $("fileStatus").textContent = "Dieser Dateityp wird nicht unterstützt. Bitte MSG, TXT, EML, HTML oder ein Bild verwenden.";
+  $("fileStatus").textContent = "Dieser Dateityp wird nicht unterstützt. Bitte MSG/OFT, EML, MBOX, MHTML, PDF, TXT, HTML oder ein Bild verwenden.";
 });
 function inspectUrls(text){
   const found = text.match(/(?:https?:\/\/|www\.)[^\s<>"']+/gi) || [];
