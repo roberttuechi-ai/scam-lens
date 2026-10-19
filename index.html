@@ -264,13 +264,13 @@ $("sourcePhoto").addEventListener("click", () => {
 });
 $("sourceFile").addEventListener("click", () => {
   cameraMode = false;
-  $("file").accept = "image/*,.txt,.eml,.html,.htm";
+  $("file").accept = "image/*,.txt,.eml,.html,.htm,.msg";
   $("file").removeAttribute("capture");
   $("file").click();
 });
 $("sourceEmail").addEventListener("click", () => {
   cameraMode = false;
-  $("file").accept = ".eml,.pdf,.txt,.html,.htm,message/rfc822,application/pdf,text/plain";
+  $("file").accept = ".eml,.msg,.pdf,.txt,.html,.htm,message/rfc822,application/pdf,text/plain";
   $("file").removeAttribute("capture");
   $("file").click();
 });
@@ -292,6 +292,29 @@ $("file").addEventListener("change", async () => {
     $("fileStatus").textContent = "Bild geladen. Ohne OCR bitte den sichtbaren Nachrichtentext in das Textfeld kopieren.";
     return;
   }
+  if (/\.msg$/.test(name)) {
+    try {
+      $("fileStatus").textContent = "Outlook-Datei wird lokal ausgelesen …";
+      const module = await import("https://cdn.jsdelivr.net/npm/@kenjiuno/msgreader-web-ng@0.2.0-alpha1/+esm");
+      const MsgReader = module.MsgReader || module.default?.MsgReader || module.default;
+      if (typeof MsgReader !== "function") throw new Error("MSG-Lesemodul konnte nicht geladen werden.");
+      const buffer = await chosenFile.arrayBuffer();
+      const reader = new MsgReader(buffer);
+      const data = reader.getFileData();
+      const parts = [];
+      if (data.subject) parts.push("Betreff: " + data.subject);
+      if (data.senderName || data.senderEmail) parts.push("Absender: " + [data.senderName, data.senderEmail].filter(Boolean).join(" <") + (data.senderEmail && data.senderName ? ">" : ""));
+      if (data.recipients?.length) parts.push("Empfänger: " + data.recipients.map(r => r.name || r.email || "").filter(Boolean).join(", "));
+      parts.push("", data.body || "");
+      const emailText = parts.join("\\n").trim();
+      if (!emailText) throw new Error("In der Outlook-Datei wurde kein lesbarer Nachrichtentext gefunden.");
+      $("msg").value = emailText.slice(0, 30000);
+      $("fileStatus").textContent = "Outlook-.MSG-Datei lokal eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.";
+    } catch (err) {
+      $("fileStatus").textContent = "Outlook-Datei konnte nicht gelesen werden: " + (err.message || "Unbekannter Fehler") + ". Du kannst den Nachrichtentext alternativ aus Outlook kopieren.";
+    }
+    return;
+  }
   if (/\.(txt|eml|html?)$/.test(name)) {
     try {
       let t = await chosenFile.text();
@@ -304,7 +327,7 @@ $("file").addEventListener("change", async () => {
     } catch (_) { $("fileStatus").textContent = "Datei konnte nicht gelesen werden."; }
     return;
   }
-  $("fileStatus").textContent = "Dieser Dateityp wird nicht unterstützt. Bitte TXT, EML, HTML oder ein Bild verwenden.";
+  $("fileStatus").textContent = "Dieser Dateityp wird nicht unterstützt. Bitte MSG, TXT, EML, HTML oder ein Bild verwenden.";
 });
 function inspectUrls(text){
   const found = text.match(/(?:https?:\/\/|www\.)[^\s<>"']+/gi) || [];
