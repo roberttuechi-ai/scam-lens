@@ -1092,6 +1092,24 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
  .mascot-hero .mascot-stage{transform:none!important;max-width:260px!important;margin:0 auto!important}
  .mascot-hero .mascot-speech{font-size:16px!important}
 }
+
+/* Version 5.8: equal-height language control and welcome art styled closer to the supplied Lensi reference */
+.header-tools{align-items:center!important}
+.header-tools .language-control{align-self:stretch!important;display:flex!important;flex-direction:column!important;justify-content:center!important;gap:0!important;min-width:0!important}
+.header-tools .language-control label{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.header-tools .language-control select{height:58px!important;min-height:58px!important;max-height:58px!important;width:100%!important;align-self:stretch!important;border-radius:15px!important;border:2px solid #c4d9ee!important;padding:8px 14px!important;font-size:16px!important;font-weight:800!important;background:#fff!important;color:#123765!important;box-shadow:0 4px 12px #12376512!important}
+.header-tools .usage-guide-button,.header-tools .upgrade-button,.header-tools .operator-top>summary{height:58px!important;min-height:58px!important;max-height:58px!important;align-self:center!important}
+@media(max-width:900px){.header-tools .language-control{grid-column:1!important;grid-row:1!important;align-self:end!important}.header-tools .language-control select{height:50px!important;min-height:50px!important;max-height:50px!important}.header-tools .usage-guide-button{height:50px!important;min-height:50px!important;max-height:50px!important}.header-tools .operator-top{grid-column:1!important;grid-row:2!important}.header-tools .operator-top>summary,.header-tools .upgrade-button{height:50px!important;min-height:50px!important;max-height:50px!important}}
+/* Prominent welcome section: centered heading, large readable copy and generous art area. */
+.mascot-hero{position:relative!important;isolation:isolate!important;min-height:560px!important;display:grid!important;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr)!important;align-items:center!important;gap:clamp(22px,4vw,56px)!important;padding:clamp(30px,5vw,64px)!important;border-radius:32px!important;background:linear-gradient(125deg,#f8fbff 0%,#e7f4ff 52%,#d2eaff 100%)!important;border:1px solid #c8e1f8!important;box-shadow:0 16px 42px #173b6112!important;overflow:hidden!important}
+.mascot-hero .landscape-art{position:absolute!important;inset:auto 0 0!important;width:100%!important;height:52%!important;opacity:.9!important;z-index:-1!important;pointer-events:none!important}
+.mascot-hero .hero-copy{position:relative!important;z-index:2!important;max-width:700px!important;align-self:center!important}
+.mascot-hero .hero-copy h1{font-size:clamp(46px,6.1vw,88px)!important;line-height:1.02!important;letter-spacing:-2px!important;text-align:center!important;margin:0 0 26px!important}
+.mascot-hero .hero-copy>p{font-size:clamp(22px,2.35vw,32px)!important;line-height:1.4!important;text-align:left!important;max-width:620px!important}
+.mascot-hero .mascot-speech{max-width:580px!important;padding:20px 24px!important;border-radius:24px!important;background:#ffffffed!important;border:2px solid #9bcfff!important;box-shadow:0 10px 30px #1769c21a!important;font-size:clamp(17px,1.5vw,21px)!important;line-height:1.5!important}
+.mascot-hero .mascot-stage{transform:scale(1.28)!important;transform-origin:center!important;justify-self:center!important;align-self:center!important;z-index:2!important}
+@media(max-width:900px){.mascot-hero{min-height:460px!important;grid-template-columns:minmax(0,1fr) minmax(220px,.8fr)!important;padding:28px!important}.mascot-hero .hero-copy h1{font-size:clamp(42px,6vw,62px)!important;letter-spacing:-1px!important}.mascot-hero .mascot-stage{transform:scale(1.08)!important}}
+@media(max-width:560px){.mascot-hero{grid-template-columns:minmax(0,1fr)!important;min-height:0!important;padding:26px 20px 38px!important;gap:22px!important}.mascot-hero .hero-copy h1{font-size:clamp(40px,11vw,54px)!important;text-align:center!important}.mascot-hero .hero-copy>p{text-align:center!important;font-size:21px!important}.mascot-hero .mascot-stage{transform:none!important;max-width:300px!important;margin:0 auto!important}.mascot-hero .mascot-speech{font-size:16px!important;padding:16px!important}.mascot-hero .landscape-art{height:42%!important}}
 </style>
 </head>
 <body>
@@ -1107,7 +1125,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 5.7</span>
+<span class="tag">SCAM LENS · TESTVERSION 5.8</span>
 
 
 <div class="mascot-hero">
