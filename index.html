@@ -1422,6 +1422,10 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
  #riskbox .scorecircle strong{font-size:24px!important}
 }
 </style>
+<style id="three-input-methods">/* Three clear input methods only: text, camera, upload. */
+.source-grid{grid-template-columns:minmax(0,1fr)!important}
+.source-grid .source-button{min-height:76px!important}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
@@ -1503,12 +1507,10 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 </div>
 <h2>📥 Schritt 1: Wähle deine Nachricht</h2>
 <div class="source-grid" role="group" aria-label="Quelle der Nachricht auswählen">
-  <button class="source-button" id="sourceText" type="button"><span class="source-icon" aria-hidden="true">▤</span><span>Text eingeben</span><small>Nachricht hier einfügen oder selbst schreiben</small></button>
-  <button class="source-button camera-button" id="sourceCamera" type="button"><span class="source-icon" aria-hidden="true">📷</span><span>Kamera nutzen</span><small>Foto direkt aufnehmen</small></button>
-  <button class="source-button" id="sourcePhoto" type="button"><span class="source-icon" aria-hidden="true">▧</span><span>Foto / Screenshot</span><small>Bild aus Galerie auswählen</small></button>
-  <button class="source-button" id="sourceFile" type="button"><span class="source-icon" aria-hidden="true">↑</span><span>Datei hochladen</span><small>PDF, Bild oder Textdatei</small></button>
-  <button class="source-button" id="sourceEmail" type="button"><span class="source-icon" aria-hidden="true">✉</span><span>E-Mail-Datei</span><small>E-Mail-Datei (z. B. .eml)</small></button>
-</div>
+  <button class="source-button" id="sourceText" type="button"><span class="source-icon" aria-hidden="true">▤</span><span>Text</span><small>Nachricht einfügen oder schreiben</small></button>
+  <button class="source-button camera-button" id="sourceCamera" type="button"><span class="source-icon" aria-hidden="true">📷</span><span>Kamera</span><small>Nachricht direkt fotografieren</small></button>
+  <button class="source-button" id="sourceFile" type="button"><span class="source-icon" aria-hidden="true">↑</span><span>Hochladen</span><small>Foto, Screenshot, PDF oder Datei</small></button>
+  </div>
 <div class="voice-welcome" id="voiceWelcome" aria-label="Hilfe zum Vorlesen"><div class="voice-welcome-icon" aria-hidden="true">◖))</div><div><strong>Lieber zuhören als lesen?</strong><p>Hier kannst du dir später den vollständigen Sicherheitsbericht vorlesen lassen.</p></div></div>
 
 <section id="messageEditor" class="message-editor" hidden aria-live="polite">
@@ -1749,12 +1751,10 @@ $("sourceText").addEventListener("click", () => {
   openMessageEditor("Text eingeben", "Füge die verdächtige Nachricht hier ein. Danach kannst du sie prüfen.");
 });
 $("sourceCamera").addEventListener("click", () => {
-  openMessageEditor("Nachricht aus Foto", "Wähle, ob du ein neues Foto aufnehmen oder ein vorhandenes Bild auswählen möchtest.", false);
-  const takePhoto = window.confirm("Foto aufnehmen?\n\nOK = Kamera öffnen\nAbbrechen = Bild aus Galerie auswählen");
-  cameraMode = takePhoto;
+  openMessageEditor("Nachricht aus Foto", "Fotografiere die Nachricht mit der Kamera. Der erkannte Text erscheint anschließend hier.", false);
+  cameraMode = true;
   $("file").accept = "image/*";
-  if (takePhoto) $("file").setAttribute("capture", "environment");
-  else $("file").removeAttribute("capture");
+  $("file").setAttribute("capture", "environment");
   $("file").click();
 });
 $("sourcePhoto").addEventListener("click", () => {
@@ -1765,9 +1765,9 @@ $("sourcePhoto").addEventListener("click", () => {
   $("file").click();
 });
 $("sourceFile").addEventListener("click", event => {
-  openMessageEditor("Datei importieren", "Der erkannte Nachrichtentext erscheint nach dem Import hier.", false);
+  openMessageEditor("Datei hochladen", "Wähle ein Foto, einen Screenshot, ein PDF oder eine Text-/E-Mail-Datei. Der Inhalt wird zum Prüfen vorbereitet.", false);
   cameraMode = false;
-  $("file").accept = "image/*,.txt,.eml,.html,.htm,.msg";
+  $("file").accept = "image/*,.pdf,.txt,.eml,.html,.htm,.msg,.oft,.mbox,.mht,.mhtml,.ics,.vcf";
   $("file").removeAttribute("capture");
   $("file").click();
 });
