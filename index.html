@@ -933,6 +933,14 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
 #sourceText small,#sourceCamera small,#sourcePhoto small,#sourceFile small,#sourceEmail small{color:#294762!important}
 #subscriptionPanel{margin-top:24px!important;margin-bottom:24px!important;scroll-margin-top:20px!important}
 @media(max-width:600px){#subscriptionPanel{margin:18px 8px 24px!important;width:auto!important}.source-icon{flex-shrink:0!important}}
+
+/* Version 4.7: source buttons show headings only with consistent readable typography */
+.source-grid .source-button{display:grid!important;grid-template-columns:54px minmax(0,1fr) 18px!important;grid-template-rows:auto!important;grid-auto-flow:row!important;align-items:center!important;justify-content:initial!important;justify-items:stretch!important;gap:0 14px!important;min-height:86px!important;height:auto!important;padding:14px!important;text-align:left!important;flex-direction:initial!important}
+.source-grid .source-button .source-icon{grid-column:1!important;grid-row:1!important;width:50px!important;height:50px!important;min-width:50px!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:27px!important;line-height:1!important;opacity:1!important;border-radius:50%!important;color:#fff!important}
+.source-grid .source-button span:nth-child(2){grid-column:2!important;grid-row:1!important;align-self:center!important;font-size:18px!important;line-height:1.3!important;font-weight:800!important;color:#102e49!important;overflow-wrap:anywhere!important}
+.source-grid .source-button small{display:none!important}
+.source-grid .source-button:after{grid-column:3!important;grid-row:1!important;align-self:center!important;justify-self:end!important;font-size:27px!important;line-height:1!important;margin:0!important;color:#102e49!important}
+@media(max-width:600px){.source-grid{grid-template-columns:minmax(0,1fr)!important;gap:10px!important}.source-grid .source-button{grid-template-columns:48px minmax(0,1fr) 16px!important;min-height:76px!important;padding:12px!important;gap:0 12px!important}.source-grid .source-button .source-icon{width:44px!important;height:44px!important;min-width:44px!important;font-size:24px!important}.source-grid .source-button span:nth-child(2){font-size:17px!important}.source-grid .source-button:after{font-size:25px!important}}
 </style>
 </head>
 <body>
@@ -945,7 +953,7 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 4.6</span>
+<span class="tag">SCAM LENS · TESTVERSION 4.7</span>
 
 
 <div class="mascot-hero">
