@@ -2070,6 +2070,10 @@ function slProgressSet(percent,step){
  if(p>=100){$("progressTitle").textContent=(document.documentElement.lang==="en"?"Analysis complete":"Prüfung abgeschlossen");}
 }
 function slProgressEnd(){slProgressSet(100,$("progressSteps").children.length);setTimeout(()=>{$("analysisProgress").classList.remove("active")},1800);}
+/* AI waiting indicator: continuous estimated progress while the provider is processing; capped until a response arrives. */
+let slAiWaitTimer=null;
+function slAiWaitStart(){slAiWaitStop();let p=42;slProgressSet(p,1);slAiWaitTimer=setInterval(()=>{if(p<90){p=Math.min(90,p+(p<65?1.1:0.35));$("progressFill").style.width=p+"%";$("progressPercent").textContent=Math.floor(p)+"%";$("progressBar").setAttribute("aria-valuenow",String(Math.floor(p)));}},850);}
+function slAiWaitStop(){if(slAiWaitTimer!==null){clearInterval(slAiWaitTimer);slAiWaitTimer=null;}}
 
 $("check").onclick=()=>{
  const text=$("msg").value.trim();if(!text){alert(document.documentElement.lang==="en"?"Enter or load a message first.":"Bitte zuerst eine Nachricht eingeben oder laden.");$("msg").focus();return;}
@@ -2187,9 +2191,9 @@ $("aiStart").addEventListener("click", async () => {
   slProgressBegin("ai");slProgressSet(20,0);
   try {
     const language = document.documentElement.lang || "de";
-    slProgressSet(42,1);$("progressTitle").textContent=document.documentElement.lang==="en"?"Waiting for Pollinations AI response …":"Warte auf die KI-Antwort von Pollinations …";
+    $("progressTitle").textContent=document.documentElement.lang==="en"?"Waiting for Pollinations AI response …":"Warte auf die KI-Antwort von Pollinations …";slAiWaitStart();
     const d = await scamLensDirectAI(text, language);
-    slProgressSet(78,2);
+    slAiWaitStop();slProgressSet(78,2);
     const local = localAnalysis(text);
     const aiRisk = normaliseRisk(d.risk);
     const rank = {low:1, medium:2, high:3, unknown:0};
@@ -2201,7 +2205,7 @@ $("aiStart").addEventListener("click", async () => {
     const summary = String(d.summary || "KI- und lokale Prüfung zusammengeführt.");
     renderReport({risk, score:risk==="high"?10:risk==="medium"?5:risk==="low"?2:"?", summary, evidence, steps:d.recommendations.map(x => String(x)), limitations:"KI-Ergebnis kann falsch sein. Nicht alle Angaben wurden unabhängig verifiziert. Links, Absender, Sponsor und Unternehmensdaten wurden nur dann live geprüft, wenn dies ausdrücklich in den Prüfschritten ausgewiesen ist. Externer KI-Dienst: Pollinations Free API. Der Text wurde nach deiner Zustimmung an den Anbieter übertragen.", method:"KI-Kontextanalyse + lokale Regeln und Kontextprüfung (Pollinations)"});slProgressEnd();
   } catch (error) {
-    slProgressSet(100,2);slProgressEnd();
+    slAiWaitStop();slProgressSet(100,2);slProgressEnd();
     runLocalReport(text);
     $("limitations").textContent = "KI-Analyse nicht verfügbar: " + error.message + ". Es wurde ausschließlich lokal geprüft; ein erfolgreiches KI-Ergebnis wurde nicht vorgetäuscht.";
     $("method").textContent = "Prüfmethode: Nur lokale Prüfung (kostenlose KI nicht verfügbar).";
