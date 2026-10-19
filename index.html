@@ -4,7 +4,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#102a43"><title>Scam Lens 6.4 – Sicherheitscheck</title>
+<meta name="theme-color" content="#102a43"><title>Scam Lens 6.6 – Sicherheitscheck</title>
 <style>
 :root{font:18px/1.6 Arial,Helvetica,sans-serif;color:#17324d;background:#eef4fb;--navy:#102a43;--blue:#3155d9;--teal:#087f70;--red:#c62828;--orange:#a66300;--green:#237747}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eaf4ff 0,#f5f7fb 280px,#f3f6fa 100%);line-height:1.6}
@@ -179,6 +179,93 @@ footer{color:#60758b!important;padding:0 18px 30px!important}
 #riskbox.risk-high h2{font-size:clamp(24px,5vw,30px)!important;font-weight:900!important}
 #riskbox.risk-high p{color:#65101b!important;font-weight:700!important;line-height:1.45!important}
 #riskbox.risk-high .risk-alert-symbol{font-size:32px!important;font-weight:900!important}
+
+/* Version 6.6: fluid responsive layout and typography across phones, tablets and desktop. */
+:root{
+  font-size:clamp(15px, calc(14px + .28vw), 19px);
+  --page-gutter:clamp(10px, 3.2vw, 28px);
+}
+html{font-size:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-wrap:anywhere}
+body{min-width:0;width:100%;overflow-x:hidden}
+.wrap,main.wrap{width:min(100% - (var(--page-gutter) * 2), 980px);max-width:980px}
+header{padding:clamp(12px,3vw,26px) var(--page-gutter)}
+main,main.wrap{padding:clamp(10px,2.8vw,26px) var(--page-gutter) clamp(20px,4vw,40px)}
+.card{padding:clamp(13px,3.2vw,26px);border-radius:clamp(14px,2.5vw,22px);min-width:0}
+.brand{font-size:clamp(24px,4.2vw,32px)!important;line-height:1.2}
+header p{font-size:clamp(14px,2.2vw,17px)}
+h1,.hero-copy h1{font-size:clamp(25px,5.4vw,42px)!important;line-height:1.15}
+h2{font-size:clamp(20px,3.6vw,27px)!important;line-height:1.25}
+h3{font-size:clamp(17px,3vw,21px)!important;line-height:1.3}
+p,li,label{overflow-wrap:anywhere}
+button,input,textarea,select{max-width:100%;min-width:0}
+button{font-size:clamp(14px,2.4vw,18px);line-height:1.35;white-space:normal}
+textarea,input,select{font-size:clamp(16px,2.5vw,19px);padding:clamp(10px,2.4vw,15px)}
+textarea{min-height:clamp(130px,25vh,220px)}
+.toolbar{gap:clamp(7px,1.8vw,12px)}
+.toolbar button{flex:0 1 auto}
+.source-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.analysis-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.help-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.source-button{min-width:0}
+.source-button small,.help-link small,.help-details,.muted,.method{font-size:clamp(13px,2vw,16px)!important;line-height:1.45}
+.source-button{font-size:clamp(16px,2.7vw,20px)!important}
+.report,.report *{min-width:0;max-width:100%}
+.riskbox{align-items:flex-start;flex-wrap:wrap;gap:clamp(10px,2.5vw,18px);padding:clamp(12px,2.8vw,18px)}
+.riskbox>div:last-child{flex:1 1 180px}
+.scorecircle{width:clamp(66px,12vw,92px);height:clamp(66px,12vw,92px);min-width:clamp(66px,12vw,92px)}
+.scorecircle strong{font-size:clamp(23px,4vw,31px)}
+.result-action{padding:clamp(12px,2.8vw,18px)}
+.mascot-hero{grid-template-columns:minmax(0,1.1fr) minmax(90px,.9fr)!important}
+.mascot-stage{width:100%;max-width:220px}
+img,svg,video,canvas{max-width:100%;height:auto}
+@media(max-width:600px){
+  .wrap,main.wrap{width:100%;max-width:100%}
+  header{padding:14px var(--page-gutter)}
+  main,main.wrap{padding:10px var(--page-gutter) 24px}
+  .card{margin-bottom:12px}
+  .header-row{gap:8px}
+  .header-tools{gap:7px}
+  .header-tools button{font-size:14px;padding:9px 10px}
+  .mascot-hero{grid-template-columns:minmax(0,1fr) minmax(82px,34%)!important;gap:6px!important}
+  .hero-copy>p{font-size:clamp(14px,3.7vw,18px)!important}
+  .mascot-speech{font-size:clamp(13px,3.2vw,16px)!important;overflow-wrap:anywhere}
+  .source-grid{grid-template-columns:1fr!important}
+  .source-button{grid-template-columns:clamp(42px,12vw,56px) minmax(0,1fr) 16px!important;padding:10px 12px!important;gap:0 9px!important;min-height:70px!important}
+  .source-button .source-icon{width:clamp(40px,11vw,52px)!important;height:clamp(40px,11vw,52px)!important;font-size:clamp(21px,6vw,28px)!important}
+  .source-button small{white-space:normal}
+  .analysis-grid{grid-template-columns:1fr!important}
+  .local-action,.ai-action{grid-template-columns:40px minmax(0,1fr) 16px;gap:8px;padding:12px;min-height:82px}
+  .action-icon{font-size:28px}
+  .local-action strong,.ai-action strong{font-size:clamp(16px,4vw,20px)}
+  .local-action small,.ai-action small{font-size:14px}
+  .help-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  .help-item,.help-item summary{min-height:82px}
+  .help-item summary{padding:8px!important;gap:5px}
+  .help-item summary strong{font-size:clamp(12px,3.4vw,15px)}
+  .help-item .help-icon{font-size:20px;flex-basis:22px}
+  .riskbox{display:flex;align-items:center}
+  .result-action strong{font-size:clamp(16px,4vw,20px)}
+  .report-voice-controls button{width:100%!important}
+  .drop{padding:11px}
+  footer{font-size:13px}
+}
+@media(max-width:360px){
+  :root{--page-gutter:8px}
+  .mascot-hero{grid-template-columns:minmax(0,1fr) 78px!important}
+  .mascot-stage{width:78px!important}
+  .hero-copy h1{font-size:clamp(23px,7.2vw,27px)!important}
+  .help-grid{grid-template-columns:1fr!important}
+  .help-item,.help-item summary{min-height:62px}
+  .riskbox{align-items:flex-start}
+}
+@media(min-width:900px){
+  .source-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+
 </style>
 <style id="scam-lens-mobile">
 /* Mobile-first improvements; desktop layout remains intact. */
