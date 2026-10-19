@@ -1404,7 +1404,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 </section>
 <section id="emailDropZone" class="email-drop-zone" tabindex="0" role="button" aria-label="E-Mail-Datei hier ablegen oder auswählen">
   <div class="email-drop-icon" aria-hidden="true">✉</div>
-  <div class="email-drop-copy"><strong>E-Mail hierher ziehen</strong><span>Lege eine .eml-, .msg-, .txt- oder .html-Datei hier ab – oder wähle sie aus.</span></div>
+  <div class="email-drop-copy"><strong>E-Mail hierher ziehen</strong><span>Ziehe eine E-Mail direkt aus Outlook hierher oder lege eine .eml-, .msg-, .txt- oder .html-Datei ab.</span></div>
   <button type="button" id="emailDropBrowse" class="secondary">Datei auswählen</button>
   <p id="emailDropStatus" class="email-drop-status" aria-live="polite">Die Datei wird lokal eingelesen. Die Analyse startet erst, wenn du sie selbst startest.</p>
 </section>
@@ -1669,7 +1669,16 @@ const emailDropZone = $("emailDropZone");
 const emailDropStatus = $("emailDropStatus");
 const emailExtensions = /\.(eml|msg|oft|mbox|mht|mhtml|txt|html|htm|pdf)$/i;
 function slHandleDroppedEmailFiles(fileList, transfer) {
-  const files = Array.from(fileList || []);
+  let files = Array.from(fileList || []);
+  /* Outlook may expose dragged attachments/messages through DataTransfer.items rather than .files. */
+  if (!files.length && transfer && transfer.items) {
+    try {
+      files = Array.from(transfer.items)
+        .filter(item => item.kind === "file")
+        .map(item => { try { return item.getAsFile(); } catch (_) { return null; } })
+        .filter(Boolean);
+    } catch (_) {}
+  }
   /* Webmail and some desktop clients drag message content as text/html or text/plain, not as a file. */
   if (!files.length && transfer) {
     let droppedText = "";
@@ -1738,7 +1747,13 @@ function slHandleDroppedEmailFiles(fileList, transfer) {
 emailDropZone.addEventListener("dragenter", event => { event.preventDefault(); emailDropZone.classList.add("is-dragover"); });
 emailDropZone.addEventListener("dragover", event => { event.preventDefault(); if(event.dataTransfer) event.dataTransfer.dropEffect = "copy"; emailDropZone.classList.add("is-dragover"); });
 emailDropZone.addEventListener("dragleave", event => { if(!emailDropZone.contains(event.relatedTarget)) emailDropZone.classList.remove("is-dragover"); });
-emailDropZone.addEventListener("drop", event => { event.preventDefault(); emailDropZone.classList.remove("is-dragover"); slHandleDroppedEmailFiles(event.dataTransfer && event.dataTransfer.files, event.dataTransfer); });
+emailDropZone.addEventListener("drop", event => {
+  event.preventDefault();
+  event.stopPropagation();
+  emailDropZone.classList.remove("is-dragover");
+  const transfer = event.dataTransfer;
+  slHandleDroppedEmailFiles(transfer && transfer.files, transfer);
+});
 emailDropZone.addEventListener("click", event => { if(event.target.closest("button")) return; $("emailDropBrowse").click(); });
 emailDropZone.addEventListener("keydown", event => { if(event.key==="Enter" || event.key===" "){event.preventDefault();$("emailDropBrowse").click();} });
 $("emailDropBrowse").addEventListener("click", event => {
