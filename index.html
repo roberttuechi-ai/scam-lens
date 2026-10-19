@@ -1766,21 +1766,7 @@ $("sourceCamera").addEventListener("click", () => {
   $("file").setAttribute("capture", "environment");
   $("file").click();
 });
-$("sourcePhoto").addEventListener("click", () => {
-  openMessageEditor("Text aus Foto erkennen", "Wähle einen Screenshot oder ein Foto. Erkannter Text erscheint hier.", false);
-  cameraMode = false;
-  $("file").accept = "image/*";
-  $("file").removeAttribute("capture");
-  $("file").click();
-});
 $("file").addEventListener("click", () => { cameraMode = false; $("file").removeAttribute("capture"); });
-$("sourceEmail").addEventListener("click", () => {
-  openMessageEditor("E-Mail importieren", "Nach dem Einlesen kannst du den Inhalt prüfen und analysieren.", false);
-  cameraMode = false;
-  $("file").accept = ".eml,.msg,.oft,.mbox,.mht,.mhtml,.pdf,.txt,.html,.htm,.ics,.vcf,message/rfc822,application/pdf,text/plain";
-  $("file").removeAttribute("capture");
-  $("file").click();
-});
 
 /* Accessible drag-and-drop for email files; reuse the existing import pipeline. */
 const emailDropZone = $("emailDropZone");
