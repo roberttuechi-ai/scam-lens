@@ -1668,8 +1668,34 @@ $("sourceEmail").addEventListener("click", () => {
 const emailDropZone = $("emailDropZone");
 const emailDropStatus = $("emailDropStatus");
 const emailExtensions = /\.(eml|msg|oft|mbox|mht|mhtml|txt|html|htm|pdf)$/i;
-function slHandleDroppedEmailFiles(fileList) {
+function slHandleDroppedEmailFiles(fileList, transfer) {
   const files = Array.from(fileList || []);
+  /* Webmail and some desktop clients drag message content as text/html or text/plain, not as a file. */
+  if (!files.length && transfer) {
+    let droppedText = "";
+    try { droppedText = transfer.getData("text/plain") || ""; } catch (_) {}
+    if (!droppedText.trim()) {
+      try {
+        const html = transfer.getData("text/html") || "";
+        if (html) {
+          const doc = new DOMParser().parseFromString(html, "text/html");
+          doc.querySelectorAll("script,style,head,meta,link").forEach(node => node.remove());
+          droppedText = (doc.body ? doc.body.innerText || doc.body.textContent : "").trim();
+        }
+      } catch (_) {}
+    }
+    if (droppedText.trim()) {
+      emailDropZone.classList.remove("is-error");
+      openMessageEditor("E-Mail importieren", "Der gezogene E-Mail-Inhalt wurde übernommen. Bitte kontrolliere ihn vor der Analyse.", false);
+      $("msg").value = droppedText.trim().slice(0, 30000);
+      emailDropStatus.textContent = "E-Mail-Inhalt übernommen. Bitte prüfen; die Analyse startet nicht automatisch.";
+      $("fileStatus").textContent = "E-Mail-Inhalt per Drag & Drop übernommen. Noch keine Analyse gestartet.";
+      return;
+    }
+    emailDropZone.classList.add("is-error");
+    emailDropStatus.textContent = "Der Mail-Client stellt beim Ziehen keinen lesbaren Inhalt bereit. Speichere die E-Mail als .eml oder ziehe den markierten Nachrichtentext hierher.";
+    return;
+  }
   if (!files.length) return;
   if (files.length > 1) {
     emailDropZone.classList.add("is-error");
@@ -1706,7 +1732,7 @@ function slHandleDroppedEmailFiles(fileList) {
 emailDropZone.addEventListener("dragenter", event => { event.preventDefault(); emailDropZone.classList.add("is-dragover"); });
 emailDropZone.addEventListener("dragover", event => { event.preventDefault(); if(event.dataTransfer) event.dataTransfer.dropEffect = "copy"; emailDropZone.classList.add("is-dragover"); });
 emailDropZone.addEventListener("dragleave", event => { if(!emailDropZone.contains(event.relatedTarget)) emailDropZone.classList.remove("is-dragover"); });
-emailDropZone.addEventListener("drop", event => { event.preventDefault(); emailDropZone.classList.remove("is-dragover"); slHandleDroppedEmailFiles(event.dataTransfer && event.dataTransfer.files); });
+emailDropZone.addEventListener("drop", event => { event.preventDefault(); emailDropZone.classList.remove("is-dragover"); slHandleDroppedEmailFiles(event.dataTransfer && event.dataTransfer.files, event.dataTransfer); });
 emailDropZone.addEventListener("click", event => { if(event.target.closest("button")) return; $("emailDropBrowse").click(); });
 emailDropZone.addEventListener("keydown", event => { if(event.key==="Enter" || event.key===" "){event.preventDefault();$("emailDropBrowse").click();} });
 $("emailDropBrowse").addEventListener("click", event => {
