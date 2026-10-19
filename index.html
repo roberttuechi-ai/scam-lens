@@ -1851,7 +1851,7 @@ const urlCheck = inspectUrls(text);
 if (urlCheck.urls.length) { add("Webadresse gefunden",urlCheck.urls.length + " Link(s) erkannt. Diese lokale Prüfung verifiziert weder Domaininhaber noch Live-Reputation oder Weiterleitungen.",1); }
 for (const f of urlCheck.findings) { add(f.title||"URL-Warnhinweis",f.why||f.detail||"Die URL enthält prüfenswerte Merkmale.",2); }
 if(!e.length)e.push({title:"Keine typischen Muster erkannt",why:"Das beweist nicht, dass die Nachricht echt oder sicher ist.",source:"Lokale Regelprüfung"});
-const risk=p>=8?"high":p>=3?"medium":"low";
+const strongThreat=/password|passwort|login credentials|verification code|bestätigungscode|konto gesperrt|account suspended|account locked|keep this confidential|geheim halten|gift card|geschenkkarte|bitcoin|crypto|krypto|overpayment|überzahlung|refund to|rückerstattung an|pay immediately|sofort bezahlen/i.test(text);const risk=strongThreat&&p>=5?"high":p>=3?"medium":"low";
 return {points:Math.min(10,Math.round(p)),raw:p,evidence:e,risk,method:"Lokale Regel- und Kontextprüfung"}}function normaliseRisk(r){r=String(r||"").toLowerCase();if(["high","hoch","hohes risiko"].includes(r))return "high";if(["medium","mittel","auffälligkeiten gefunden"].includes(r))return "medium";if(["low","niedrig","gering"].includes(r))return "low";return "unknown"}
 function renderReport(data){let risk=data.risk||"unknown",score=risk==="high"?10:risk==="medium"?5:risk==="low"?2:"?";$("score").textContent=score;$("riskbox").className="riskbox risk-"+risk;
 const titles={high:"Hohes Risiko",medium:"Auffälligkeiten gefunden",low:"Wenige Hinweise erkannt",unknown:"Nicht ausreichend prüfbar"};
