@@ -1684,6 +1684,12 @@ function slHandleDroppedEmailFiles(fileList, transfer) {
         }
       } catch (_) {}
     }
+    if (!droppedText.trim()) {
+      try {
+        const uri = transfer.getData("text/uri-list") || "";
+        if (uri && !/^https?:/i.test(uri.trim())) droppedText = uri.trim();
+      } catch (_) {}
+    }
     if (droppedText.trim()) {
       emailDropZone.classList.remove("is-error");
       openMessageEditor("E-Mail importieren", "Der gezogene E-Mail-Inhalt wurde übernommen. Bitte kontrolliere ihn vor der Analyse.", false);
@@ -1693,7 +1699,7 @@ function slHandleDroppedEmailFiles(fileList, transfer) {
       return;
     }
     emailDropZone.classList.add("is-error");
-    emailDropStatus.textContent = "Der Mail-Client stellt beim Ziehen keinen lesbaren Inhalt bereit. Speichere die E-Mail als .eml oder ziehe den markierten Nachrichtentext hierher.";
+    emailDropStatus.textContent = "Outlook stellt beim Ziehen dieser Nachricht keinen lesbaren Text bereit. Zuverlässiger Weg: E-Mail in Outlook öffnen → Datei > Speichern unter (Outlook-Desktop) und als .msg speichern; danach hier auf „Datei auswählen“ klicken und die .msg-Datei importieren. Alternativ Nachrichtentext markieren, kopieren und in „Text eingeben“ einfügen.";
     return;
   }
   if (!files.length) return;
