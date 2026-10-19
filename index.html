@@ -841,15 +841,31 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
 @media(min-width:601px){.mascot-hero{min-height:390px!important}.mascot-hero>.landscape-art{top:90px!important;left:-28px!important;right:-28px!important}}
 @media(max-width:600px){.mascot-hero{min-height:315px!important}.mascot-hero>.landscape-art{top:85px!important;left:-15px!important;right:-15px!important}}
 </style>
+<style id="scam-lens-settings-gear-fix-v35">
+/* Version 3.5: make the visible gear the actual settings control */
+.header-tools{display:flex!important;align-items:center!important;gap:10px!important}
+.operator-top{position:relative!important;top:auto!important;right:auto!important;z-index:20!important;display:block!important;flex:0 0 auto!important;font-size:14px!important}
+.operator-top>summary{display:grid!important;place-items:center!important;box-sizing:border-box!important;list-style:none!important;cursor:pointer!important;width:54px!important;height:54px!important;overflow:visible!important;opacity:1!important;font-size:0!important;padding:0!important;border:1px solid #a9d0ff!important;background:#f8fcff!important;border-radius:13px!important;color:#0752b4!important}
+.operator-top>summary::-webkit-details-marker{display:none!important}
+.operator-top>summary::before{content:"⚙"!important;font-size:27px!important;line-height:1!important}
+.operator-top[open]>summary{background:#e7f2ff!important;border-color:#75aff5!important}
+.operator-top[open] .operator-panel{position:absolute!important;top:calc(100% + 8px)!important;right:0!important;width:min(360px,calc(100vw - 32px))!important;max-height:70vh!important;overflow:auto!important;background:#fff!important;padding:16px!important;border:1px solid #c6dcf3!important;border-radius:16px!important;box-shadow:0 12px 30px #10396325!important;z-index:50!important}
+@media(max-width:600px){
+ .header-tools{gap:5px!important}
+ .operator-top>summary{width:40px!important;height:40px!important;border-radius:11px!important}
+ .operator-top>summary::before{font-size:22px!important}
+ .operator-top[open] .operator-panel{right:0!important}
+}
+</style>
 </head>
 <body>
-<header><div class="wrap"><div class="header-row"><div><div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><div class="header-tools"><div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div><span class="settings-icon" aria-hidden="true">⚙</span></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
+<header><div class="wrap"><div class="header-row"><div><div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><div class="header-tools"><div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div><details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
 
 
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 3.4</span>
+<span class="tag">SCAM LENS · TESTVERSION 3.5</span>
 
 
 <div class="mascot-hero">
