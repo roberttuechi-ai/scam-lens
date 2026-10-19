@@ -830,6 +830,17 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
 .hero-copy,.mascot-stage{position:relative!important;z-index:2!important}
 @media(max-width:600px){.landscape-art{top:185px!important;height:205px!important}}
 </style>
+<style id="scam-lens-landscape-fix-v34">
+/* Version 3.4: fix landscape layering so mountains and trees remain visible */
+#app>section:first-child{position:relative!important;overflow:hidden!important}
+.mascot-hero{position:relative!important;isolation:isolate!important;overflow:visible!important;background:transparent!important;min-height:350px!important}
+.mascot-hero>.landscape-art{position:absolute!important;z-index:0!important;left:-24px!important;right:-24px!important;top:80px!important;bottom:0!important;height:auto!important;overflow:hidden!important;pointer-events:none!important;opacity:1!important;mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 76%,transparent 100%)!important;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 76%,transparent 100%)!important}
+.mascot-hero>.landscape-art svg{display:block!important;width:100%!important;height:100%!important}
+.mascot-hero>.hero-copy,.mascot-hero>.mascot-stage{position:relative!important;z-index:2!important}
+.mascot-hero .mascot-speech{background:rgba(247,251,255,.94)!important}
+@media(min-width:601px){.mascot-hero{min-height:390px!important}.mascot-hero>.landscape-art{top:90px!important;left:-28px!important;right:-28px!important}}
+@media(max-width:600px){.mascot-hero{min-height:315px!important}.mascot-hero>.landscape-art{top:85px!important;left:-15px!important;right:-15px!important}}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div><div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><div class="header-tools"><div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div><span class="settings-icon" aria-hidden="true">⚙</span></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
@@ -838,8 +849,10 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 3.3</span>
+<span class="tag">SCAM LENS · TESTVERSION 3.4</span>
 
+
+<div class="mascot-hero">
 <div class="landscape-art" aria-hidden="true">
 <svg viewBox="0 0 900 310" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
 <defs>
@@ -866,7 +879,6 @@ footer{max-width:540px!important;color:#234c78!important;font-size:14px!importan
 </g>
 <rect y="294" width="900" height="16" fill="#fff" opacity=".38"/>
 </svg></div>
-<div class="mascot-hero">
   <div class="hero-copy"><h1>Hallo!<br>Ich bin Lensi.</h1><p>Ich helfe dir, verdächtige Nachrichten einfach und sicher zu prüfen.</p><div class="mascot-speech">Du musst kein Technikprofi sein. Wir gehen alles in Ruhe durch. Du kannst dir den fertigen Bericht auch vorlesen lassen.</div></div>
   <div class="mascot-stage" role="img" aria-label="Scam Lens, ein freundlicher kleiner Sicherheitsroboter mit Schild">
     <svg class="scam-mascot" viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
