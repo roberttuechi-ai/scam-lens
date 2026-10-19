@@ -1773,11 +1773,7 @@ $("sourcePhoto").addEventListener("click", () => {
   $("file").removeAttribute("capture");
   $("file").click();
 });
-$("sourceFile").addEventListener("click", () => {
-  cameraMode = false;
-  $("file").removeAttribute("capture");
-  openMessageEditor("Datei hochladen", "Wähle ein Foto, einen Screenshot, ein PDF oder eine Text-/E-Mail-Datei. Der Inhalt wird zum Prüfen vorbereitet.", false);
-});
+$("file").addEventListener("click", () => { cameraMode = false; $("file").removeAttribute("capture"); });
 $("sourceEmail").addEventListener("click", () => {
   openMessageEditor("E-Mail importieren", "Nach dem Einlesen kannst du den Inhalt prüfen und analysieren.", false);
   cameraMode = false;
