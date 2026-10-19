@@ -350,6 +350,19 @@ details summary{background:#f0f5ff!important;color:#355b91!important;border:1px 
 @media(max-width:600px){header{padding:20px 15px}.guided-steps{align-items:stretch;gap:4px;padding:10px}.guided-step{flex-direction:column;text-align:center;gap:5px}.guided-step strong{font-size:12px}.guided-step small{font-size:10px}.guided-step>span{flex-basis:32px;height:32px;width:32px}.step-connector{flex-basis:8px;margin-top:15px}.source-grid{grid-template-columns:1fr 1fr!important}.source-button{min-height:128px!important;padding:12px!important}.source-button span:nth-child(2){font-size:17px!important}.source-icon{font-size:34px!important}.toolbar{display:grid;grid-template-columns:1fr!important}.toolbar button{width:100%}.local-action,.ai-action{grid-template-columns:46px 1fr 18px!important;padding:14px!important}.local-action strong,.ai-action strong{font-size:18px!important}.riskbox{align-items:flex-start!important;gap:12px!important;padding:14px!important}.scorecircle{width:74px!important;height:74px!important;min-width:74px!important}.scorecircle strong{font-size:24px!important}}
 @media(prefers-reduced-motion:reduce){button{transition:none!important}}
 </style>
+<style id="scam-lens-mascot-v2-2">
+.mascot-hero{display:grid;grid-template-columns:minmax(0,1fr) 230px;align-items:center;gap:18px;margin:10px 0 18px;padding:22px 24px;border-radius:24px;background:linear-gradient(120deg,#e8f5ff 0%,#f2edff 58%,#fff0f5 100%);border:1px solid #dce6fa;overflow:hidden}
+.hero-copy h1{margin:4px 0 10px!important;color:#173b61!important}
+.hero-copy p{font-size:18px;line-height:1.55;margin:0 0 14px}
+.mascot-speech{display:inline-block;padding:10px 14px;background:#fff;border:1px solid #d8e5f6;border-radius:15px 15px 15px 4px;color:#355579;font-weight:700;font-size:15px;box-shadow:0 4px 12px #3459870b}
+.mascot-stage{display:flex;align-items:center;justify-content:center;flex-direction:column;min-width:0}
+.scam-mascot{width:100%;max-width:210px;height:auto;overflow:visible;filter:drop-shadow(0 9px 10px #4169a31c);animation:lensi-float 3.6s ease-in-out infinite}
+.mascot-name{display:flex;align-items:center;gap:6px;color:#244d81;font-size:17px;font-weight:900;margin-top:-2px}
+.mascot-name span{font-size:11px;font-weight:600;color:#7488a4}
+@keyframes lensi-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media(max-width:620px){.mascot-hero{grid-template-columns:minmax(0,1fr) 112px;gap:8px;padding:17px 14px;border-radius:20px}.hero-copy h1{font-size:26px!important;line-height:1.14!important}.hero-copy p{font-size:15px;line-height:1.45}.mascot-speech{font-size:12px;padding:8px 9px}.scam-mascot{max-width:120px}.mascot-name{display:block;text-align:center;font-size:14px}.mascot-name span{display:block;font-size:10px}}
+@media(prefers-reduced-motion:reduce){.scam-mascot{animation:none}}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="brand">SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div></header>
@@ -362,7 +375,35 @@ details summary{background:#f0f5ff!important;color:#355b91!important;border:1px 
 <section class="card">
 <span class="tag">SCAM LENS · TESTVERSION 2.1</span>
 <div class="toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak">Ergebnis vorlesen</button><button class="secondary" id="stop">Vorlesen stoppen</button></div>
-<h1>Ist diese Nachricht sicher? 🕵️</h1><p>Wir schauen gemeinsam genauer hin. Füge eine verdächtige Nachricht ein oder lade ein Foto bzw. eine Datei hoch. Scam Lens sucht nach Warnsignalen und zeigt dir, was du als Nächstes tun kannst.</p>
+<div class="mascot-hero">
+  <div class="hero-copy"><h1>Ist diese Nachricht sicher?</h1><p>Hallo! Ich helfe dir, Betrugsnachrichten zu erkennen. Wähle eine Nachricht aus – wir prüfen sie gemeinsam Schritt für Schritt.</p><div class="mascot-speech">🔎 Gemeinsam finden wir verdächtige Hinweise!</div></div>
+  <div class="mascot-stage" role="img" aria-label="Scam Lens, ein freundlicher kleiner Sicherheitsroboter mit Schild">
+    <svg class="scam-mascot" viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs><linearGradient id="botBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dbeaff"/></linearGradient><linearGradient id="botBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#42b9ff"/><stop offset="1" stop-color="#2878ed"/></linearGradient></defs>
+      <ellipse cx="119" cy="230" rx="62" ry="10" fill="#355f9b" opacity=".12"/>
+      <path d="M77 176 Q52 185 44 207 Q41 218 52 220 Q62 221 69 208 L91 190" fill="url(#botBody)" stroke="#a8c5eb" stroke-width="4" stroke-linecap="round"/>
+      <path d="M161 176 Q185 183 195 200 Q202 211 192 217 Q182 222 174 208 L153 191" fill="url(#botBody)" stroke="#a8c5eb" stroke-width="4" stroke-linecap="round"/>
+      <rect x="72" y="121" width="96" height="93" rx="31" fill="url(#botBody)" stroke="#a8c5eb" stroke-width="4"/>
+      <rect x="92" y="142" width="56" height="45" rx="18" fill="url(#botBlue)"/>
+      <path d="M108 164 l8 8 16 -18" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="57" y="39" width="126" height="105" rx="35" fill="url(#botBody)" stroke="#a8c5eb" stroke-width="4"/>
+      <rect x="69" y="53" width="102" height="70" rx="25" fill="#173b61"/>
+      <ellipse cx="98" cy="82" rx="10" ry="13" fill="#76dcff"/><ellipse cx="143" cy="82" rx="10" ry="13" fill="#76dcff"/>
+      <circle cx="101" cy="78" r="3" fill="#fff"/><circle cx="146" cy="78" r="3" fill="#fff"/>
+      <path d="M100 103 Q120 120 141 103" fill="none" stroke="#8be9ff" stroke-width="5" stroke-linecap="round"/>
+      <path d="M120 39 V25" stroke="#8eabd4" stroke-width="5" stroke-linecap="round"/><circle cx="120" cy="18" r="10" fill="#ffcb52" stroke="#fff" stroke-width="3"/>
+      <circle cx="54" cy="84" r="10" fill="#b8d4f7" stroke="#8eabd4" stroke-width="3"/><circle cx="186" cy="84" r="10" fill="#b8d4f7" stroke="#8eabd4" stroke-width="3"/>
+      <path d="M177 135 Q199 139 209 158 L217 181 Q220 191 210 196 L188 201 Q181 203 178 193 L169 164" fill="url(#botBody)" stroke="#a8c5eb" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M192 155 L210 164 L208 183 Q202 194 192 198 Q181 191 177 181 L176 164 Z" fill="url(#botBlue)" stroke="#fff" stroke-width="2"/>
+      <path d="M185 177 l6 6 11 -13" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M82 213 v10 M158 213 v10" stroke="#a8c5eb" stroke-width="8" stroke-linecap="round"/>
+      <rect x="68" y="220" width="35" height="15" rx="7" fill="#2878ed"/><rect x="137" y="220" width="35" height="15" rx="7" fill="#2878ed"/>
+      <path d="M33 47 l4 9 10 2 -8 6 1 10 -7 -6 -9 4 4 -9 -6 -8 10 1z" fill="#ffcb52"/>
+      <path d="M199 37 l3 7 8 2 -7 4 1 8 -6 -5 -7 3 3 -7 -5 -6 8 1z" fill="#c6a6ff"/>
+    </svg>
+    <span class="mascot-name">Lensi <span>dein Sicherheitshelfer</span></span>
+  </div>
+</div>
 <div class="guided-steps" aria-label="So funktioniert Scam Lens">
   <div class="guided-step active"><span>1</span><div><strong>Nachricht wählen</strong><small>Text, Foto oder E-Mail</small></div></div>
   <div class="step-connector" aria-hidden="true"></div>
