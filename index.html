@@ -161,7 +161,7 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 1.3</span>
+<span class="tag">SCAM LENS · TESTVERSION 1.4</span>
 <div class="toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak">Ergebnis vorlesen</button><button class="secondary" id="stop">Vorlesen stoppen</button></div>
 <h1>Ist diese Nachricht sicher?</h1><p>Füge den Nachrichtentext ein oder wähle eine Datei. Du erhältst einen einzigen Bericht mit Risikowert, Belegen und nächsten Schritten.</p>
 <label for="msg">Nachrichtentext</label><textarea id="msg" maxlength="30000" placeholder="E-Mail, SMS oder Chatnachricht hier einfügen …"></textarea>
@@ -182,7 +182,7 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 </div>
 <details open style="margin-top:16px"><summary style="cursor:pointer;font-weight:bold">KI-ANALYSE – Einstellungen</summary>
 <p class="muted">Mit Klick auf „KI-Analyse starten“ wird der Nachrichtentext an diese Backend-Adresse und den dort konfigurierten KI-Anbieter übertragen. Es gibt kein zusätzliches Freigabefeld.</p>
-<label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><p class="muted" id="backendHelp">Die Backend-Adresse ist nicht fest hinterlegt, weil kostenlose Cloudflare-Quick-Tunnel-Adressen temporär sind. Starte zuerst das Backend und den Tunnel auf deinem PC und trage hier die aktuell angezeigte HTTPS-Adresse ein – ohne <code>/health</code> oder <code>/api/analyze</code>.</p>
+<label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Backend-Adresse ist nicht fest hinterlegt, weil kostenlose Cloudflare-Quick-Tunnel-Adressen temporär sind. Starte zuerst das Backend und den Tunnel auf deinem PC und trage hier die aktuell angezeigte HTTPS-Adresse ein – ohne <code>/health</code> oder <code>/api/analyze</code>.</p>
 </details>
 
 <div class="risk-legend" aria-label="Erklärung der Risikostufen" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0">
@@ -330,6 +330,30 @@ const local=localAnalysis(text);let report={risk:local.risk,score:local.points,s
 report.method="Nur lokale Regelprüfung (automatisch, ohne Datenübertragung)";
 renderReport(report)}
 $("check").onclick=()=>runLocalReport($("msg").value.trim());
+$("checkBackend").addEventListener("click", async () => {
+  const base = $("backend").value.trim().replace(/\\/+$/, "");
+  const status = $("backendStatus");
+  status.style.display = "block";
+  if (!/^https?:\\/\\//i.test(base)) {
+    status.textContent = "Bitte zuerst die aktuelle Backend-Adresse ohne /health eintragen.";
+    return;
+  }
+  status.textContent = "Verbindung wird geprüft …";
+  try {
+    const res = await fetch(base + "/health", { method: "GET", headers: { "Accept": "application/json" } });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (data.ai_configured === true) {
+      status.textContent = "Backend erreichbar. KI-Konfiguration ist aktiv.";
+    } else if (data.ai_configured === false) {
+      status.textContent = "Backend erreichbar, aber die KI ist noch nicht konfiguriert (ai_configured: false).";
+    } else {
+      status.textContent = "Backend erreichbar. Antwort: " + JSON.stringify(data);
+    }
+  } catch (err) {
+    status.textContent = "Verbindung nicht bestätigt. Prüfe die Tunnel-Adresse, ob das Tunnel-Fenster noch läuft und ob das Backend CORS für https://roberttuechi-ai.github.io erlaubt. Details: " + err.message;
+  }
+});
 $("msg").addEventListener("input",()=>{
   clearTimeout(window.scamLensAutoTimer);
   const text=$("msg").value.trim();
