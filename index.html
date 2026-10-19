@@ -151,6 +151,60 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 }
 </style>
 
+
+<style id="scam-lens-visual-refresh-1-9">
+:root{color-scheme:dark;--navy:#061426;--blue:#087cff;--teal:#00b894;--red:#ff4d5e;--orange:#ffb020;--green:#28c987}
+html,body{background:#061426!important;color:#e8f1ff!important}
+body{background:radial-gradient(ellipse at 50% -10%,#102c50 0,#061426 55%,#030b16 100%)!important}
+header{background:linear-gradient(115deg,#061426,#0a1d36 60%,#082b50)!important;border-bottom:1px solid #193451;box-shadow:0 8px 30px #0004}
+.brand{letter-spacing:-1px}.brand span{color:#4db8ff}
+main{padding-top:26px}
+.card{background:linear-gradient(145deg,#0d1d31,#091728)!important;border:1px solid #203752!important;border-radius:20px!important;box-shadow:0 12px 35px #0003!important;color:#e8f1ff}
+h1,h2,h3{color:#f4f8ff!important;letter-spacing:-.35px}
+p,label,li{color:inherit}
+.tag{background:#0c4fa4!important;color:#fff!important;border:1px solid #287fe9}
+button{border-radius:13px!important;transition:transform .15s,border-color .15s,background .15s!important}
+button:hover{transform:translateY(-2px);box-shadow:0 7px 20px #0004}
+.secondary{background:#10243b!important;color:#e5f0ff!important;border-color:#35516f!important}
+.primary{background:#087cff!important;border-color:#087cff!important;color:#fff!important}
+textarea,input,select{background:#071426!important;color:#f0f6ff!important;border:1px solid #34506f!important;border-radius:13px!important}
+textarea::placeholder,input::placeholder{color:#8ea5c1}
+.toolbar{gap:9px}
+.source-button{background:linear-gradient(145deg,#10243b,#0a192b)!important;border:1px solid #294563!important;color:#e8f1ff!important;border-radius:16px!important}
+.source-button:hover{background:#132d4a!important;border-color:#1684ff!important}
+.source-icon{color:#45a8ff!important}
+.camera-button{background:linear-gradient(145deg,#321c2b,#211726)!important;border-color:#9b4858!important}
+.camera-button .source-icon{color:#ff7381!important}
+.drop{background:#0b1a2c!important;border:1px dashed #45617f!important}
+.muted,.method,footer{color:#a4b8d0!important}
+.notice{background:#2a2415!important;border:1px solid #98702b!important;color:#ffe3a0!important}
+details summary{background:#10243b!important;color:#a9cfff!important;border:1px solid #294563}
+.help-link{background:#0d1e32!important;border-color:#2b4561!important;color:#e8f1ff!important}
+.help-link small{color:#a8bbd1!important}
+.help-red{background:#2a151d!important;border-color:#763541!important}
+.help-blue{background:#0d2038!important;border-color:#28558b!important}
+.help-purple{background:#211733!important;border-color:#5c3d87!important}
+.help-orange{background:#2a2114!important;border-color:#79582b!important}
+.help-green{background:#0d2923!important;border-color:#226c58!important}
+.analysis-grid{gap:12px}
+.local-action{background:linear-gradient(120deg,#0c352b,#102a25)!important;color:#bfffe0!important;border:1px solid #238363!important}
+.ai-action{background:linear-gradient(120deg,#087cff,#1746c9)!important;border:1px solid #318cff!important;box-shadow:0 8px 24px #087cff30!important}
+#analysisSource.source-local{background:#102a28!important;color:#9df5d8!important;border-color:#21876e!important}
+#analysisSource.source-ai{background:#142044!important;color:#c6d3ff!important;border-color:#526af0!important}
+.risk-legend>div{filter:saturate(.82);border-radius:12px}
+#riskbox.risk-high{background:#2a121c!important;border-color:#ff4d5e!important;color:#ffe2e5!important}
+#riskbox.risk-high .scorecircle{background:#d92c45!important}
+#riskbox.risk-medium{background:#2a2113!important;border-color:#ffb020!important;color:#ffe8bd!important}
+#riskbox.risk-medium .scorecircle{background:#b86a00!important}
+#riskbox.risk-low{background:#102820!important;border-color:#28c987!important;color:#caffdf!important}
+#riskbox.risk-low .scorecircle{background:#16865a!important}
+#riskbox.risk-unknown{background:#152235!important;border-color:#60738c!important;color:#e2eaf4!important}
+#riskbox .scorecircle{box-shadow:0 5px 18px #0004}
+.report{border-color:#29415c!important}
+@media(max-width:700px){header{padding:22px 15px}main{padding-top:16px}.card{border-radius:16px!important}.source-button{min-height:112px}.analysis-grid{grid-template-columns:1fr!important}}
+@media(prefers-reduced-motion:reduce){button{transition:none!important}}
+</style>
+
 </head>
 <body>
 <header><div class="wrap"><div class="brand">SCAM <span>LENS</span></div><p>Verdächtige Nachrichten erkennen. Risiken verstehen. Sicher handeln.</p></div></header>
@@ -161,7 +215,7 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 1.8</span>
+<span class="tag">SCAM LENS · TESTVERSION 1.9</span>
 <div class="toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak">Ergebnis vorlesen</button><button class="secondary" id="stop">Vorlesen stoppen</button></div>
 <h1>Ist diese Nachricht sicher?</h1><p>Füge den Nachrichtentext ein oder wähle eine Datei. Du erhältst einen einzigen Bericht mit Risikowert, Belegen und nächsten Schritten.</p>
 <label for="msg">Nachrichtentext</label><textarea id="msg" maxlength="30000" placeholder="E-Mail, SMS oder Chatnachricht hier einfügen …"></textarea>
