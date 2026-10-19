@@ -643,15 +643,88 @@ body.accessible .report-voice-controls,body.accessible-xl .report-voice-controls
 body.accessible .report-voice-controls button,body.accessible-xl .report-voice-controls button{width:100%;min-width:0}
 </style>
 
+<style id="scam-lens-v31-visual-override">
+/* 3.1 VISUAL REBUILD — force the selected calm voice-assistant mockup */
+:root{font-family:Arial,Helvetica,sans-serif!important;font-size:18px!important;color:#102f59!important;background:#eaf5ff!important}
+html,body{margin:0!important;background:#eaf5ff!important;color:#102f59!important}
+body{background:linear-gradient(180deg,#dcefff 0,#f6f9fc 300px,#f6f9fc 100%)!important}
+header{background:#f8fcff!important;color:#123765!important;padding:15px 16px!important;box-shadow:none!important;border-bottom:1px solid #d8e8f5!important}
+header .wrap{max-width:760px!important}
+.header-row{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important}
+.brand{font-size:28px!important;color:#123765!important;letter-spacing:-.4px!important}
+.brand span{color:#1769c2!important}
+header p{color:#476583!important;font-size:15px!important;margin:3px 0 0!important}
+.operator-top{font-size:13px!important}
+main.wrap,#app{max-width:760px!important;width:100%!important;margin:0 auto!important;padding:16px 12px 30px!important}
+#app>section:first-child{background:#fff!important;border:1px solid #dce9f4!important;border-radius:25px!important;padding:16px!important;box-shadow:0 10px 28px #163b5d10!important}
+#app>section:first-child>.tag{font-size:11px!important;letter-spacing:.5px!important;background:#eef6ff!important;color:#2b5f92!important;border:1px solid #d8e8f6!important}
+.accessibility-toolbar{display:flex!important;justify-content:flex-end!important;gap:8px!important;margin:4px 0 8px!important}
+.accessibility-toolbar button{font-size:14px!important;padding:8px 11px!important;border:1px solid #c9def1!important;background:#f5faff!important;color:#24578a!important}
+.mascot-hero{display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(130px,.85fr)!important;align-items:center!important;gap:8px!important;padding:15px 4px 20px!important;margin:8px 0 16px!important;background:linear-gradient(135deg,#eef7ff 0%,#fff 64%,#f0f8f5 100%)!important;border:0!important;border-radius:22px!important}
+.hero-copy{min-width:0!important}
+.hero-copy h1{font-size:clamp(31px,5vw,43px)!important;line-height:1.08!important;letter-spacing:-1px!important;color:#102d58!important;margin:4px 0 12px!important}
+.hero-copy>p{font-size:18px!important;line-height:1.45!important;color:#203f65!important;margin:0 0 12px!important}
+.mascot-speech{font-size:15px!important;line-height:1.45!important;color:#254c78!important;background:#f0f7ff!important;border:1px solid #c5def5!important;border-radius:17px!important;padding:11px 12px!important}
+.mascot-stage{width:100%!important;max-width:205px!important;margin:auto!important}
+.scam-mascot{display:block!important;width:100%!important;height:auto!important;max-height:230px!important}
+.mascot-name{display:block!important;text-align:center!important;font-size:17px!important;color:#123765!important;font-weight:800!important}
+.mascot-name span{display:block!important;font-size:12px!important;color:#5b7690!important;font-weight:500!important}
+.guided-steps{display:none!important}
+#app>section:first-child>h2{font-size:21px!important;line-height:1.25!important;color:#123765!important;margin:16px 0 12px!important}
+.source-grid{display:flex!important;flex-direction:column!important;gap:10px!important;margin:12px 0 16px!important}
+.source-grid .source-button{position:relative!important;display:grid!important;grid-template-columns:56px minmax(0,1fr) 20px!important;grid-template-rows:auto auto!important;align-items:center!important;justify-items:start!important;gap:0 12px!important;width:100%!important;min-height:82px!important;padding:12px 14px!important;border:1px solid #c8deef!important;border-radius:19px!important;background:#eaf5ff!important;color:#123765!important;text-align:left!important;font-size:19px!important;font-weight:800!important;box-shadow:none!important}
+.source-grid .source-button .source-icon{grid-column:1!important;grid-row:1/3!important;display:grid!important;place-items:center!important;width:54px!important;height:54px!important;border-radius:50%!important;background:#0878ed!important;color:#fff!important;font-size:26px!important}
+.source-grid .source-button>span:not(.source-icon){grid-column:2!important;grid-row:1!important;align-self:end!important}
+.source-grid .source-button small{grid-column:2!important;grid-row:2!important;align-self:start!important;font-size:14px!important;line-height:1.35!important;font-weight:400!important;color:#355777!important;margin-top:2px!important}
+.source-grid .source-button:after{content:"›"!important;display:block!important;grid-column:3!important;grid-row:1/3!important;align-self:center!important;justify-self:center!important;font-size:30px!important;font-weight:400!important;color:#153e70!important}
+.source-grid #sourceCamera{background:#fff0ef!important;border-color:#f0c8c5!important}
+.source-grid #sourceCamera .source-icon{background:#cf433e!important}
+.source-grid #sourcePhoto{background:#f2edff!important;border-color:#d9cdf8!important}
+.source-grid #sourcePhoto .source-icon{background:#7150c8!important}
+.source-grid #sourceFile{background:#eaf8ed!important;border-color:#c4e6cb!important}
+.source-grid #sourceFile .source-icon{background:#217a50!important}
+.source-grid #sourceEmail{background:#fff4d7!important;border-color:#f0dfa7!important}
+.source-grid #sourceEmail .source-icon{background:#7b5a18!important}
+.voice-welcome{display:grid!important;grid-template-columns:70px minmax(0,1fr)!important;align-items:center!important;gap:13px!important;width:100%!important;margin:16px 0 5px!important;padding:15px!important;border:1px solid #d1e4f5!important;border-radius:20px!important;background:linear-gradient(120deg,#eaf6ff,#f8fbff)!important;color:#173b66!important}
+.voice-welcome-icon{display:grid!important;place-items:center!important;width:68px!important;height:68px!important;border-radius:50%!important;background:#0878ed!important;color:#fff!important;font-size:31px!important}
+.voice-welcome strong{font-size:18px!important;color:#123765!important}
+.voice-welcome p{font-size:15px!important;line-height:1.45!important;color:#355777!important;margin:3px 0 0!important}
+#messageEditor{padding:14px!important;border-radius:18px!important;background:#f8fbff!important;border:1px solid #d9e7f3!important}
+#app .card{border-radius:22px!important}
+#report{margin-top:18px!important}
+#report h2{color:#123765!important}
+.report-voice-controls button{width:100%!important;min-height:54px!important;font-size:18px!important;background:#0878ed!important;color:#fff!important;border-color:#0878ed!important}
+.result-action{border-radius:16px!important}
+footer{max-width:760px!important;color:#61768b!important;font-size:13px!important}
+@media(max-width:520px){
+ header{padding:12px!important}
+ main.wrap,#app{padding:9px 8px 24px!important}
+ #app>section:first-child{padding:12px!important;border-radius:20px!important}
+ .brand{font-size:24px!important}
+ .mascot-hero{grid-template-columns:minmax(0,1fr) 105px!important;gap:6px!important;padding:10px 0 15px!important}
+ .hero-copy h1{font-size:29px!important;letter-spacing:-.7px!important}
+ .hero-copy>p{font-size:15px!important}
+ .mascot-speech{font-size:13px!important;padding:8px!important}
+ .mascot-stage{max-width:105px!important}
+ .mascot-name{font-size:14px!important}
+ .source-grid .source-button{grid-template-columns:48px minmax(0,1fr) 16px!important;min-height:74px!important;padding:10px!important;gap:0 10px!important;font-size:17px!important}
+ .source-grid .source-button .source-icon{width:46px!important;height:46px!important;font-size:22px!important}
+ .source-grid .source-button small{font-size:13px!important}
+ .voice-welcome{grid-template-columns:52px minmax(0,1fr)!important;padding:12px!important;gap:10px!important}
+ .voice-welcome-icon{width:50px!important;height:50px!important;font-size:24px!important}
+ .voice-welcome strong{font-size:16px!important}
+ .voice-welcome p{font-size:13px!important}
+}
+</style>
 </head>
 <body>
-<header><div class="wrap"><div class="header-row"><div><div class="brand">SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
+<header><div class="wrap"><div class="header-row"><div><div class="brand">🛡️ SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
 
 
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 3.0</span>
+<span class="tag">SCAM LENS · TESTVERSION 3.1</span>
 <div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button></div>
 <div class="mascot-hero">
   <div class="hero-copy"><h1>Hallo!<br>Ich bin Lensi.</h1><p>Ich helfe dir, verdächtige Nachrichten einfach und sicher zu prüfen.</p><div class="mascot-speech">Du musst kein Technikprofi sein. Wir gehen alles in Ruhe durch. Du kannst dir den fertigen Bericht auch vorlesen lassen.</div></div>
