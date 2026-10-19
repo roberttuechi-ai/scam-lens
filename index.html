@@ -205,6 +205,67 @@ details summary{background:#10243b!important;color:#a9cfff!important;border:1px 
 @media(prefers-reduced-motion:reduce){button{transition:none!important}}
 </style>
 
+
+<style id="scam-lens-ux-2-0">
+/* Friendly, clearer consumer-first layout */
+:root{font-size:19px}
+main{max-width:1080px!important}
+.card{padding:clamp(20px,3vw,32px)!important}
+h1{font-size:clamp(30px,4vw,40px)!important;margin:18px 0 12px!important}
+h2{font-size:clamp(23px,3vw,29px)!important}
+.card>p{font-size:19px;line-height:1.55}
+.source-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.source-button{min-height:150px!important;padding:20px!important;gap:10px!important;border-width:2px!important;box-shadow:0 5px 0 #0002}
+.source-button span:nth-child(2){font-size:21px!important;font-weight:800}
+.source-button small{font-size:16px!important}
+.source-icon{font-size:44px!important}
+.camera-button{background:linear-gradient(145deg,#301b2b,#1c1930)!important}
+#sourceText{background:linear-gradient(145deg,#102e49,#0d2035)!important}
+#sourcePhoto{background:linear-gradient(145deg,#152e45,#112136)!important}
+#sourceFile{background:linear-gradient(145deg,#252044,#171b36)!important}
+#sourceEmail{background:linear-gradient(145deg,#12372f,#0e2729)!important}
+#msg{min-height:220px!important;font-size:19px!important;padding:20px!important}
+button{min-height:54px;font-size:18px!important}
+.toolbar button{min-height:52px;padding:14px 18px!important}
+.analysis-grid{grid-template-columns:1fr!important;gap:14px!important}
+.local-action,.ai-action{min-height:112px!important;padding:20px!important;grid-template-columns:58px 1fr 22px!important;border-radius:18px!important}
+.local-action strong,.ai-action strong{font-size:22px!important}
+.local-action small,.ai-action small{font-size:16px!important}
+.action-icon{font-size:40px!important}
+#liveLinkCheck{min-height:88px!important;display:flex;align-items:center;gap:12px;border-radius:18px!important}
+#liveLinkCheck .action-icon{font-size:36px}
+#liveLinkCheck strong{font-size:20px;display:block}
+#liveLinkCheck small{font-size:16px;display:block;font-weight:normal;margin-top:3px}
+#operatorSettings{margin-top:20px!important;border:1px dashed #3b5876;border-radius:15px;padding:10px 12px;background:#081526}
+#operatorSettings summary{font-size:15px!important;color:#9db5d1!important;background:transparent!important;border:0!important;padding:9px!important}
+#operatorSettings[open]{background:#0a192b}
+#operatorSettings p{font-size:15px!important}
+#operatorSettings label{font-size:15px!important}
+#operatorSettings input{font-size:16px!important}
+#fileStatus{font-size:16px!important}
+.drop{margin-top:12px}
+.notice{line-height:1.5}
+.riskbox{padding:22px!important}
+footer{font-size:15px!important}
+@media(min-width:760px){
+ .source-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .analysis-grid{grid-template-columns:1fr 1fr!important}
+ #aiStart{grid-column:1/-1}
+}
+@media(max-width:600px){
+ :root{font-size:18px}
+ .source-grid{grid-template-columns:1fr 1fr!important}
+ .source-button{min-height:132px!important;padding:12px!important}
+ .source-button span:nth-child(2){font-size:18px!important}
+ .source-icon{font-size:36px!important}
+ #msg{min-height:175px!important}
+ .toolbar{display:grid;grid-template-columns:1fr!important}
+ .toolbar button{width:100%}
+ .local-action,.ai-action{grid-template-columns:46px 1fr 18px!important;padding:14px!important}
+ .local-action strong,.ai-action strong{font-size:19px!important}
+ .action-icon{font-size:32px!important}
+}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="brand">SCAM <span>LENS</span></div><p>Verdächtige Nachrichten erkennen. Risiken verstehen. Sicher handeln.</p></div></header>
@@ -215,12 +276,12 @@ details summary{background:#10243b!important;color:#a9cfff!important;border:1px 
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 1.9</span>
+<span class="tag">SCAM LENS · TESTVERSION 2.0</span>
 <div class="toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak">Ergebnis vorlesen</button><button class="secondary" id="stop">Vorlesen stoppen</button></div>
-<h1>Ist diese Nachricht sicher?</h1><p>Füge den Nachrichtentext ein oder wähle eine Datei. Du erhältst einen einzigen Bericht mit Risikowert, Belegen und nächsten Schritten.</p>
+<h1>Ist diese Nachricht sicher? 🕵️</h1><p>Wir schauen gemeinsam genauer hin. Füge eine verdächtige Nachricht ein oder lade ein Foto bzw. eine Datei hoch. Scam Lens sucht nach Warnsignalen und zeigt dir, was du als Nächstes tun kannst.</p>
 <label for="msg">Nachrichtentext</label><textarea id="msg" maxlength="30000" placeholder="E-Mail, SMS oder Chatnachricht hier einfügen …"></textarea>
 <div class="toolbar"><button class="secondary" id="sample">Testbeispiel laden</button><button class="secondary" id="clear">Zurücksetzen</button></div>
-<h2>Wie möchtest du die Nachricht prüfen?</h2>
+<h2>📥 Wie kommt die Nachricht zu uns?</h2>
 <div class="source-grid" role="group" aria-label="Quelle der Nachricht auswählen">
   <button class="source-button" id="sourceText" type="button"><span class="source-icon" aria-hidden="true">⌨</span><span>Text eingeben</span></button>
   <button class="source-button camera-button" id="sourceCamera" type="button"><span class="source-icon" aria-hidden="true">📷</span><span>Kamera nutzen</span><small>Foto direkt aufnehmen</small></button>
@@ -234,9 +295,9 @@ details summary{background:#10243b!important;color:#a9cfff!important;border:1px 
 <p class="muted">TXT-, EML- und HTML-Dateien werden lokal eingelesen. Bei Fotos versucht Scam Lens automatisch, den Text per OCR (Deutsch und Englisch) zu erkennen. Der erkannte Text wird übernommen, aber nicht automatisch analysiert. Beim ersten Einsatz werden OCR-Bibliothek und Sprachdaten aus dem Internet geladen.</p>
 
 </div>
-<details open style="margin-top:16px"><summary style="cursor:pointer;font-weight:bold">KI-ANALYSE – Einstellungen</summary>
-<p class="muted">Mit Klick auf „KI-Analyse starten“ wird der Nachrichtentext an diese Backend-Adresse und den dort konfigurierten KI-Anbieter übertragen. Es gibt kein zusätzliches Freigabefeld.</p>
-<label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Backend-Adresse ist nicht fest hinterlegt, weil kostenlose Cloudflare-Quick-Tunnel-Adressen temporär sind. Starte zuerst das Backend und den Tunnel auf deinem PC und trage hier die aktuell angezeigte HTTPS-Adresse ein – ohne <code>/health</code> oder <code>/api/analyze</code>.</p>
+<details id="operatorSettings" style="margin-top:16px"><summary style="cursor:pointer;font-weight:bold">⚙️ Technische Einstellungen · nur Betreiber</summary>
+<p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p>
+<label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p>
 </details>
 
 <div class="risk-legend" aria-label="Erklärung der Risikostufen" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0">
@@ -247,9 +308,9 @@ details summary{background:#10243b!important;color:#a9cfff!important;border:1px 
 <p class="muted">Die Werte sind vereinfachte Warnstufen und keine statistische Wahrscheinlichkeit. Auch eine grüne Bewertung garantiert keine Sicherheit.</p>
 
 <div class="analysis-grid">
-  <button class="local-action" id="check" type="button"><span class="action-icon" aria-hidden="true">⌕</span><span><strong>Nur lokale Prüfung</strong><small>Schnell, ohne Datenübertragung</small></span><span aria-hidden="true">›</span></button>
-  <button class="secondary" id="liveLinkCheck" type="button" style="min-height:100px;text-align:left"><span class="action-icon" aria-hidden="true">↗</span><span><strong>Links live prüfen</strong><small>Abgleich mit OpenPhish</small></span></button>
-  <button class="ai-action" id="aiStart" type="button"><span class="action-icon" aria-hidden="true">✦</span><span><strong>KI-Analyse starten</strong><small>Erweiterte Erkennung</small></span><span aria-hidden="true">›</span></button>
+  <button class="local-action" id="check" type="button"><span class="action-icon" aria-hidden="true">🛡️</span><span><strong>Schnell-Check starten</strong><small>Privat auf diesem Gerät · keine Datenübertragung</small></span><span aria-hidden="true">›</span></button>
+  <button class="secondary" id="liveLinkCheck" type="button" style="min-height:100px;text-align:left"><span class="action-icon" aria-hidden="true">🔎</span><span><strong>Links live prüfen</strong><small>Verdächtige Webadressen abgleichen</small></span></button>
+  <button class="ai-action" id="aiStart" type="button"><span class="action-icon" aria-hidden="true">✨</span><span><strong>Gründliche KI-Analyse</strong><small>Zusätzliche Einschätzung mit KI</small></span><span aria-hidden="true">›</span></button>
 </div>
 <p class="notice">Die Live-Linkprüfung sendet nur die gefundenen Webadressen an OpenPhish.eu, nicht den gesamten Nachrichtentext. Das geschieht erst nach deiner Bestätigung. OpenPhish erhält dadurch die geprüften URLs. Ein fehlender Treffer ist keine Sicherheitsgarantie.</p>
 <p id="liveLinkStatus" class="muted" role="status" aria-live="polite" style="display:none"></p>
@@ -266,7 +327,7 @@ details summary{background:#10243b!important;color:#a9cfff!important;border:1px 
 <p class="method" id="method"></p>
 </section>
 
-<section class="card"><h2>Vier wichtige Regeln</h2><ul><li>Keine Links öffnen, wenn du der Nachricht nicht vertraust.</li><li>Niemals Passwörter, TANs oder Bestätigungscodes weitergeben.</li><li>Die Organisation über selbst gefundene offizielle Kontaktdaten kontaktieren.</li><li>Bei Geldforderungen erst über einen zweiten Kanal prüfen.</li></ul></section>
+<section class="card"><h2>🛡️ Vier einfache Regeln für mehr Sicherheit</h2><ul><li>Keine Links öffnen, wenn du der Nachricht nicht vertraust.</li><li>Niemals Passwörter, TANs oder Bestätigungscodes weitergeben.</li><li>Die Organisation über selbst gefundene offizielle Kontaktdaten kontaktieren.</li><li>Bei Geldforderungen erst über einen zweiten Kanal prüfen.</li></ul></section>
 
 <section class="card help-card" id="melden">
   <span class="tag">HILFE & MELDEN</span>
