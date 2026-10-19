@@ -1835,11 +1835,11 @@ test(/geschenkkarte|krypto|bitcoin|überweisung|gebühr bezahlen|zahlung bestät
 test(/klicken sie|klicke hier|link öffnen|hier bestätigen|jetzt verifizieren|anmelden unter|click here|verify now|open the link/,"Link-Aufforderung","Die Nachricht fordert zum Öffnen oder Bestätigen eines Links auf.",1);
 test(/geheim halten|niemandem sagen|nicht mit ihrer bank sprechen|nicht auflegen|keep this confidential|do not tell anyone/,"Geheimhaltung","Die Aufforderung zur Geheimhaltung ist ein Warnsignal.",2);
 /* Context-aware commercial-pattern checks: signals are not proof of fraud by themselves. */
-const longGroup=/\\b(1[0-9]|[2-9][0-9])\\s*(adults|people|guests|personen|gäste)\\b|group of\\s*(1[0-9]|[2-9][0-9])/i.test(text);
-const multiDay=/\\b(1[0-9]|[2-9][0-9])\\s*(days|nights|tage|nächte)\\b|from.{0,35}to.{0,35}daily|every evening|each evening/i.test(text);
+const longGroup=/\b(1[0-9]|[2-9][0-9])\s*(adults|people|guests|personen|gäste)\b|group of\s*(1[0-9]|[2-9][0-9])/i.test(text);
+const multiDay=/\b(1[0-9]|[2-9][0-9])\s*(days|nights|tage|nächte)\b|from.{0,35}to.{0,35}daily|every evening|each evening/i.test(text);
 const advance=/prepay|pre-payment|prepayment|advance payment|deposit|upfront payment|vorauszahlung|anzahlung|advance fee/i.test(text);
 const sponsor=/politician|political|sponsored by|sponsor(ed)?|minister|politiker|gesponsert/i.test(text);
-const personalEmail=/[a-z0-9._%+-]+@gmail\\.com|[a-z0-9._%+-]+@yahoo\\.com|[a-z0-9._%+-]+@outlook\\.com/i.test(text);
+const personalEmail=/[a-z0-9._%+-]+@gmail\.com|[a-z0-9._%+-]+@yahoo\.com|[a-z0-9._%+-]+@outlook\.com/i.test(text);
 const commercialPattern=[longGroup,multiDay,advance,sponsor,personalEmail].filter(Boolean).length;
 if(longGroup)add("Ungewöhnlich große Gruppenbuchung","Eine große Gruppenbuchung kann legitim sein, sollte bei ungewöhnlichen Zahlungsbedingungen aber mit den übrigen Angaben zusammen geprüft werden.",1);
 if(multiDay)add("Längerer Buchungszeitraum","Eine Buchung über viele aufeinanderfolgende Tage ist nicht betrügerisch, erhöht aber den möglichen finanziellen Schaden und macht klare schriftliche Bedingungen wichtig.",1);
