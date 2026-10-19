@@ -161,7 +161,7 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 1.7</span>
+<span class="tag">SCAM LENS · TESTVERSION 1.8</span>
 <div class="toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak">Ergebnis vorlesen</button><button class="secondary" id="stop">Vorlesen stoppen</button></div>
 <h1>Ist diese Nachricht sicher?</h1><p>Füge den Nachrichtentext ein oder wähle eine Datei. Du erhältst einen einzigen Bericht mit Risikowert, Belegen und nächsten Schritten.</p>
 <label for="msg">Nachrichtentext</label><textarea id="msg" maxlength="30000" placeholder="E-Mail, SMS oder Chatnachricht hier einfügen …"></textarea>
@@ -177,7 +177,7 @@ html body #riskbox.risk-unknown { background:#eef2f6 !important; border:3px soli
 <input id="file" type="file" accept="image/*,.txt,.eml,.html,.htm" hidden>
 <img id="preview" class="preview" alt="Vorschau des ausgewählten Bildes"><p id="fileStatus" class="muted" aria-live="polite">Noch keine Datei ausgewählt.</p>
 <div class="drop">
-<p class="muted">TXT-, EML- und HTML-Dateien werden automatisch lokal eingelesen und geprüft. Bilder können angezeigt werden; bitte kopiere den Nachrichtentext zusätzlich in das Textfeld. Diese Version verwendet keine OCR.</p>
+<p class="muted">TXT-, EML- und HTML-Dateien werden lokal eingelesen. Bei Fotos versucht Scam Lens automatisch, den Text per OCR (Deutsch und Englisch) zu erkennen. Der erkannte Text wird übernommen, aber nicht automatisch analysiert. Beim ersten Einsatz werden OCR-Bibliothek und Sprachdaten aus dem Internet geladen.</p>
 
 </div>
 <details open style="margin-top:16px"><summary style="cursor:pointer;font-weight:bold">KI-ANALYSE – Einstellungen</summary>
@@ -289,7 +289,37 @@ $("file").addEventListener("change", async () => {
   if (chosenFile.type.startsWith("image/")) {
     objectUrl = URL.createObjectURL(chosenFile);
     $("preview").src = objectUrl; $("preview").style.display = "block";
-    $("fileStatus").textContent = "Bild geladen. Ohne OCR bitte den sichtbaren Nachrichtentext in das Textfeld kopieren.";
+    $("fileStatus").textContent = "Foto geladen. OCR-Texterkennung wird vorbereitet …";
+    try {
+      if (!window.Tesseract) {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+          script.onload = resolve;
+          script.onerror = () => reject(new Error("OCR-Bibliothek konnte nicht geladen werden. Prüfe die Internetverbindung."));
+          document.head.appendChild(script);
+        });
+      }
+      const result = await window.Tesseract.recognize(chosenFile, "deu+eng", {
+        logger: info => {
+          if (info.status === "recognizing text" && typeof info.progress === "number") {
+            $("fileStatus").textContent = "Texterkennung läuft … " + Math.round(info.progress * 100) + "%";
+          } else if (info.status) {
+            $("fileStatus").textContent = "OCR: " + info.status + " …";
+          }
+        }
+      });
+      const extracted = (result.data && result.data.text || "").trim();
+      if (!extracted) {
+        $("fileStatus").textContent = "Kein lesbarer Text erkannt. Bitte fotografiere die Nachricht schärfer und mit besserer Beleuchtung.";
+      } else {
+        $("msg").value = extracted.slice(0, 30000);
+        $("fileStatus").textContent = "Text automatisch aus dem Foto erkannt und ins Textfeld übernommen. Noch keine Analyse gestartet; bitte kontrolliere den Text.";
+        $("msg").scrollIntoView({behavior:"smooth", block:"center"});
+      }
+    } catch (err) {
+      $("fileStatus").textContent = "OCR konnte nicht ausgeführt werden: " + (err.message || "Unbekannter Fehler") + ". Du kannst den Text weiterhin manuell eingeben.";
+    }
     return;
   }
   if (/\.(msg|oft)$/.test(name)) {
