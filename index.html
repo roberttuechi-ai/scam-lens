@@ -1397,6 +1397,17 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
  .header-tools .operator-top>summary{font-size:26px!important}
 }
 </style>
+<style id="remove-gear-button">
+/* Remove the gear/settings control from the visible header and rebalance its layout. */
+.header-tools #operatorSettings{display:none!important}
+.header-tools{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,1fr)!important}
+@media(max-width:760px){
+ .header-tools{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:58px 58px!important;align-items:stretch!important;gap:10px!important}
+ .header-tools .language-control{grid-column:1!important;grid-row:1!important}
+ .header-tools .usage-guide-button{grid-column:2!important;grid-row:1!important}
+ .header-tools .upgrade-button{grid-column:1 / -1!important;grid-row:2!important;width:100%!important;height:58px!important;min-height:58px!important;max-height:58px!important}
+}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
