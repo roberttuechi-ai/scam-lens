@@ -9,6 +9,7 @@
 :root{font:18px/1.6 Arial,Helvetica,sans-serif;color:#17324d;background:#eef4fb;--navy:#102a43;--blue:#3155d9;--teal:#087f70;--red:#c62828;--orange:#a66300;--green:#237747}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eaf4ff 0,#f5f7fb 280px,#f3f6fa 100%);line-height:1.6}
 header{background:linear-gradient(120deg,#102a43,#174a73 65%,#176b79);color:#fff;padding:27px 18px;box-shadow:0 5px 18px #102a4326}
+.app-version{display:inline-block;margin-top:3px;color:#d6f4ff;font-size:13px;font-weight:700;letter-spacing:.25px;line-height:1.3}
 .wrap{max-width:900px;margin:auto}.brand{font-size:32px;font-weight:900;letter-spacing:-.6px}.brand span{color:#6ce3c5}
 header p{margin:5px 0 0;color:#e2f2ff;font-size:17px}
 main{padding:24px 15px 40px}.card{background:#fff;border:1px solid #d6e2ef;border-radius:20px;padding:24px;margin-bottom:20px;box-shadow:0 8px 28px #193a5b0c}
@@ -1438,7 +1439,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
-<div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
+<div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p><small class="app-version">Version 7.4</small></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
 <button class="usage-guide-button" id="usageGuideToggle" type="button" aria-expanded="false" aria-controls="usageGuidePanel">Gebrauchsanweisung</button>
 <details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Scam Lens kann die kostenlose, anonyme Textschnittstelle von Pollinations direkt aufrufen. Es ist keine Backend-Adresse und kein API-Schlüssel nötig. Der Anbieter erhält den Text, den du ausdrücklich zur KI-Prüfung freigibst. Verwende keine Passwörter, vollständigen Zahlungsdaten oder andere Geheimnisse.</p><div class="toolbar"><button class="secondary" id="testAI" type="button">KI mit Beispieltext testen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die kostenlose Schnittstelle kann gedrosselt werden oder zeitweise ausfallen. Wenn sie nicht erreichbar ist, bleibt die lokale Prüfung verfügbar.</p></div></details>
 <button class="upgrade-button" id="upgradeTop" type="button">⭐ Upgrade</button></div></div></div></header>
