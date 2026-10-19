@@ -472,6 +472,60 @@ body.accessible .scam-mascot{max-width:170px!important}
  body.accessible .analysis-actions>button small{font-size:20px!important}
 }
 </style>
+
+<style id="scam-lens-version-2-5">
+/* Version 2.5: extra-large accessible mode, Lensi companion and result-first report */
+.accessibility-toolbar{display:flex;flex-wrap:wrap;gap:12px}
+.accessibility-toolbar button{flex:1 1 220px;min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.3}
+.mascot-speech{font-size:1.08rem!important;font-weight:800;line-height:1.45;padding:15px 18px!important;border-radius:16px!important;max-width:100%;overflow-wrap:anywhere}
+.report-lensi{display:flex;align-items:flex-start;gap:14px;padding:17px 18px;margin:14px 0 20px;background:#edf6ff;border:2px solid #9bc8f5;border-radius:18px;color:#173b61}
+.report-lensi-icon{flex:0 0 44px;font-size:34px;line-height:1.2;text-align:center}
+.report-lensi p{margin:0;font-size:1.12rem;font-weight:700;line-height:1.5;overflow-wrap:anywhere}
+#riskbox{order:0}
+#analysisSource{margin-top:0}
+#riskTitle{font-size:clamp(1.35rem,4vw,2rem)!important;line-height:1.2!important;overflow-wrap:anywhere}
+#riskText{font-size:1.12rem!important;line-height:1.5!important;overflow-wrap:anywhere}
+body.accessible{font-size:22px!important}
+body.accessible h1{font-size:clamp(2.1rem,5vw,2.8rem)!important;line-height:1.18!important}
+body.accessible h2{font-size:clamp(1.65rem,4vw,2.15rem)!important;line-height:1.22!important}
+body.accessible h3{font-size:1.4rem!important;line-height:1.25!important}
+body.accessible p,body.accessible li,body.accessible label,body.accessible .source-button span:nth-child(2){font-size:1.15rem!important;line-height:1.55!important}
+body.accessible button{font-size:1.1rem!important;line-height:1.35!important;white-space:normal!important;overflow-wrap:anywhere!important;min-width:0!important;height:auto!important}
+body.accessible .source-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+body.accessible .source-button{min-width:0!important;min-height:150px!important;padding:14px!important}
+body.accessible .source-button small{font-size:1rem!important;line-height:1.4!important;overflow-wrap:anywhere}
+body.accessible .analysis-actions{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+body.accessible .analysis-actions>button{width:100%!important;grid-template-columns:42px minmax(0,1fr)!important;gap:10px!important;padding:15px!important}
+body.accessible .analysis-actions>button strong,body.accessible .analysis-actions>button small{overflow-wrap:anywhere;word-break:normal}
+body.accessible-xl{font-size:25px!important}
+body.accessible-xl h1{font-size:clamp(2.3rem,6vw,3.1rem)!important}
+body.accessible-xl h2{font-size:clamp(1.85rem,5vw,2.4rem)!important}
+body.accessible-xl h3{font-size:1.55rem!important}
+body.accessible-xl p,body.accessible-xl li,body.accessible-xl label{font-size:1.22rem!important;line-height:1.6!important}
+body.accessible-xl button{font-size:1.16rem!important;line-height:1.4!important;padding:17px!important}
+body.accessible-xl .source-grid{grid-template-columns:minmax(0,1fr)!important}
+body.accessible-xl .source-button{min-height:128px!important}
+body.accessible-xl .source-button span:nth-child(2){font-size:1.2rem!important;line-height:1.35!important;overflow-wrap:anywhere}
+body.accessible-xl .source-button small{font-size:1.02rem!important}
+body.accessible-xl .riskbox{align-items:flex-start!important;flex-wrap:wrap!important}
+body.accessible-xl .scorecircle{width:78px!important;height:78px!important;min-width:78px!important}
+body.accessible-xl .report-lensi{gap:10px;padding:14px}
+body.accessible-xl .report-lensi-icon{flex-basis:34px;font-size:28px}
+body.accessible-xl .report-lensi p{font-size:1.15rem!important}
+#operatorSettings:not([open]) .operator-panel{display:none}
+@media(max-width:480px){
+ .accessibility-toolbar{display:grid;grid-template-columns:minmax(0,1fr)!important}
+ .accessibility-toolbar button{width:100%;min-width:0}
+ .mascot-hero{grid-template-columns:minmax(0,1fr)!important}
+ .mascot-stage{max-width:150px;margin:0 auto}
+ .riskbox{align-items:flex-start;gap:12px;min-width:0}
+ .riskbox>div:last-child{min-width:0;flex:1}
+ .scorecircle{width:70px!important;height:70px!important;min-width:70px!important}
+ .report-lensi{align-items:flex-start}
+ body.accessible .source-grid{grid-template-columns:minmax(0,1fr)!important}
+}
+</style>
+
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div><div class="brand">SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
@@ -480,10 +534,10 @@ body.accessible .scam-mascot{max-width:170px!important}
 
 <main class="wrap" id="app">
 <section class="card">
-<span class="tag">SCAM LENS · TESTVERSION 2.4</span>
-<div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Größere Schrift</button><button class="secondary" id="speak" hidden>🔊 Bericht vorlesen</button><button class="secondary" id="stop" hidden>⏹ Vorlesen stoppen</button></div>
+<span class="tag">SCAM LENS · TESTVERSION 2.5</span>
+<div class="toolbar accessibility-toolbar"><button class="secondary" id="access" aria-pressed="false">A+ Schrift vergrößern</button><button class="secondary" id="accessMore" aria-pressed="false">A++ Noch größer</button><button class="secondary" id="speak" hidden>🔊 Bericht vorlesen</button><button class="secondary" id="stop" hidden>⏹ Vorlesen stoppen</button></div>
 <div class="mascot-hero">
-  <div class="hero-copy"><h1>Ist diese Nachricht sicher?</h1><p>Hallo! Ich helfe dir, Betrugsnachrichten zu erkennen. Wähle eine Nachricht aus – wir prüfen sie gemeinsam Schritt für Schritt.</p><div class="mascot-speech">🔎 Gemeinsam finden wir verdächtige Hinweise!</div></div>
+  <div class="hero-copy"><h1>Ist diese Nachricht sicher?</h1><p>Hallo! Ich helfe dir, Betrugsnachrichten zu erkennen. Wähle eine Nachricht aus – wir prüfen sie gemeinsam Schritt für Schritt.</p><div class="mascot-speech">🔎 Wir gehen Schritt für Schritt vor. Ich erkläre dir, was auffällt und was du als Nächstes tun kannst.</div></div>
   <div class="mascot-stage" role="img" aria-label="Scam Lens, ein freundlicher kleiner Sicherheitsroboter mit Schild">
     <svg class="scam-mascot" viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs><linearGradient id="botBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dbeaff"/></linearGradient><linearGradient id="botBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#42b9ff"/><stop offset="1" stop-color="#2878ed"/></linearGradient></defs>
@@ -555,8 +609,9 @@ body.accessible .scam-mascot{max-width:170px!important}
 
 <section class="card report" id="report" aria-live="polite" aria-atomic="true">
 <h2>Dein Sicherheitsbericht</h2>
-<div id="analysisSource" class="source-local" role="status">Lokale Regelprüfung – keine KI verwendet</div>
 <div id="riskbox" class="riskbox risk-unknown"><div class="scorecircle"><strong id="score">?</strong><span>von 10</span></div><div><h2 id="riskTitle">Noch nicht geprüft</h2><p id="riskText">Füge eine Nachricht ein und starte die Prüfung.</p></div></div>
+<div id="analysisSource" class="source-local" role="status">Lokale Regelprüfung – keine KI verwendet</div>
+<div class="report-lensi" id="reportLensi" role="status" aria-live="polite"><span class="report-lensi-icon" aria-hidden="true">🤖</span><p id="lensiResultText">Ich erkläre dir das Ergebnis und die nächsten Schritte.</p></div>
 <h3>Warum diese Einschätzung?</h3><ul id="evidence"></ul>
 <h3>Was solltest du tun?</h3><ul id="steps"></ul>
 <p class="notice" id="limitations">Eine niedrige Bewertung beweist nicht, dass eine Nachricht sicher ist.</p>
@@ -593,7 +648,8 @@ body.accessible .scam-mascot{max-width:170px!important}
 <footer class="wrap">Scam Lens ist eine Entscheidungshilfe, kein zertifizierter Sicherheitsdienst. Die Bewertung kann falsch sein; Links werden nicht live überprüft.</footer>
 <script>
 const $=id=>document.getElementById(id);let chosenFile=null,objectUrl=null,lastReport="";
-$("access").onclick=()=>{const on=!document.body.classList.contains("accessible");document.body.classList.toggle("accessible",on);$("access").setAttribute("aria-pressed",String(on));$("access").textContent=on?"A+ Normale Schrift":"A+ Größere Schrift verdoppeln"};
+$("access").onclick=()=>{const xl=document.body.classList.contains("accessible-xl");document.body.classList.toggle("accessible",true);document.body.classList.remove("accessible-xl");$("access").setAttribute("aria-pressed","true");$("accessMore").setAttribute("aria-pressed","false");$("access").textContent="A+ Große Schrift aktiv";$("accessMore").textContent="A++ Noch größer";};
+$("accessMore").onclick=()=>{const xl=document.body.classList.contains("accessible-xl");document.body.classList.toggle("accessible",true);document.body.classList.toggle("accessible-xl",!xl);$("access").setAttribute("aria-pressed","true");$("accessMore").setAttribute("aria-pressed",String(!xl));$("access").textContent="A+ Große Schrift aktiv";$("accessMore").textContent=!xl?"A++ Sehr große Schrift aktiv":"A++ Noch größer";};
 $("speak").onclick=()=>{if(!("speechSynthesis"in window)){alert("Vorlesen wird in diesem Browser nicht unterstützt.");return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(lastReport||"Noch kein Bericht vorhanden.");u.lang="de-AT";speechSynthesis.speak(u)};
 $("stop").onclick=()=>{if("speechSynthesis"in window)speechSynthesis.cancel()};
 $("sample").onclick=()=>{$("msg").value="Ihre Bankkarte wird heute gesperrt. Bestätigen Sie sofort Ihre Zugangsdaten unter http://example.invalid/login, um Ihr Konto zu retten."};
@@ -824,7 +880,7 @@ return {points:Math.min(10,Math.round(p/1.2)),raw:p,evidence:e,risk:p>=5?"high":
 function renderReport(data){let risk=data.risk||"unknown",score=risk==="high"?10:risk==="medium"?5:risk==="low"?2:"?";$("score").textContent=score;$("riskbox").className="riskbox risk-"+risk;
 const titles={high:"Hohes Risiko",medium:"Auffälligkeiten gefunden",low:"Wenige Hinweise erkannt",unknown:"Nicht ausreichend prüfbar"};
 const texts={high:"Die Nachricht enthält deutliche Betrugsmerkmale. Handle nicht über die Nachricht.",medium:"Es gibt Warnsignale. Prüfe Absender und Forderung unabhängig.",low:"Es wurden wenige Hinweise gefunden. Das ist keine Sicherheitsgarantie.",unknown:"Die Informationen reichen für eine belastbare Einschätzung nicht aus."};
-$("riskTitle").textContent=titles[risk];$("riskText").textContent=data.summary||texts[risk];
+$("riskTitle").textContent=titles[risk];$("riskText").textContent=data.summary||texts[risk];const lensiMessages={high:"Stopp: Das sieht gefährlich aus. Öffne keine Links und gib keine Daten ein. Prüfe den Absender über einen offiziellen Kontaktweg.",medium:"Ich sehe Warnsignale. Reagiere nicht unter Zeitdruck und überprüfe die Nachricht unabhängig.",low:"Ich habe wenige typische Warnsignale gefunden. Das bedeutet nicht automatisch, dass die Nachricht sicher ist.",unknown:"Ich kann das nicht zuverlässig einschätzen. Sei vorsichtig und prüfe die Nachricht über einen unabhängigen Kontaktweg."};$("lensiResultText").textContent=lensiMessages[risk]||lensiMessages.unknown;
 $("evidence").replaceChildren();(data.evidence||[]).forEach(x=>{let li=document.createElement("li");let title=document.createElement("strong");title.textContent=(x.title||"Hinweis")+": ";li.append(title,document.createTextNode(x.why||x.detail||""));$("evidence").append(li)});if(!$("evidence").children.length){let li=document.createElement("li");li.textContent="Keine konkreten Belege ausgegeben."; $("evidence").append(li)}
 $("steps").replaceChildren();(data.steps||[]).forEach(x=>{let li=document.createElement("li");li.textContent=x;$("steps").append(li)});if(!$("steps").children.length){["Keine Links öffnen und keine sensiblen Daten preisgeben.","Den Absender über unabhängig gefundene Kontaktdaten prüfen."].forEach(x=>{let li=document.createElement("li");li.textContent=x;$("steps").append(li)})}
 $("limitations").textContent=data.limitations||"Diese Einschätzung kann falsch sein. Links und Absender wurden nicht live geprüft. Die URL-Prüfung untersucht nur sichtbare Strukturmerkmale. Ein niedriger Wert bedeutet nicht, dass die Nachricht sicher ist.";
