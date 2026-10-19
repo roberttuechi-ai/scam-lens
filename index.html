@@ -416,6 +416,29 @@ header{padding:18px 20px!important}
 .risk-key-low{background:#e7fbef;border-color:#8bd9a8;color:#145c35}
 @media(min-width:760px){.risk-legend:not([hidden]){grid-template-columns:repeat(3,minmax(0,1fr))}.analysis-actions .ai-action,.analysis-actions #liveLinkCheck,.analysis-actions #check{min-height:100px!important}}
 </style>
+<style id="scam-lens-ux-polish-2-2">
+/* Hide generic warning/technical notices from the main entry screen; show status only when needed */
+#app>.notice:not(#liveLinkStatus){display:none!important}
+.analysis-grid{display:block!important;margin-top:20px!important}
+.analysis-actions{display:flex!important;flex-direction:column!important;gap:14px!important;width:100%}
+.analysis-actions>button{display:grid!important;grid-template-columns:58px minmax(0,1fr) 22px;align-items:center;gap:12px;width:100%!important;min-height:94px!important;padding:18px 22px!important;border-radius:20px!important;text-align:left!important;box-sizing:border-box}
+.analysis-actions>button strong{display:block;font-size:21px!important;line-height:1.25}
+.analysis-actions>button small{display:block;font-size:16px!important;line-height:1.45;margin-top:5px}
+.analysis-actions>button .action-icon{font-size:34px!important;text-align:center}
+.analysis-actions #aiStart{order:1;background:linear-gradient(110deg,#286fe8,#7250e8)!important;border:2px solid #4169ee!important;color:#fff!important;box-shadow:0 5px 0 #2f45a31b!important}
+.analysis-actions #liveLinkCheck{order:2;background:linear-gradient(110deg,#fff7df,#ffedbd)!important;border:2px solid #efcb78!important;color:#684a08!important}
+.analysis-actions #check{order:3;background:linear-gradient(110deg,#e2fbef,#c4f3dc)!important;border:2px solid #8adbb5!important;color:#135b42!important}
+#access{min-height:60px!important;padding:15px 22px!important;font-size:20px!important;font-weight:800!important;background:#e6efff!important;border:2px solid #9bbcff!important;border-radius:15px!important}
+body.accessible{font-size:36px!important;line-height:1.6!important}
+body.accessible p,body.accessible li,body.accessible label,body.accessible input,body.accessible textarea,body.accessible button,body.accessible .muted,body.accessible .source-button span:nth-child(2),body.accessible .source-button small,body.accessible .analysis-actions>button strong,body.accessible .analysis-actions>button small{font-size:2em!important;line-height:1.45!important}
+body.accessible h1{font-size:2em!important}body.accessible h2{font-size:1.8em!important}body.accessible h3{font-size:1.6em!important}
+body.accessible .source-button{min-height:220px!important}
+body.accessible .analysis-actions>button{min-height:170px!important}
+.mascot-hero{grid-template-columns:minmax(0,1fr) 290px!important;min-height:240px!important;padding:24px!important}
+.scam-mascot{max-width:270px!important;width:100%!important}
+.mascot-name{font-size:19px!important}
+@media(max-width:620px){.mascot-hero{grid-template-columns:minmax(0,1fr) 140px!important;min-height:0!important;padding:16px!important}.scam-mascot{max-width:140px!important}.mascot-name{font-size:13px!important}.analysis-actions>button{grid-template-columns:44px minmax(0,1fr) 16px;padding:15px!important}.analysis-actions>button strong{font-size:18px!important}.analysis-actions>button small{font-size:14px!important}#access{width:100%;font-size:19px!important}body.accessible .mascot-hero{grid-template-columns:1fr!important}}
+</style>
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div><div class="brand">SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p></div><details id="operatorSettings" class="operator-top"><summary>⚙️ Technische Einstellungen · nur Betreiber</summary><div class="operator-panel"><p class="muted">Dieser Bereich ist nur für den Betreiber der App gedacht. Nutzer müssen hier nichts einstellen. Bei einer KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen.</p><label for="backend">Backend-Adresse</label><input id="backend" type="url" value="" placeholder="https://dein-aktueller-tunnel.trycloudflare.com" autocomplete="url"><div class="toolbar"><button class="secondary" id="checkBackend" type="button">Backend-Verbindung prüfen</button></div><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die Adresse ist eine technische Betreiber-Einstellung und für normale Nutzer nicht erforderlich. Quick-Tunnel-Adressen können sich ändern.</p></div></details></div></div></header>
@@ -489,11 +512,12 @@ header{padding:18px 20px!important}
 </div>
 
 <div class="analysis-grid">
-  <div class="analysis-actions"></div>
-  <button class="secondary" id="liveLinkCheck" type="button" style="min-height:100px;text-align:left"><span class="action-icon" aria-hidden="true">🔎</span><span><strong>Links live prüfen</strong><small>Verdächtige Webadressen abgleichen</small></span></button>
-  <button class="ai-action" id="aiStart" type="button"><span class="action-icon" aria-hidden="true">✨</span><span><strong>Gründliche KI-Analyse</strong><small>Zusätzliche Einschätzung mit KI</small></span><span aria-hidden="true">›</span></button>
+  <div class="analysis-actions">
+    <button class="ai-action" id="aiStart" type="button"><span class="action-icon" aria-hidden="true">✨</span><span><strong>Gründliche KI-Analyse</strong><small>Ausführliche Einschätzung mit KI</small></span><span aria-hidden="true">›</span></button>
+    <button class="secondary" id="liveLinkCheck" type="button"><span class="action-icon" aria-hidden="true">🔎</span><span><strong>Links live prüfen</strong><small>Verdächtige Webadressen abgleichen</small></span></button>
+    <button class="local-action" id="check" type="button"><span class="action-icon" aria-hidden="true">🛡️</span><span><strong>Normaler Sicherheits-Check</strong><small>Schnelle Prüfung auf diesem Gerät – ohne Datenübertragung</small></span><span aria-hidden="true">›</span></button>
+  </div>
 </div>
-<p class="notice">Die Live-Linkprüfung sendet nur die gefundenen Webadressen an OpenPhish.eu, nicht den gesamten Nachrichtentext. Das geschieht erst nach deiner Bestätigung. OpenPhish erhält dadurch die geprüften URLs. Ein fehlender Treffer ist keine Sicherheitsgarantie.</p>
 <p id="liveLinkStatus" class="muted" role="status" aria-live="polite" style="display:none"></p>
 <p class="muted">Beim Start der KI-Analyse wird der Nachrichtentext an das konfigurierte Backend und den dort gewählten KI-Anbieter übertragen. Die Live-Linkprüfung ist separat und optional.</p>
 </section>
@@ -538,7 +562,7 @@ header{padding:18px 20px!important}
 <footer class="wrap">Scam Lens ist eine Entscheidungshilfe, kein zertifizierter Sicherheitsdienst. Die Bewertung kann falsch sein; Links werden nicht live überprüft.</footer>
 <script>
 const $=id=>document.getElementById(id);let chosenFile=null,objectUrl=null,lastReport="";
-$("access").onclick=()=>{const on=!document.body.classList.contains("accessible");document.body.classList.toggle("accessible",on);$("access").setAttribute("aria-pressed",String(on));$("access").textContent=on?"A+ Größere Schrift: an":"A+ Größere Schrift"};
+$("access").onclick=()=>{const on=!document.body.classList.contains("accessible");document.body.classList.toggle("accessible",on);$("access").setAttribute("aria-pressed",String(on));$("access").textContent=on?"A+ Normale Schrift":"A+ Größere Schrift verdoppeln"};
 $("speak").onclick=()=>{if(!("speechSynthesis"in window)){alert("Vorlesen wird in diesem Browser nicht unterstützt.");return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(lastReport||"Noch kein Bericht vorhanden.");u.lang="de-AT";speechSynthesis.speak(u)};
 $("stop").onclick=()=>{if("speechSynthesis"in window)speechSynthesis.cancel()};
 $("sample").onclick=()=>{$("msg").value="Ihre Bankkarte wird heute gesperrt. Bestätigen Sie sofort Ihre Zugangsdaten unter http://example.invalid/login, um Ihr Konto zu retten."};
