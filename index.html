@@ -1306,6 +1306,28 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
  .mascot-hero .mascot-stage .scam-mascot{max-height:300px!important}
  .mascot-hero .landscape-art{height:36%!important}
 }
+
+/* Version 7.5: phone portrait layout — readable, full-width controls and compact report */
+@media screen and (max-width:600px) and (orientation:portrait){
+  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+  body{font-size:16px!important}
+  main.wrap#app{display:flex!important;flex-direction:column!important;gap:14px!important;width:100%!important;max-width:100%!important;margin:0 auto!important;padding:10px!important;box-sizing:border-box!important}
+  main.wrap#app>*,main.wrap#app>section.card,main.wrap#app>section.report{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important}
+  .card,.report{padding:16px!important;border-radius:18px!important;min-width:0!important}
+  h1,h2,h3{overflow-wrap:anywhere!important}
+  button,.btn,input,select,textarea{max-width:100%!important;box-sizing:border-box!important}
+  button,.btn{min-height:46px!important;white-space:normal!important;line-height:1.25!important}
+  .mascot-hero{width:100%!important;box-sizing:border-box!important;overflow:hidden!important;gap:14px!important;padding:20px 16px 24px!important;border-radius:22px!important}
+  .mascot-hero .hero-copy h1{font-size:clamp(38px,10vw,52px)!important;overflow-wrap:normal!important}
+  .mascot-hero .hero-copy>p{font-size:clamp(19px,5vw,24px)!important}
+  .mascot-hero .mascot-speech{font-size:16px!important;padding:14px!important}
+  .mascot-hero .mascot-stage{width:min(100%,260px)!important;max-width:260px!important}
+  .mascot-hero .mascot-stage .scam-mascot{max-height:260px!important}
+  .help-grid{grid-template-columns:minmax(0,1fr)!important}
+  .scorecircle{max-width:100%!important}
+  .score-note{font-size:13px!important;line-height:1.45!important}
+  #msg{width:100%!important;min-height:150px!important;font-size:16px!important}
+}
 </style>
 </head>
 <body>
@@ -1975,7 +1997,7 @@ for (const f of urlCheck.findings) { add(f.title||"URL-Warnhinweis",f.why||f.det
 if(!e.length)e.push({title:"Keine typischen Muster erkannt",why:"Das beweist nicht, dass die Nachricht echt oder sicher ist.",source:"Lokale Regelprüfung"});
 const strongThreat=/password|passwort|login credentials|verification code|bestätigungscode|konto gesperrt|account suspended|account locked|keep this confidential|geheim halten|gift card|geschenkkarte|bitcoin|crypto|krypto|overpayment|überzahlung|refund to|rückerstattung an|pay immediately|sofort bezahlen/i.test(text);const risk=strongThreat&&p>=5?"high":p>=3?"medium":"low";
 return {points:Math.min(10,Math.round(p)),raw:p,evidence:e,risk,method:"Lokale Regel- und Kontextprüfung"}}function normaliseRisk(r){r=String(r||"").toLowerCase();if(["high","hoch","hohes risiko"].includes(r))return "high";if(["medium","mittel","auffälligkeiten gefunden"].includes(r))return "medium";if(["low","niedrig","gering"].includes(r))return "low";return "unknown"}
-function renderReport(data){let risk=data.risk||"unknown";const riskPercent={high:85,medium:55,low:20,unknown:null};const percent=Number.isFinite(Number(data.score))&&data.score!==null&&data.score!==""?Math.max(0,Math.min(100,Math.round(Number(data.score)*10))):riskPercent[risk];$("score").textContent=percent===null||percent===undefined?"—":percent+"%";$("scoreUnit").textContent="Risikoindikator";$("scoreNote").textContent="Orientierungswert anhand erkannter Warnsignale – keine statistisch gemessene Betrugswahrscheinlichkeit. Niedrig bedeutet nicht automatisch sicher."; $("riskbox").className="riskbox risk-"+risk;
+function renderReport(data){let risk=data.risk||"unknown";const riskPercent={high:85,medium:55,low:20,unknown:null};const methodName=String(data.method||"").toLowerCase();const rawScore=Number(data.score);const hasScore=data.score!==null&&data.score!==undefined&&data.score!==""&&Number.isFinite(rawScore);const percent=hasScore?Math.max(0,Math.min(100,Math.round(methodName.includes("phishunt")||methodName.includes("/100")?rawScore:rawScore*10))):riskPercent[risk];$("score").textContent=percent===null||percent===undefined?"—":percent+"%";$("scoreUnit").textContent="Risikoindikator";$("scoreNote").textContent="Orientierungswert anhand erkannter Warnsignale – keine statistisch gemessene Betrugswahrscheinlichkeit. Niedrig bedeutet nicht automatisch sicher."; $("riskbox").className="riskbox risk-"+risk;
 const titles={high:"Hohes Risiko",medium:"Auffälligkeiten gefunden",low:"Wenige Hinweise erkannt",unknown:"Nicht ausreichend prüfbar"};
 const texts={high:"Die Nachricht enthält deutliche Betrugsmerkmale. Handle nicht über die Nachricht.",medium:"Es gibt Warnsignale. Prüfe Absender und Forderung unabhängig.",low:"Es wurden wenige Hinweise gefunden. Das ist keine Sicherheitsgarantie.",unknown:"Die Informationen reichen für eine belastbare Einschätzung nicht aus."};
 const actions={high:["Nicht klicken, nicht antworten und kein Geld überweisen.","Beende den Kontakt über diese Nachricht. Prüfe den angeblichen Absender über eine selbst gefundene offizielle Telefonnummer oder Website."],medium:["Erst prüfen – noch nicht reagieren.","Öffne keine Links und gib keine Daten ein, bis du Absender und Forderung über einen unabhängigen Kontaktweg bestätigt hast."],low:["Trotzdem aufmerksam bleiben.","Es wurden wenige typische Warnsignale erkannt. Das beweist nicht, dass die Nachricht echt ist. Prüfe unerwartete Forderungen unabhängig."],unknown:["Vorsicht: keine sichere Einschätzung möglich.","Verlasse dich nicht auf diese Prüfung allein. Öffne keine Links und kontaktiere den angeblichen Absender über offizielle Kontaktdaten."]};
