@@ -291,6 +291,24 @@ img,svg,video,canvas{max-width:100%;height:auto}
 .analysis-progress .progress-note{font-size:14px;margin:8px 0 0;color:#425b74}
 @media(prefers-reduced-motion:reduce){.analysis-progress-fill{transition:none}}
 
+
+/* Per-step progress: each of the three steps has its own 0–100% bar and completion check. */
+.progress-step{list-style:none;margin:14px 0;padding:12px 14px;border:1px solid #d5e2ef;border-radius:12px;background:#f8fbff}
+#progressSteps{padding:0;margin:14px 0;list-style:none}
+.progress-step-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;font-weight:700;line-height:1.45}
+.progress-step-label{flex:1;min-width:0}
+.progress-step-status{display:flex;align-items:center;gap:7px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.progress-step-percent{color:#52677d;font-size:.92rem}
+.progress-step-check{visibility:hidden;color:#16834a;font-size:1.25rem;font-weight:900}
+.progress-step-track{height:9px;background:#dce7f2;border-radius:99px;overflow:hidden;margin-top:10px}
+.progress-step-fill{height:100%;width:0;background:linear-gradient(90deg,#3155d9,#078779);border-radius:99px;transition:width .25s ease}
+.progress-step.done{background:#effaf3;border-color:#9ddbb7}
+.progress-step.done .progress-step-percent{color:#16834a;font-weight:800}
+.progress-step.done .progress-step-fill{background:#169b57}
+.progress-step.current{border-color:#8db5f0;background:#f2f7ff}
+#analysisProgress.failed .progress-step.failed{border-color:#e5a2a2;background:#fff4f4}
+#analysisProgress.failed .progress-step.failed .progress-step-percent{color:#b42318}
+@media(max-width:480px){.progress-step{padding:11px}.progress-step-head{font-size:.93rem;gap:8px}.progress-step-percent{font-size:.86rem}}
 </style>
 <style id="scam-lens-mobile">
 /* Mobile-first improvements; desktop layout remains intact. */
@@ -2059,20 +2077,41 @@ const SL_PROGRESS_COPY = {
 };
 function slProgressBegin(kind){
  const lang=(document.documentElement.lang==="en"?"en":"de"),copy=SL_PROGRESS_COPY[lang][kind],box=$("analysisProgress");
- box.dataset.kind=kind;box.classList.add("active");box.setAttribute("aria-label",copy.title);
+ box.dataset.kind=kind;box.classList.add("active");box.classList.remove("failed");
+ box.setAttribute("aria-label",copy.title);
  $("progressTitle").textContent=copy.title;$("progressNote").textContent=copy.note;
- $("progressSteps").innerHTML=copy.steps.map((x,i)=>"<li"+(i===0?' class="current"':"")+">"+x+"</li>").join("");
+ $("progressSteps").innerHTML=copy.steps.map((x,i)=>'<li class="progress-step" data-step="'+i+'" data-progress="0"><div class="progress-step-head"><span class="progress-step-label">'+x+'</span><span class="progress-step-status"><span class="progress-step-percent">0%</span><span class="progress-step-check" aria-hidden="true">✓</span></span></div><div class="progress-step-track" role="progressbar" aria-label="'+x.replace(/"/g,"&quot;")+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-step-fill"></div></div></li>').join("");
+ $("progressBar").style.display="none";$("progressFill").style.width="0%";$("progressPercent").textContent="0%";
  slProgressSet(0,0);return copy;
 }
 function slProgressSet(percent,step){
- const p=Math.max(0,Math.min(100,percent));$("progressFill").style.width=p+"%";$("progressPercent").textContent=Math.round(p)+"%";$("progressBar").setAttribute("aria-valuenow",String(Math.round(p)));
- [...$("progressSteps").children].forEach((li,i)=>{li.className=i<step?"done":i===step&&p<100?"current":"";if(i<step&&!li.textContent.startsWith("✓ "))li.textContent="✓ "+li.textContent;});
- if(p>=100){$("progressTitle").textContent=(document.documentElement.lang==="en"?"Analysis complete":"Prüfung abgeschlossen");}
+ const items=[...$("progressSteps").children],p=Math.max(0,Math.min(100,Number(percent)||0)),active=Math.max(0,Math.min(items.length-1,Number(step)||0));
+ items.forEach((li,i)=>{
+   const value=i<active?100:(i===active?p:0),done=value>=100;
+   li.dataset.progress=String(Math.round(value));li.className="progress-step"+(done?" done":i===active?" current":"");
+   const pct=li.querySelector(".progress-step-percent"),fill=li.querySelector(".progress-step-fill"),bar=li.querySelector('[role="progressbar"]');
+   if(pct)pct.textContent=Math.round(value)+"%";if(fill)fill.style.width=value+"%";if(bar)bar.setAttribute("aria-valuenow",String(Math.round(value)));
+   const check=li.querySelector(".progress-step-check");if(check)check.style.visibility=done?"visible":"hidden";
+ });
+ $("progressPercent").textContent=Math.round(p)+"%";
+ $("progressBar").setAttribute("aria-valuenow",String(Math.round(p)));
+ if(p>=100&&active===items.length-1){$("progressTitle").textContent=(document.documentElement.lang==="en"?"Analysis complete":"Prüfung abgeschlossen");}
 }
-function slProgressEnd(){slProgressSet(100,$("progressSteps").children.length);setTimeout(()=>{$("analysisProgress").classList.remove("active")},1800);}
-/* AI waiting indicator: continuous estimated progress while the provider is processing; capped until a response arrives. */
+function slProgressEnd(){
+ [...$("progressSteps").children].forEach((li)=>{li.classList.remove("current");li.classList.add("done");li.dataset.progress="100";const pct=li.querySelector(".progress-step-percent"),fill=li.querySelector(".progress-step-fill"),bar=li.querySelector('[role="progressbar"]'),check=li.querySelector(".progress-step-check");if(pct)pct.textContent="100%";if(fill)fill.style.width="100%";if(bar)bar.setAttribute("aria-valuenow","100");if(check)check.style.visibility="visible";});
+ $("progressPercent").textContent="100%";$("progressTitle").textContent=(document.documentElement.lang==="en"?"Analysis complete":"Prüfung abgeschlossen");
+ setTimeout(()=>{$("analysisProgress").classList.remove("active")},2600);
+}
+function slProgressFail(message){
+ slAiWaitStop();const box=$("analysisProgress");box.classList.add("failed");
+ $("progressTitle").textContent=(document.documentElement.lang==="en"?"Step failed":"Prüfschritt fehlgeschlagen");
+ $("progressNote").textContent=message|| (document.documentElement.lang==="en"?"The step did not complete. No green check was added.":"Der Schritt wurde nicht abgeschlossen. Es wurde kein grüner Haken gesetzt.");
+ [...$("progressSteps").children].forEach(li=>{if(!li.classList.contains("done")){li.classList.remove("current");li.classList.add("failed");}});
+ setTimeout(()=>box.classList.remove("active"),5000);
+}
+/* Estimated provider progress is capped below 100 until a real response arrives. */
 let slAiWaitTimer=null;
-function slAiWaitStart(){slAiWaitStop();let p=42;slProgressSet(p,1);slAiWaitTimer=setInterval(()=>{if(p<90){p=Math.min(90,p+(p<65?1.1:0.35));$("progressFill").style.width=p+"%";$("progressPercent").textContent=Math.floor(p)+"%";$("progressBar").setAttribute("aria-valuenow",String(Math.floor(p)));}},850);}
+function slAiWaitStart(){slAiWaitStop();let p=5;slProgressSet(p,1);slAiWaitTimer=setInterval(()=>{if(p<95){p=Math.min(95,p+(p<60?1.4:0.3));slProgressSet(p,1);}},850);}
 function slAiWaitStop(){if(slAiWaitTimer!==null){clearInterval(slAiWaitTimer);slAiWaitTimer=null;}}
 
 $("check").onclick=()=>{
@@ -2131,7 +2170,7 @@ $("liveLinkCheck").addEventListener("click", async () => {
     renderReport({risk,summary:hit?"Die externe URL-Prüfung hat mindestens eine Adresse als gelistet oder hochriskant eingestuft. Öffne sie nicht.":"Die externe URL-Prüfung hat keinen eindeutigen Phishing-Treffer mit hohem Risiko gemeldet. Das beweist nicht, dass die Links sicher sind.",evidence,steps:hit?["Öffne die als riskant eingestuften Links nicht.","Gib keine Zugangsdaten oder Zahlungsinformationen ein.","Wenn du bereits Daten eingegeben oder bezahlt hast, kontaktiere umgehend deine Bank bzw. den betroffenen Dienst."]:["Ein niedriges oder unklares Ergebnis ist keine Sicherheitsgarantie.","Öffne unerwartete Links nicht direkt.","Prüfe Absender und Anliegen über einen unabhängig gefundenen Kontaktweg."],limitations:"Externe URL-Analyse durch Phishunt.io für maximal fünf URLs. Ergebnisse und Datenquellen können unvollständig sein; unbekannte oder neue Betrugsseiten können übersehen werden. Die Zielseite wird laut Dienst nicht direkt aufgerufen.",method:"Lokale Regelprüfung + Live-URL-Analyse Phishunt.io"});
     status.textContent = "Live-Prüfung abgeschlossen: " + results.length + " URL(s) analysiert; " + results.filter(r=>r.listed || r.risk === "high").length + " mit hohem Risiko oder bekanntem Treffer. Kein Treffer beweist nicht, dass eine URL sicher ist.";slProgressSet(90,2);slProgressEnd();
   } catch (err) {
-    status.textContent = "Live-Prüfung nicht möglich: " + err.message + ". Es wurde kein Ergebnis vorgetäuscht. Du kannst weiterhin die lokale Prüfung verwenden.";slProgressSet(100,2);slProgressEnd();
+    status.textContent = "Live-Prüfung nicht möglich: " + err.message + ". Es wurde kein Ergebnis vorgetäuscht. Du kannst weiterhin die lokale Prüfung verwenden.";slProgressFail(status.textContent);
   } finally {
     button.disabled = false;
   }
@@ -2205,7 +2244,7 @@ $("aiStart").addEventListener("click", async () => {
     const summary = String(d.summary || "KI- und lokale Prüfung zusammengeführt.");
     renderReport({risk, score:risk==="high"?10:risk==="medium"?5:risk==="low"?2:"?", summary, evidence, steps:d.recommendations.map(x => String(x)), limitations:"KI-Ergebnis kann falsch sein. Nicht alle Angaben wurden unabhängig verifiziert. Links, Absender, Sponsor und Unternehmensdaten wurden nur dann live geprüft, wenn dies ausdrücklich in den Prüfschritten ausgewiesen ist. Externer KI-Dienst: Pollinations Free API. Der Text wurde nach deiner Zustimmung an den Anbieter übertragen.", method:"KI-Kontextanalyse + lokale Regeln und Kontextprüfung (Pollinations)"});slProgressEnd();
   } catch (error) {
-    slAiWaitStop();slProgressSet(100,2);slProgressEnd();
+    slAiWaitStop();slProgressFail("KI-Antwort fehlgeschlagen: "+error.message+". Lokale Ersatzprüfung wird angezeigt; die KI-Analyse ist nicht abgeschlossen.");
     runLocalReport(text);
     $("limitations").textContent = "KI-Analyse nicht verfügbar: " + error.message + ". Es wurde ausschließlich lokal geprüft; ein erfolgreiches KI-Ergebnis wurde nicht vorgetäuscht.";
     $("method").textContent = "Prüfmethode: Nur lokale Prüfung (kostenlose KI nicht verfügbar).";
