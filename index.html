@@ -1326,7 +1326,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
  .mascot-hero .landscape-art{height:36%!important}
 }
 
-/* Version 8.0: use Phishunt verdict alongside URL heuristics; clarify required AI key */
+/* Version 8.1: use Phishunt verdict alongside URL heuristics; clarify required AI key */
 /* Version 7.5: phone portrait layout — readable, full-width controls and compact report */
 @media screen and (max-width:600px) and (orientation:portrait){
   html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
@@ -1349,7 +1349,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
   #msg{width:100%!important;min-height:150px!important;font-size:16px!important}
 }
 
-/* Version 8.0: fix iPhone portrait header wrapping and welcome-card overlap */
+/* Version 8.1: fix iPhone portrait header wrapping and welcome-card overlap */
 @media screen and (max-width:600px) and (orientation:portrait){
   header{padding:18px 14px!important}
   header .wrap{width:100%!important;max-width:100%!important}
@@ -1444,7 +1444,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
-<div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p><small class="app-version">Version 8.0</small></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
+<div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p><small class="app-version">Version 8.1</small></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
 <button class="usage-guide-button" id="usageGuideToggle" type="button" aria-expanded="false" aria-controls="usageGuidePanel">Gebrauchsanweisung</button>
 <details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Scam Lens verwendet Google Gemini API. Der Nachrichtentext wird nur nach deiner Zustimmung an Google übertragen. Verwende keine Passwörter oder vollständigen Zahlungsdaten.</p><div class="toolbar"><button class="secondary" id="testAI" type="button">KI mit Beispieltext testen</button></div><label for="geminiKey" style="display:block;margin-top:10px">Google Gemini API-Schlüssel (nur für diese Sitzung)</label><input id="geminiKey" type="password" autocomplete="off" placeholder="Gemini API-Schlüssel" style="width:100%;padding:12px;border-radius:10px;border:1px solid #8ca4bd"><p class="muted">Der Schlüssel wird nicht im Repository gespeichert und bleibt nur in dieser Browser-Sitzung. Hinweis: Bei einer öffentlichen Web-App ist ein direkt im Browser verwendeter Schlüssel nicht vollständig geheim. Für einen Produktivbetrieb wird ein abgesicherter Backend-Proxy empfohlen.</p><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Google Gemini API: Verfügbarkeit und Limits hängen vom Schlüssel und Modell ab. Die lokale Sicherheitsprüfung bleibt unabhängig verfügbar.</p></div></details>
 <button class="upgrade-button" id="upgradeTop" type="button">⭐ Upgrade</button></div></div></div></header>
@@ -1455,7 +1455,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · VERSION 8.0</span>
+<span class="tag">SCAM LENS · VERSION 8.1</span>
 
 
 <div class="mascot-hero">
@@ -2285,10 +2285,19 @@ async function scamLensGeminiAI(text, language) {
     throw new Error("Google Gemini API HTTP " + response.status + "." + hint + (detail ? " Details: " + detail.slice(0,260) : ""));
   }
   const data = await response.json();
-  const content = String(data?.output_text || data?.outputs?.map(o => o?.text || "").filter(Boolean).join("\n") || "").trim();
+  const outputItems = Array.isArray(data?.outputs) ? data.outputs : (Array.isArray(data?.output) ? data.output : []);
+  const outputText = outputItems.map(item => {
+    if (typeof item?.text === "string") return item.text;
+    if (typeof item?.content === "string") return item.content;
+    if (Array.isArray(item?.content)) return item.content.map(part => part?.text || "").join("\\n");
+    if (Array.isArray(item?.parts)) return item.parts.map(part => part?.text || "").join("\\n");
+    return "";
+  }).filter(Boolean).join("\\n");
+  const content = String(data?.output_text || outputText || data?.response?.text || "").trim();
   if (!content) {
-    const reason = data?.status || data?.error?.message || "keine Antwort";
-    throw new Error("Google Gemini lieferte keinen auswertbaren Text (" + reason + ").");
+    const shape = Object.keys(data || {}).join(", ") || "leere Antwort";
+    const reason = data?.error?.message || data?.status || "keine Antwort";
+    throw new Error("Google Gemini lieferte keinen auswertbaren Text (Status: " + reason + "; Antwortfelder: " + shape + ").");
   }
   const cleaned = content.replace(/^\s*```(?:json)?\s*/i,"").replace(/\s*```\s*$/,"").trim();
   const match = cleaned.match(/\{[\s\S]*\}/);
@@ -2385,7 +2394,7 @@ $("usageGuideClose").addEventListener("click", () => {
 
 $("downloadUserGuide").addEventListener("click",()=>{
  const en=document.documentElement.lang==="en";
- const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 8.0)
+ const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 8.1)
 ========================================================
 
 THREE ANALYSIS METHODS
@@ -2413,7 +2422,7 @@ OTHER NOTES
 - The app does not automatically open destination links.
 - Availability, results, data retention and privacy practices of external providers are controlled by those providers; review their current policies before use.
 - No source list can truthfully claim that all websites worldwide and all languages are searched. This version only uses the specific sources described above.
-` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 8.0)
+` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 8.1)
 ========================================================
 
 DREI ANALYSEVERFAHREN
