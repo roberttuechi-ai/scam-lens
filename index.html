@@ -1326,7 +1326,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
  .mascot-hero .landscape-art{height:36%!important}
 }
 
-/* Version 8.2: use Phishunt verdict alongside URL heuristics; clarify required AI key */
+/* Version 8.3: use Phishunt verdict alongside URL heuristics; clarify required AI key */
 /* Version 7.5: phone portrait layout — readable, full-width controls and compact report */
 @media screen and (max-width:600px) and (orientation:portrait){
   html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
@@ -1349,7 +1349,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
   #msg{width:100%!important;min-height:150px!important;font-size:16px!important}
 }
 
-/* Version 8.2: fix iPhone portrait header wrapping and welcome-card overlap */
+/* Version 8.3: fix iPhone portrait header wrapping and welcome-card overlap */
 @media screen and (max-width:600px) and (orientation:portrait){
   header{padding:18px 14px!important}
   header .wrap{width:100%!important;max-width:100%!important}
@@ -1444,7 +1444,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
-<div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p><small class="app-version">Version 8.2</small></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
+<div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p><small class="app-version">Version 8.3</small></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
 <button class="usage-guide-button" id="usageGuideToggle" type="button" aria-expanded="false" aria-controls="usageGuidePanel">Gebrauchsanweisung</button>
 <details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Scam Lens verwendet Google Gemini API. Der Nachrichtentext wird nur nach deiner Zustimmung an Google übertragen. Verwende keine Passwörter oder vollständigen Zahlungsdaten.</p><div class="toolbar"><button class="secondary" id="testAI" type="button">KI mit Beispieltext testen</button></div><label for="geminiKey" style="display:block;margin-top:10px">Google Gemini API-Schlüssel (nur für diese Sitzung)</label><input id="geminiKey" type="password" autocomplete="off" placeholder="Gemini API-Schlüssel" style="width:100%;padding:12px;border-radius:10px;border:1px solid #8ca4bd"><p class="muted">Der Schlüssel wird nicht im Repository gespeichert und bleibt nur in dieser Browser-Sitzung. Hinweis: Bei einer öffentlichen Web-App ist ein direkt im Browser verwendeter Schlüssel nicht vollständig geheim. Für einen Produktivbetrieb wird ein abgesicherter Backend-Proxy empfohlen.</p><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Google Gemini API: Verfügbarkeit und Limits hängen vom Schlüssel und Modell ab. Die lokale Sicherheitsprüfung bleibt unabhängig verfügbar.</p></div></details>
 <button class="upgrade-button" id="upgradeTop" type="button">⭐ Upgrade</button></div></div></div></header>
@@ -1455,7 +1455,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · VERSION 8.2</span>
+<span class="tag">SCAM LENS · VERSION 8.3</span>
 
 
 <div class="mascot-hero">
@@ -1666,6 +1666,50 @@ const languageNotice={de:"Die Sprachwahl ist vorbereitet. Eine vollständige Üb
 
 Object.assign(SL_TRANSLATIONS.en,{
 "Scam Lens – einfach erklärt":"Scam Lens – explained simply","Du kannst jeden Schritt in Ruhe durchführen. Du musst nichts anklicken, was dir unsicher vorkommt.":"Take each step at your own pace. Do not click anything that feels unsafe.","1. Wähle eine Nachricht":"1. Choose a message","2. Kontrolliere den Text":"2. Check the text","3. Starte die Prüfung selbst":"3. Start the check yourself","4. Zusätzliche Prüfungen":"4. Additional checks","5. Verstehe das Ergebnis":"5. Understand the result","Hohes Risiko":"High risk","Auffälligkeiten gefunden":"Warning signs found","Wenige Hinweise erkannt":"Few warning signs found","Nicht ausreichend prüfbar":"Not enough information to assess","Die Nachricht enthält deutliche Betrugsmerkmale. Handle nicht über die Nachricht.":"The message contains clear signs of a scam. Do not act through this message.","Es gibt Warnsignale. Prüfe Absender und Forderung unabhängig.":"There are warning signs. Verify the sender and request independently.","Es wurden wenige Hinweise gefunden. Das ist keine Sicherheitsgarantie.":"Few warning signs were found. This does not guarantee safety.","Die Informationen reichen für eine belastbare Einschätzung nicht aus.":"There is not enough information for a reliable assessment.","Nicht klicken, nicht antworten und kein Geld überweisen.":"Do not click, reply, or transfer money.","Erst prüfen – noch nicht reagieren.":"Check first — do not respond yet.","Trotzdem aufmerksam bleiben.":"Stay alert anyway.","Vorsicht: keine sichere Einschätzung möglich.":"Caution: a reliable assessment is not possible.","Warum diese Einschätzung?":"Why this assessment?","Prüfmethode:":"Check method:","Nur lokale Regelprüfung – keine erfolgreiche KI-Analyse":"Local rule check only — no successful AI analysis","KI-Analyse + lokale Prüfung":"AI analysis + local check","Keine konkreten Belege ausgegeben.":"No specific evidence was produced.","Keine Links öffnen und keine sensiblen Daten preisgeben.":"Do not open links or share sensitive information.","Den Absender über unabhängig gefundene Kontaktdaten prüfen.":"Verify the sender using contact details found independently.","Diese Einschätzung kann falsch sein. Links und Absender wurden nicht live geprüft.":"This assessment may be wrong. Links and senders were not checked live.","Bericht vorlesen":"Read report aloud","Vorlesen stoppen":"Stop reading aloud","Erkannter Text":"Recognized text","Text prüfen":"Check text","Prüfung starten":"Start check","Ergebnis":"Result","Nächste Schritte":"Next steps","Datenschutz":"Privacy","Automatische Prüfungen – vorbereiten":"Prepare automatic checks","Meine Wünsche speichern":"Save my preferences","Einstellungen speichern":"Save settings","Startzeit":"Start time","Endzeit":"End time","Prüfintervall":"Check interval","E-Mail-Check im Hintergrund":"Background email check","SMS-Check bei Bedarf":"SMS check on demand","Scam Lens ist eine Entscheidungshilfe, kein zertifizierter Sicherheitsdienst. Die Bewertung kann falsch sein; Links werden nur nach Zustimmung live geprüft.":"Scam Lens is a decision aid, not a certified security service. Results may be wrong; links are checked live only with your consent."
+});
+Object.assign(SL_TRANSLATIONS.en,{
+ "Dein freundlicher Helfer gegen Betrugsnachrichten.":"Your friendly helper for checking suspicious messages.",
+ "Sprache":"Language","Gebrauchsanweisung":"User guide","Schritt 1: Wähle deine Nachricht":"Step 1: Choose your message",
+ "Text eingeben":"Enter text","Kamera":"Camera","Hochladen":"Upload","Importierter Nachrichtentext":"Imported message text",
+ "Bitte kontrolliere den Inhalt vor der Analyse.":"Please review the content before analysis.","Datei auswählen":"Choose file",
+ "KI-Analyse starten":"Start AI analysis","Links live prüfen":"Check links live","Normaler Sicherheits-Check":"Standard security check",
+ "Verdächtige Webadressen abgleichen":"Check suspicious web addresses","Schnelle Prüfung auf diesem Gerät – ohne Datenübertragung":"Quick check on this device — no data transfer",
+ "Live-Prüfung abgebrochen.":"Live check cancelled.","Live-Prüfung abgeschlossen:":"Live check completed:",
+ "Live-Prüfung nicht möglich:":"Live check unavailable:","Prüfmethode:":"Check method:",
+ "Nur lokale Regelprüfung – keine erfolgreiche KI-Analyse":"Local rule check only — no successful AI analysis",
+ "KI nicht verfügbar – Ergebnis stammt nur aus der lokalen Regelprüfung.":"AI unavailable — this result comes only from the local rule check.",
+ "Regelbasierte Ersteinschätzung.":"Rule-based initial assessment.","Deutliche Warnsignale gefunden.":"Clear warning signs found.",
+ "Orientierungswert anhand erkannter Warnsignale – keine statistisch gemessene Betrugswahrscheinlichkeit. Niedrig bedeutet nicht automatisch sicher.":"An indicative score based on detected warning signs — not a statistically measured probability of fraud. A low score does not automatically mean safe.",
+ "Risiko":"Risk","Hohes Risiko":"High risk","Auffälligkeiten gefunden":"Warning signs found","Wenige Hinweise erkannt":"Few warning signs found","Nicht ausreichend prüfbar":"Not enough information to assess",
+ "Nicht klicken, nicht antworten und kein Geld überweisen.":"Do not click, reply, or transfer money.",
+ "Beende den Kontakt über diese Nachricht. Prüfe den angeblichen Absender über eine selbst gefundene offizielle Telefonnummer oder Website.":"Stop communicating through this message. Verify the claimed sender using an official phone number or website you find independently.",
+ "Erst prüfen – noch nicht reagieren.":"Check first — do not respond yet.",
+ "Öffne keine Links und gib keine Daten ein, bis du Absender und Forderung über einen unabhängigen Kontaktweg bestätigt hast.":"Do not open links or enter data until you have verified the sender and request through an independent channel.",
+ "Trotzdem aufmerksam bleiben.":"Stay alert anyway.",
+ "Es wurden wenige typische Warnsignale erkannt. Das beweist nicht, dass die Nachricht echt ist. Prüfe unerwartete Forderungen unabhängig.":"Few typical warning signs were detected. This does not prove the message is genuine. Independently verify unexpected requests.",
+ "Vorsicht: keine sichere Einschätzung möglich.":"Caution: a reliable assessment is not possible.",
+ "Verlasse dich nicht auf diese Prüfung allein. Öffne keine Links und kontaktiere den angeblichen Absender über offizielle Kontaktdaten.":"Do not rely on this check alone. Do not open links; contact the claimed sender using official contact details.",
+ "Stopp: Das sieht gefährlich aus. Öffne keine Links und gib keine Daten ein. Prüfe den Absender über einen offiziellen Kontaktweg.":"Stop: This looks dangerous. Do not open links or enter data. Verify the sender through an official channel.",
+ "Ich sehe Warnsignale. Reagiere nicht unter Zeitdruck und überprüfe die Nachricht unabhängig.":"I see warning signs. Do not act under time pressure; verify the message independently.",
+ "Ich habe wenige typische Warnsignale gefunden. Das bedeutet nicht automatisch, dass die Nachricht sicher ist.":"I found few typical warning signs. That does not automatically mean the message is safe.",
+ "Ich kann das nicht zuverlässig einschätzen. Sei vorsichtig und prüfe die Nachricht über einen unabhängigen Kontaktweg.":"I cannot assess this reliably. Be cautious and verify the message through an independent channel.",
+ "Keine konkreten Belege ausgegeben.":"No specific evidence was produced.",
+ "Keine Links öffnen und keine sensiblen Daten preisgeben.":"Do not open links or disclose sensitive data.",
+ "Den Absender über unabhängig gefundene Kontaktdaten prüfen.":"Verify the sender using contact details found independently.",
+ "Diese Einschätzung kann falsch sein. Links und Absender wurden nicht live geprüft. Die URL-Prüfung untersucht nur sichtbare Strukturmerkmale. Ein niedriger Wert bedeutet nicht, dass die Nachricht sicher ist.":"This assessment may be wrong. Links and senders were not checked live. URL checks examine visible structural features only. A low score does not mean the message is safe.",
+ "Warum diese Einschätzung?":"Why this assessment?","Was solltest du tun?":"What should you do?",
+ "Vier einfache Regeln für mehr Sicherheit":"Four simple rules for better security",
+ "Wo bekommst du Hilfe?":"Where can you get help?",
+ "Öffne eine Überschrift, um die Erklärung und die Kontaktmöglichkeit zu sehen.":"Open a heading to see the explanation and contact details.",
+ "Live-Prüfung abgebrochen. Es wurden keine URLs übermittelt.":"Live check cancelled. No URLs were sent.",
+ "Text erkannt. Bitte kontrolliere ihn. Noch keine Prüfung gestartet.":"Text recognized. Please review it. No check has started yet.",
+ "Outlook-Datei lokal eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.":"Outlook file read locally. No check has started yet. Click “Local check only” or “Start AI analysis”.",
+ "PDF-Text lokal eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.":"PDF text read locally. No check has started yet. Click “Local check only” or “Start AI analysis”.",
+ "Datei lokal als Text eingelesen. Noch keine Prüfung gestartet; kontrolliere den Inhalt vor der Analyse.":"File read locally as text. No check has started yet; review the content before analysis.",
+ "Vorlesen beendet.":"Reading finished.","Vorlesen gestoppt.":"Reading stopped.",
+ "KI-Analyse nicht verfügbar:":"AI analysis unavailable:",
+ "Prüfmethode: Nur lokale Prüfung (kostenlose KI nicht verfügbar).":"Check method: Local check only (AI unavailable).",
+ "Es wurde ausschließlich lokal geprüft; ein erfolgreiches KI-Ergebnis wurde nicht vorgetäuscht.":"Only a local check was performed; no successful AI result was claimed."
 });
 Object.assign(SL_TRANSLATIONS.tr,{"Hohes Risiko":"Yüksek risk","Auffälligkeiten gefunden":"Uyarı işaretleri bulundu","Wenige Hinweise erkannt":"Az sayıda belirti bulundu","Nicht ausreichend prüfbar":"Değerlendirmek için yeterli bilgi yok","Warum diese Einschätzung?":"Bu değerlendirme neden yapıldı?","Prüfung starten":"Kontrolü başlat","Ergebnis":"Sonuç","Nächste Schritte":"Sonraki adımlar","Datenschutz":"Gizlilik","Bericht vorlesen":"Raporu sesli oku","Vorlesen stoppen":"Sesli okumayı durdur"});
 Object.assign(SL_TRANSLATIONS.bs,{"Hohes Risiko":"Visok rizik","Auffälligkeiten gefunden":"Pronađeni znakovi upozorenja","Wenige Hinweise erkannt":"Pronađeno malo upozorenja","Nicht ausreichend prüfbar":"Nema dovoljno podataka za procjenu","Warum diese Einschätzung?":"Zašto ova procjena?","Prüfung starten":"Pokreni provjeru","Ergebnis":"Rezultat","Nächste Schritte":"Sljedeći koraci","Datenschutz":"Privatnost","Bericht vorlesen":"Pročitaj izvještaj naglas","Vorlesen stoppen":"Zaustavi čitanje"});
@@ -2108,7 +2152,7 @@ $("riskTitle").textContent=titles[risk];$("riskText").textContent=data.summary||
 $("evidence").replaceChildren();(data.evidence||[]).forEach(x=>{let li=document.createElement("li");let title=document.createElement("strong");title.textContent=(x.title||"Hinweis")+": ";li.append(title,document.createTextNode(x.why||x.detail||""));$("evidence").append(li)});if(!$("evidence").children.length){let li=document.createElement("li");li.textContent="Keine konkreten Belege ausgegeben."; $("evidence").append(li)}
 $("steps").replaceChildren();(data.steps||[]).forEach(x=>{let li=document.createElement("li");li.textContent=x;$("steps").append(li)});if(!$("steps").children.length){["Keine Links öffnen und keine sensiblen Daten preisgeben.","Den Absender über unabhängig gefundene Kontaktdaten prüfen."].forEach(x=>{let li=document.createElement("li");li.textContent=x;$("steps").append(li)})}
 $("limitations").textContent=data.limitations||"Diese Einschätzung kann falsch sein. Links und Absender wurden nicht live geprüft. Die URL-Prüfung untersucht nur sichtbare Strukturmerkmale. Ein niedriger Wert bedeutet nicht, dass die Nachricht sicher ist.";
-$("method").textContent="Prüfmethode: "+data.method+"."; const srcLabel=$("analysisSource"); const methodText=String(data.method||"").toLowerCase(); if(methodText.includes("ki") && !methodText.includes("nicht verfügbar") && !methodText.includes("fehlgeschlagen")){srcLabel.className="source-ai";srcLabel.textContent="KI-Analyse + lokale Prüfung";}else{srcLabel.className="source-local";srcLabel.textContent="Nur lokale Regelprüfung – keine erfolgreiche KI-Analyse";} $("report").style.display="block";$("report").scrollIntoView({behavior:"smooth",block:"start"});lastReport=$("report").innerText}
+$("method").textContent="Prüfmethode: "+data.method+"."; const srcLabel=$("analysisSource"); const methodText=String(data.method||"").toLowerCase(); if(methodText.includes("ki") && !methodText.includes("nicht verfügbar") && !methodText.includes("fehlgeschlagen")){srcLabel.className="source-ai";srcLabel.textContent="KI-Analyse + lokale Prüfung";}else{srcLabel.className="source-local";srcLabel.textContent="Nur lokale Regelprüfung – keine erfolgreiche KI-Analyse";} $("report").style.display="block";if(typeof slTranslateAddedNodes==="function")slTranslateAddedNodes($("report"));$("report").scrollIntoView({behavior:"smooth",block:"start"});lastReport=$("report").innerText}
 function runLocalReport(text) {
 if(!text){return}
 const local=localAnalysis(text);let report={risk:local.risk,score:local.points,summary:"Regelbasierte Ersteinschätzung. "+({high:"Deutliche Warnsignale gefunden.",medium:"Einige Warnsignale gefunden.",low:"Nur wenige typische Warnsignale gefunden."}[local.risk]),evidence:local.evidence,steps:local.raw>=5?["Nicht auf Links klicken und keine Anhänge öffnen.","Keine Passwörter, Codes oder Zahlungsdaten eingeben.","Absender unabhängig prüfen.","Bei bereits erfolgter Zahlung oder Datenweitergabe sofort Bank bzw. Dienst kontaktieren."]:["Nicht unter Zeitdruck reagieren.","Absender und Forderung über einen unabhängigen Kanal prüfen.","Keine sensiblen Daten preisgeben."],limitations:"Lokale Mustererkennung, keine Live-Prüfung von Links oder Absendern. Ein niedriger Wert beweist nicht, dass die Nachricht sicher ist.",method:"Lokale Regelprüfung"};
@@ -2399,7 +2443,7 @@ $("usageGuideClose").addEventListener("click", () => {
 
 $("downloadUserGuide").addEventListener("click",()=>{
  const en=document.documentElement.lang==="en";
- const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 8.2)
+ const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 8.3)
 ========================================================
 
 THREE ANALYSIS METHODS
@@ -2427,7 +2471,7 @@ OTHER NOTES
 - The app does not automatically open destination links.
 - Availability, results, data retention and privacy practices of external providers are controlled by those providers; review their current policies before use.
 - No source list can truthfully claim that all websites worldwide and all languages are searched. This version only uses the specific sources described above.
-` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 8.2)
+` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 8.3)
 ========================================================
 
 DREI ANALYSEVERFAHREN
