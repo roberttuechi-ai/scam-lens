@@ -4,7 +4,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#102a43"><title>Scam Lens 7.5 – Security check</title>
+<meta name="theme-color" content="#102a43"><title>Scam Lens 7.6 – Security check</title>
 <style>
 :root{font:18px/1.6 Arial,Helvetica,sans-serif;color:#17324d;background:#eef4fb;--navy:#102a43;--blue:#3155d9;--teal:#087f70;--red:#c62828;--orange:#a66300;--green:#237747}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eaf4ff 0,#f5f7fb 280px,#f3f6fa 100%);line-height:1.6}
@@ -1326,6 +1326,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
  .mascot-hero .landscape-art{height:36%!important}
 }
 
+/* Version 7.6: use Phishunt verdict alongside URL heuristics; clarify required AI key */
 /* Version 7.5: phone portrait layout — readable, full-width controls and compact report */
 @media screen and (max-width:600px) and (orientation:portrait){
   html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
@@ -1441,7 +1442,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
 <div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p><small class="app-version">Version 7.4</small></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
 <button class="usage-guide-button" id="usageGuideToggle" type="button" aria-expanded="false" aria-controls="usageGuidePanel">Gebrauchsanweisung</button>
-<details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Scam Lens kann die kostenlose, anonyme Textschnittstelle von Pollinations direkt aufrufen. Es ist keine Backend-Adresse und kein API-Schlüssel nötig. Der Anbieter erhält den Text, den du ausdrücklich zur KI-Prüfung freigibst. Verwende keine Passwörter, vollständigen Zahlungsdaten oder andere Geheimnisse.</p><div class="toolbar"><button class="secondary" id="testAI" type="button">KI mit Beispieltext testen</button></div><label for="pollinationsKey" style="display:block;margin-top:10px">Pollinations API-Schlüssel (nur für diese Sitzung)</label><input id="pollinationsKey" type="password" autocomplete="off" placeholder="pk_… oder sk_…" style="width:100%;padding:12px;border-radius:10px;border:1px solid #8ca4bd"><p class="muted">Die aktuelle Pollinations-API verlangt einen Schlüssel. Er wird nicht im Repository gespeichert und bleibt nur in dieser Browser-Sitzung.</p><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die kostenlose Schnittstelle kann gedrosselt werden oder zeitweise ausfallen. Wenn sie nicht erreichbar ist, bleibt die lokale Prüfung verfügbar.</p></div></details>
+<details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Scam Lens ruft Pollinations direkt auf. Für die aktuelle API ist ein gültiger API-Schlüssel erforderlich. Der Anbieter erhält den Text, den du ausdrücklich zur KI-Prüfung freigibst. Verwende keine Passwörter, vollständigen Zahlungsdaten oder andere Geheimnisse.</p><div class="toolbar"><button class="secondary" id="testAI" type="button">KI mit Beispieltext testen</button></div><label for="pollinationsKey" style="display:block;margin-top:10px">Pollinations API-Schlüssel (nur für diese Sitzung)</label><input id="pollinationsKey" type="password" autocomplete="off" placeholder="pk_… oder sk_…" style="width:100%;padding:12px;border-radius:10px;border:1px solid #8ca4bd"><p class="muted">Die aktuelle Pollinations-API verlangt einen Schlüssel. Er wird nicht im Repository gespeichert und bleibt nur in dieser Browser-Sitzung.</p><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die kostenlose Schnittstelle kann gedrosselt werden oder zeitweise ausfallen. Wenn sie nicht erreichbar ist, bleibt die lokale Prüfung verfügbar.</p></div></details>
 <button class="upgrade-button" id="upgradeTop" type="button">⭐ Upgrade</button></div></div></div></header>
 <section class="usage-guide-panel" id="usageGuidePanel" hidden aria-labelledby="usageGuideTitle"><div class="usage-guide-inner"><div class="usage-guide-heading"><div><h2 id="usageGuideTitle">Scam Lens – einfach erklärt</h2><p>Du kannst jeden Schritt in Ruhe durchführen. Du musst nichts anklicken, was dir unsicher vorkommt.</p></div><button class="secondary usage-guide-close" id="usageGuideClose" type="button">Schließen</button></div><div id="usageGuideText"><h3>1. Wähle eine Nachricht</h3><p>Du kannst Text einfügen, ein Foto oder einen Screenshot auswählen oder eine Datei laden. Bei einem Foto versucht Scam Lens, die Wörter im Bild zu erkennen.</p><h3>2. Kontrolliere den Text</h3><p>Vergleiche den erkannten Text mit dem Bild. Verbessere Fehler und ergänze fehlende Wörter. Wenn das Bild unscharf ist, mache ein neues Foto oder fahre bewusst mit dem erkannten Text fort.</p><h3>3. Starte die Prüfung selbst</h3><p>Die Prüfung beginnt erst, wenn du eine Prüftaste drückst. Der normale Sicherheits-Check läuft auf diesem Gerät. Für eine KI-Prüfung wird der Nachrichtentext an den eingestellten Dienst gesendet. Lies den Hinweis vorher aufmerksam.</p><h3>4. Zusätzliche Prüfungen</h3><p>Eine Live-Prüfung von Links ist freiwillig. Wenn du zustimmst, werden die geprüften Webadressen an einen externen Prüfdienst gesendet. Links werden nicht automatisch geöffnet.</p><h3>5. Verstehe das Ergebnis</h3><p>Lensi erklärt die Warnsignale und nennt nächste Schritte. Ein niedriges Risiko ist keine Garantie. Wenn du unsicher bist, klicke nicht auf den Link und kontaktiere die Organisation über eine selbst gefundene offizielle Telefonnummer.</p><h3>6. Hilfe holen</h3><p>Unter „Hilfe &amp; melden“ findest du Anlaufstellen in Österreich. Wenn du bereits Geld überwiesen oder Bankdaten eingegeben hast, kontaktiere sofort deine Bank über die offizielle App oder eine selbst gefundene Telefonnummer.</p></div><div class="usage-guide-actions"><button class="primary" id="downloadUserGuide" type="button">⬇ Gebrauchsanweisung herunterladen (.txt)</button><button class="primary" id="usageGuideSpeak" type="button">🔊 Gebrauchsanweisung vorlesen</button><button class="secondary" id="usageGuideStop" type="button" hidden>⏹ Vorlesen stoppen</button></div><p class="muted" id="usageGuideStatus" role="status" aria-live="polite"></p></div></section>
 
@@ -1450,7 +1451,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · VERSION 7.5</span>
+<span class="tag">SCAM LENS · VERSION 7.6</span>
 
 
 <div class="mascot-hero">
@@ -2195,11 +2196,18 @@ $("liveLinkCheck").addEventListener("click", async () => {
       const feeds = data.external_feeds || {};
       const listed = Boolean(data.known.in_active_feed || data.known.previously_active || data.known.in_new_registration_feed || feeds.listed || feeds.openphish || feeds.phishtank || feeds.tweetfeed);
       const riskText = String(data.live_analysis.url_risk || "unknown").toLowerCase();
+      const verdictText = String(data.verdict || "").toLowerCase();
       const score = Number(data.live_analysis.url_risk_score);
-      const risk = listed || riskText === "high" || (Number.isFinite(score) && score >= 70) ? "high" :
+      const heuristicRisk = riskText === "high" || (Number.isFinite(score) && score >= 70) ? "high" :
         riskText === "medium" || (Number.isFinite(score) && score >= 40) ? "medium" :
         riskText === "low" || (Number.isFinite(score) && score < 40) ? "low" : "unknown";
-      results.push({url, risk, score:Number.isFinite(score)?score:null, listed, brand:data.live_analysis.brand_match || "", feedsOk:feeds.feeds_ok !== false});
+      /* Phishunt documents verdict as its primary adjudicated answer; combine it conservatively with URL-shape heuristics. */
+      const verdictRisk = /^(critical|high|likely_phishing|phishing)$/.test(verdictText) ? "high" :
+        /^(medium|suspicious)$/.test(verdictText) ? "medium" :
+        /^(low|noise|no_evidence)$/.test(verdictText) ? "low" : "unknown";
+      const rank = {unknown:0,low:1,medium:2,high:3};
+      const risk = listed ? "high" : (rank[verdictRisk] >= rank[heuristicRisk] ? verdictRisk : heuristicRisk);
+      results.push({url, risk, score:Number.isFinite(score)?score:null, verdict:verdictText, verdictConfidence:data.verdict_confidence || "", listed, brand:data.live_analysis.brand_match || "", feedsOk:feeds.feeds_ok !== false});
     }
     const local = localAnalysis(text);
     const evidence = [...local.evidence];
@@ -2345,7 +2353,7 @@ $("usageGuideClose").addEventListener("click", () => {
 
 $("downloadUserGuide").addEventListener("click",()=>{
  const en=document.documentElement.lang==="en";
- const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 7.5)
+ const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 7.6)
 ========================================================
 
 THREE ANALYSIS METHODS
@@ -2373,7 +2381,7 @@ OTHER NOTES
 - The app does not automatically open destination links.
 - Availability, results, data retention and privacy practices of external providers are controlled by those providers; review their current policies before use.
 - No source list can truthfully claim that all websites worldwide and all languages are searched. This version only uses the specific sources described above.
-` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 7.5)
+` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 7.6)
 ========================================================
 
 DREI ANALYSEVERFAHREN
