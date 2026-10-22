@@ -4,7 +4,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#102a43"><title>Scam Lens 7.7 – AI connection fix</title>
+<meta name="theme-color" content="#102a43"><title>Scam Lens 7.8 – AI response parsing fix</title>
 <style>
 :root{font:18px/1.6 Arial,Helvetica,sans-serif;color:#17324d;background:#eef4fb;--navy:#102a43;--blue:#3155d9;--teal:#087f70;--red:#c62828;--orange:#a66300;--green:#237747}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eaf4ff 0,#f5f7fb 280px,#f3f6fa 100%);line-height:1.6}
@@ -1326,7 +1326,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
  .mascot-hero .landscape-art{height:36%!important}
 }
 
-/* Version 7.7: use Phishunt verdict alongside URL heuristics; clarify required AI key */
+/* Version 7.8: use Phishunt verdict alongside URL heuristics; clarify required AI key */
 /* Version 7.5: phone portrait layout — readable, full-width controls and compact report */
 @media screen and (max-width:600px) and (orientation:portrait){
   html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
@@ -1349,7 +1349,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
   #msg{width:100%!important;min-height:150px!important;font-size:16px!important}
 }
 
-/* Version 7.7: fix iPhone portrait header wrapping and welcome-card overlap */
+/* Version 7.8: fix iPhone portrait header wrapping and welcome-card overlap */
 @media screen and (max-width:600px) and (orientation:portrait){
   header{padding:18px 14px!important}
   header .wrap{width:100%!important;max-width:100%!important}
@@ -1444,7 +1444,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
-<div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p><small class="app-version">Version 7.7</small></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
+<div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p><small class="app-version">Version 7.8</small></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
 <button class="usage-guide-button" id="usageGuideToggle" type="button" aria-expanded="false" aria-controls="usageGuidePanel">Gebrauchsanweisung</button>
 <details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Scam Lens ruft Pollinations direkt auf. Für die aktuelle API ist ein gültiger API-Schlüssel erforderlich. Der Anbieter erhält den Text, den du ausdrücklich zur KI-Prüfung freigibst. Verwende keine Passwörter, vollständigen Zahlungsdaten oder andere Geheimnisse.</p><div class="toolbar"><button class="secondary" id="testAI" type="button">KI mit Beispieltext testen</button></div><label for="pollinationsKey" style="display:block;margin-top:10px">Pollinations API-Schlüssel (nur für diese Sitzung)</label><input id="pollinationsKey" type="password" autocomplete="off" placeholder="pk_… oder sk_…" style="width:100%;padding:12px;border-radius:10px;border:1px solid #8ca4bd"><p class="muted">Die aktuelle Pollinations-API verlangt einen Schlüssel. Er wird nicht im Repository gespeichert und bleibt nur in dieser Browser-Sitzung.</p><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Die kostenlose Schnittstelle kann gedrosselt werden oder zeitweise ausfallen. Wenn sie nicht erreichbar ist, bleibt die lokale Prüfung verfügbar.</p></div></details>
 <button class="upgrade-button" id="upgradeTop" type="button">⭐ Upgrade</button></div></div></div></header>
@@ -1455,7 +1455,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · VERSION 7.7</span>
+<span class="tag">SCAM LENS · VERSION 7.8</span>
 
 
 <div class="mascot-hero">
@@ -2277,8 +2277,21 @@ async function scamLensDirectAI(text, language) {
   if (!content || typeof content !== "string") throw new Error("Die KI hat keine lesbare Antwort zurückgegeben.");
   const cleaned = content.replace(/^\s*```(?:json)?\s*/i,"").replace(/\s*```\s*$/,"").trim();
   const match = cleaned.match(/\{[\s\S]*\}/);
-  if (!match) throw new Error("Die KI-Antwort hatte nicht das erwartete Format.");
-  const result = JSON.parse(match[0]);
+  let result = null;
+  if (match) {
+    try { result = JSON.parse(match[0]); } catch (_) { result = null; }
+  }
+  /* Some models return a useful plain-text answer despite the JSON-only instruction.
+     Preserve that answer instead of incorrectly reporting that the AI service is unavailable. */
+  if (!result || typeof result !== "object" || Array.isArray(result)) {
+    result = {
+      risk: "unknown",
+      summary: cleaned.slice(0, 5000),
+      findings: [],
+      recommendations: ["Prüfe die genannten Warnsignale unabhängig. Eine KI-Antwort ohne strukturiertes Risikofeld wird vorsichtshalber nicht als niedriges Risiko eingestuft."],
+      provider: data.model || "Pollinations Free API"
+    };
+  }
   result.risk = String(result.risk || "unknown").toLowerCase();
   if (["low","medium","high","unknown"].indexOf(result.risk) < 0) result.risk = "unknown";
   result.findings = Array.isArray(result.findings) ? result.findings : [];
@@ -2367,7 +2380,7 @@ $("usageGuideClose").addEventListener("click", () => {
 
 $("downloadUserGuide").addEventListener("click",()=>{
  const en=document.documentElement.lang==="en";
- const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 7.7)
+ const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 7.8)
 ========================================================
 
 THREE ANALYSIS METHODS
@@ -2395,7 +2408,7 @@ OTHER NOTES
 - The app does not automatically open destination links.
 - Availability, results, data retention and privacy practices of external providers are controlled by those providers; review their current policies before use.
 - No source list can truthfully claim that all websites worldwide and all languages are searched. This version only uses the specific sources described above.
-` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 7.7)
+` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 7.8)
 ========================================================
 
 DREI ANALYSEVERFAHREN
