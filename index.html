@@ -1326,7 +1326,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
  .mascot-hero .landscape-art{height:36%!important}
 }
 
-/* Version 8.3: use Phishunt verdict alongside URL heuristics; clarify required AI key */
+/* Version 8.4: use Phishunt verdict alongside URL heuristics; clarify required AI key */
 /* Version 7.5: phone portrait layout — readable, full-width controls and compact report */
 @media screen and (max-width:600px) and (orientation:portrait){
   html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
@@ -1349,7 +1349,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
   #msg{width:100%!important;min-height:150px!important;font-size:16px!important}
 }
 
-/* Version 8.3: fix iPhone portrait header wrapping and welcome-card overlap */
+/* Version 8.4: fix iPhone portrait header wrapping and welcome-card overlap */
 @media screen and (max-width:600px) and (orientation:portrait){
   header{padding:18px 14px!important}
   header .wrap{width:100%!important;max-width:100%!important}
@@ -1444,7 +1444,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 </head>
 <body>
 <header><div class="wrap"><div class="header-row"><div class="header-brand">
-<div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p><small class="app-version">Version 8.3</small></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
+<div class="brand"><span class="brand-shield" aria-hidden="true">🛡️</span> SCAM <span>LENS</span></div><p>Dein freundlicher Helfer gegen Betrugsnachrichten.</p><small class="app-version">Version 8.4</small></div><div class="header-tools"><div class="language-control"><label for="appLanguage">🌐 Sprache</label><select id="appLanguage" aria-label="App-Sprache auswählen"><option value="de">Deutsch</option><option value="en">English</option></select></div>
 <button class="usage-guide-button" id="usageGuideToggle" type="button" aria-expanded="false" aria-controls="usageGuidePanel">Gebrauchsanweisung</button>
 <details id="operatorSettings" class="operator-top"><summary aria-label="Technische Einstellungen öffnen" title="Technische Einstellungen">⚙</summary><div class="operator-panel"><p class="muted">Scam Lens verwendet Google Gemini API. Der Nachrichtentext wird nur nach deiner Zustimmung an Google übertragen. Verwende keine Passwörter oder vollständigen Zahlungsdaten.</p><div class="toolbar"><button class="secondary" id="testAI" type="button">KI mit Beispieltext testen</button></div><label for="geminiKey" style="display:block;margin-top:10px">Google Gemini API-Schlüssel (nur für diese Sitzung)</label><input id="geminiKey" type="password" autocomplete="off" placeholder="Gemini API-Schlüssel" style="width:100%;padding:12px;border-radius:10px;border:1px solid #8ca4bd"><p class="muted">Der Schlüssel wird nicht im Repository gespeichert und bleibt nur in dieser Browser-Sitzung. Hinweis: Bei einer öffentlichen Web-App ist ein direkt im Browser verwendeter Schlüssel nicht vollständig geheim. Für einen Produktivbetrieb wird ein abgesicherter Backend-Proxy empfohlen.</p><p id="backendStatus" class="notice" role="status" aria-live="polite" style="display:none;margin-top:8px"></p><p class="muted" id="backendHelp">Google Gemini API: Verfügbarkeit und Limits hängen vom Schlüssel und Modell ab. Die lokale Sicherheitsprüfung bleibt unabhängig verfügbar.</p></div></details>
 <button class="upgrade-button" id="upgradeTop" type="button">⭐ Upgrade</button></div></div></div></header>
@@ -1455,7 +1455,7 @@ header .wrap{max-width:1240px!important;width:min(1240px,calc(100% - 36px))!impo
 <main class="wrap" id="app">
 
 <section class="card">
-<span class="tag">SCAM LENS · VERSION 8.3</span>
+<span class="tag">SCAM LENS · VERSION 8.4</span>
 
 
 <div class="mascot-hero">
@@ -1710,6 +1710,37 @@ Object.assign(SL_TRANSLATIONS.en,{
  "KI-Analyse nicht verfügbar:":"AI analysis unavailable:",
  "Prüfmethode: Nur lokale Prüfung (kostenlose KI nicht verfügbar).":"Check method: Local check only (AI unavailable).",
  "Es wurde ausschließlich lokal geprüft; ein erfolgreiches KI-Ergebnis wurde nicht vorgetäuscht.":"Only a local check was performed; no successful AI result was claimed."
+});
+Object.assign(SL_TRANSLATIONS.en,{
+ "Schließen":"Close",
+ "Du kannst Text einfügen, ein Foto oder einen Screenshot auswählen oder eine Datei laden. Bei einem Foto versucht Scam Lens, die Wörter im Bild zu erkennen.":"You can paste text, choose a photo or screenshot, or upload a file. For photos, Scam Lens attempts to recognize the words in the image.",
+ "Vergleiche den erkannten Text mit dem Bild. Verbessere Fehler und ergänze fehlende Wörter. Wenn das Bild unscharf ist, mache ein neues Foto oder fahre bewusst mit dem erkannten Text fort.":"Compare the recognized text with the image. Correct errors and add missing words. If the image is blurry, take a new photo or consciously continue with the recognized text.",
+ "Die Prüfung beginnt erst, wenn du eine Prüftaste drückst. Der normale Sicherheits-Check läuft auf diesem Gerät. Für eine KI-Prüfung wird der Nachrichtentext an den eingestellten Dienst gesendet. Lies den Hinweis vorher aufmerksam.":"The check starts only when you press a check button. The standard security check runs on this device. For an AI check, the message text is sent to the configured service. Read the notice carefully first.",
+ "Eine Live-Prüfung von Links ist freiwillig. Wenn du zustimmst, werden die geprüften Webadressen an einen externen Prüfdienst gesendet. Links werden nicht automatisch geöffnet.":"Live link checking is optional. If you consent, the checked web addresses are sent to an external checking service. Links are not opened automatically.",
+ "Lensi erklärt die Warnsignale und nennt nächste Schritte. Ein niedriges Risiko ist keine Garantie. Wenn du unsicher bist, klicke nicht auf den Link und kontaktiere die Organisation über eine selbst gefundene offizielle Telefonnummer.":"Lensi explains the warning signs and suggests next steps. A low risk rating is not a guarantee. If you are unsure, do not click the link; contact the organization using an official phone number you find independently.",
+ "Unter „Hilfe & melden“ findest du Anlaufstellen in Österreich. Wenn du bereits Geld überwiesen oder Bankdaten eingegeben hast, kontaktiere sofort deine Bank über die offizielle App oder eine selbst gefundene Telefonnummer.":"Under “Help & report” you can find support services in Austria. If you have already transferred money or entered bank details, contact your bank immediately using its official app or a phone number you find independently.",
+ "⬇ Gebrauchsanweisung herunterladen (.txt)":"⬇ Download user guide (.txt)",
+ "🔊 Gebrauchsanweisung vorlesen":"🔊 Read user guide aloud",
+ "⏹ Vorlesen stoppen":"⏹ Stop reading aloud",
+ "Nachricht aus Foto":"Message from photo",
+ "Fotografiere die Nachricht mit der Kamera. Der erkannte Text erscheint anschließend hier.":"Take a photo of the message with the camera. The recognized text will appear here.",
+ "Textdatei eingelesen. Noch keine Prüfung gestartet. Klicke auf „Nur lokale Prüfung“ oder „KI-Analyse starten“.":"Text file loaded. No check has started yet. Click “Local check only” or “Start AI analysis”.",
+ "Längerer Buchungszeitraum: ":"Longer booking period: ",
+ "Eine Buchung über viele aufeinanderfolgende Tage ist nicht betrügerisch, erhöht aber den möglichen finanziellen Schaden und macht klare schriftliche Bedingungen wichtig.":"A booking spanning many consecutive days is not fraudulent by itself, but it can increase potential financial loss, so clear written terms are important.",
+ "Private E-Mail-Adresse: ":"Personal email address: ",
+ "Eine kostenlose private E-Mail-Adresse beweist keinen Betrug, verifiziert aber nicht die behauptete geschäftliche Identität.":"A free personal email address does not prove fraud, but it does not verify the claimed business identity.",
+ "Webadresse gefunden: ":"Web address found: ",
+ " Link(s) erkannt. Diese lokale Prüfung verifiziert weder Domaininhaber noch Live-Reputation oder Weiterleitungen.":" link(s) detected. This local check does not verify domain ownership, live reputation, or redirects.",
+ "Link ohne HTTPS: ":"Link without HTTPS: ",
+ "Die Adresse verwendet kein HTTPS. Das beweist allein keinen Betrug, ist aber ein zusätzlicher Warnhinweis.":"The address does not use HTTPS. This alone does not prove fraud, but it is an additional warning sign.",
+ "Mögliche Marken-Imitation im Link: ":"Possible brand impersonation in link: ",
+ "Der Domainname enthält „google“, endet aber nicht auf eine bekannte offizielle Domain aus der lokalen Prüfliste. Das ist ein Hinweis, kein endgültiger Betrugsnachweis.":"The domain name contains “google” but does not end in a known official domain from the local check list. This is a warning sign, not definitive proof of fraud.",
+ "KI-Ergebnis kann falsch sein. Nicht alle Angaben wurden unabhängig verifiziert. Links, Absender, Sponsor und Unternehmensdaten wurden nur dann live geprüft, wenn dies ausdrücklich in den Prüfschritten ausgewiesen ist. Externer KI-Dienst: Google Gemini API. Der Text wurde nach deiner Zustimmung an den Anbieter übertragen.":"The AI result may be wrong. Not all details were independently verified. Links, senders, sponsors, and company details were checked live only when explicitly stated in the check steps. External AI service: Google Gemini API. The text was sent to the provider after you consented.",
+ "Prüfmethode: KI-Kontextanalyse + lokale Regeln und Kontextprüfung (Google Gemini).":"Check method: AI contextual analysis + local rules and context checks (Google Gemini).",
+ "KI-Analyse + lokale Prüfung":"AI analysis + local check",
+ "Die Gebrauchsanweisung wird vorgelesen.":"Reading the user guide aloud.",
+ "Vorlesen beendet.":"Reading finished.",
+ "Vorlesen gestoppt.":"Reading stopped."
 });
 Object.assign(SL_TRANSLATIONS.tr,{"Hohes Risiko":"Yüksek risk","Auffälligkeiten gefunden":"Uyarı işaretleri bulundu","Wenige Hinweise erkannt":"Az sayıda belirti bulundu","Nicht ausreichend prüfbar":"Değerlendirmek için yeterli bilgi yok","Warum diese Einschätzung?":"Bu değerlendirme neden yapıldı?","Prüfung starten":"Kontrolü başlat","Ergebnis":"Sonuç","Nächste Schritte":"Sonraki adımlar","Datenschutz":"Gizlilik","Bericht vorlesen":"Raporu sesli oku","Vorlesen stoppen":"Sesli okumayı durdur"});
 Object.assign(SL_TRANSLATIONS.bs,{"Hohes Risiko":"Visok rizik","Auffälligkeiten gefunden":"Pronađeni znakovi upozorenja","Wenige Hinweise erkannt":"Pronađeno malo upozorenja","Nicht ausreichend prüfbar":"Nema dovoljno podataka za procjenu","Warum diese Einschätzung?":"Zašto ova procjena?","Prüfung starten":"Pokreni provjeru","Ergebnis":"Rezultat","Nächste Schritte":"Sljedeći koraci","Datenschutz":"Privatnost","Bericht vorlesen":"Pročitaj izvještaj naglas","Vorlesen stoppen":"Zaustavi čitanje"});
@@ -2443,7 +2474,7 @@ $("usageGuideClose").addEventListener("click", () => {
 
 $("downloadUserGuide").addEventListener("click",()=>{
  const en=document.documentElement.lang==="en";
- const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 8.3)
+ const guide=en? `SCAM LENS — USER GUIDE AND DATA SOURCES (Version 8.4)
 ========================================================
 
 THREE ANALYSIS METHODS
@@ -2471,7 +2502,7 @@ OTHER NOTES
 - The app does not automatically open destination links.
 - Availability, results, data retention and privacy practices of external providers are controlled by those providers; review their current policies before use.
 - No source list can truthfully claim that all websites worldwide and all languages are searched. This version only uses the specific sources described above.
-` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 8.3)
+` : `SCAM LENS — GEBRAUCHSANWEISUNG UND QUELLEN (Version 8.4)
 ========================================================
 
 DREI ANALYSEVERFAHREN
