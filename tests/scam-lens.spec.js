@@ -70,7 +70,7 @@ test('camera button prepares camera capture and OCR import flow', async ({ page 
     )
   });
   await expect(page.locator('#fileStatus')).toContainText('Text erkannt', { timeout: 10000 });
-  await expect(page.locator('#msg')).toHaveValue(/Ihr Konto wird gesperrt/);
+  await expect(page.locator('#msg')).toHaveValue(/Ihr Konto wird sofort gesperrt/);
 });
 
 test('AI test and AI report handle a mocked Gemini response without a real API key', async ({ page }) => {
