@@ -70,7 +70,7 @@ test('camera button prepares camera capture and OCR import flow', async ({ page 
     )
   });
   await expect(page.locator('#fileStatus')).toContainText('Text erkannt', { timeout: 10000 });
-  await expect(page.locator('#msg')).toContainText('Ihr Konto wird gesperrt');
+  await expect(page.locator('#msg')).toHaveValue(/Ihr Konto wird gesperrt/);
 });
 
 test('AI test and AI report handle a mocked Gemini response without a real API key', async ({ page }) => {
@@ -91,13 +91,14 @@ test('AI test and AI report handle a mocked Gemini response without a real API k
   page.on('dialog', dialog => dialog.accept());
   await page.locator('#aiStart').click();
   await expect(page.locator('#progressPercent')).toHaveText('100%', { timeout: 10000 });
-  await expect(page.locator('#analysisSource')).toContainText('Google Gemini');
+  await expect(page.locator('#analysisSource')).toContainText('KI-Analyse');
+  await expect(page.locator('#method')).toContainText('Google Gemini');
   await expect(page.locator('#riskTitle')).toContainText('Hohes Risiko');
 });
 
 test('live URL checker reports the mocked external response and handles consent', async ({ page }) => {
   await openApp(page);
-  await page.route('https://phishunt.io/api/v1/analyze?**', route =>
+  await page.route('https://phishunt.io/api/v1/analyze**', route =>
     route.fulfill({
       status: 200,
       contentType: 'application/json',
