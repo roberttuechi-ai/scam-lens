@@ -2363,16 +2363,16 @@ async function scamLensGeminiAI(text, language) {
   /* Interactions API returns generated text in steps[].content[].text (model_output). */
   const stepText = Array.isArray(data?.steps) ? data.steps
     .filter(step => step?.type === "model_output")
-    .map(step => Array.isArray(step?.content) ? step.content.map(part => part?.text || "").join("\\n") : "")
-    .filter(Boolean).join("\\n") : "";
+    .map(step => Array.isArray(step?.content) ? step.content.map(part => part?.text || "").join("\n") : "")
+    .filter(Boolean).join("\n") : "";
   const outputItems = Array.isArray(data?.outputs) ? data.outputs : (Array.isArray(data?.output) ? data.output : []);
   const outputText = outputItems.map(item => {
     if (typeof item?.text === "string") return item.text;
     if (typeof item?.content === "string") return item.content;
-    if (Array.isArray(item?.content)) return item.content.map(part => part?.text || "").join("\\n");
-    if (Array.isArray(item?.parts)) return item.parts.map(part => part?.text || "").join("\\n");
+    if (Array.isArray(item?.content)) return item.content.map(part => part?.text || "").join("\n");
+    if (Array.isArray(item?.parts)) return item.parts.map(part => part?.text || "").join("\n");
     return "";
-  }).filter(Boolean).join("\\n");
+  }).filter(Boolean).join("\n");
   const content = String(data?.output_text || stepText || outputText || data?.response?.text || "").trim();
   if (!content) {
     const shape = Object.keys(data || {}).join(", ") || "leere Antwort";
