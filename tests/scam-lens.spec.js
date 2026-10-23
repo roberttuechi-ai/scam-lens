@@ -49,7 +49,7 @@ test('camera button prepares camera capture and OCR import flow', async ({ page 
     window.Tesseract = {
       recognize: async () => ({
         data: {
-          text: 'Ihr Konto wird gesperrt. Bitte sofort anmelden.',
+          text: 'Ihr Konto wird sofort gesperrt. Bitte melden Sie sich jetzt über den Link an.',
           confidence: 96
         }
       })
