@@ -4,7 +4,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#102a43"><title>Scam Lens 8.0 – Google Gemini API</title>
+<meta name="theme-color" content="#102a43"><title>Scam Lens 8.4 – Google Gemini API</title>
 <style>
 :root{font:18px/1.6 Arial,Helvetica,sans-serif;color:#17324d;background:#eef4fb;--navy:#102a43;--blue:#3155d9;--teal:#087f70;--red:#c62828;--orange:#a66300;--green:#237747}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eaf4ff 0,#f5f7fb 280px,#f3f6fa 100%);line-height:1.6}
@@ -1784,7 +1784,7 @@ Object.assign(SL_TRANSLATIONS.hu,{
 SL_LANG_NAMES.de="Deutsch"; SL_LANG_NAMES.en="English";
 Object.assign(SL_TRANSLATIONS.en,{
 "🌐 Sprache":"🌐 Language","KI mit Beispieltext testen":"Test AI with sample text","Die kostenlose Schnittstelle kann gedrosselt werden oder zeitweise ausfallen. Wenn sie nicht erreichbar ist, bleibt die lokale Prüfung verfügbar.":"The free service may be rate-limited or temporarily unavailable. If it cannot be reached, local checking remains available.",
-"Scam Lens kann die kostenlose, anonyme Textschnittstelle von Google Gemini direkt aufrufen. Es ist keine Backend-Adresse und kein API-Schlüssel nötig. Der Anbieter erhält den Text, den du ausdrücklich zur KI-Prüfung freigibst. Verwende keine Passwörter, vollständigen Zahlungsdaten oder andere Geheimnisse.":"Scam Lens can call Google Gemini' free text interface directly. No backend address or API key is required. The provider receives the text you explicitly approve for AI analysis. Do not submit passwords, full payment details, or other secrets.",
+"Scam Lens überträgt den Nachrichtentext nach deiner Zustimmung direkt an die Google Gemini API. Dafür ist ein API-Schlüssel erforderlich, den du in den technischen Einstellungen für diese Browsersitzung eingibst. Google erhält den freigegebenen Text. Verwende keine Passwörter, vollständigen Zahlungsdaten oder andere Geheimnisse.":"After you consent, Scam Lens sends the message text directly to the Google Gemini API. An API key is required and must be entered in technical settings for this browser session. Google receives the approved text. Do not submit passwords, full payment details, or other secrets.",
 "Bitte zuerst eine Nachricht mit mindestens einer Webadresse einfügen.":"Please paste a message containing at least one web address first.","In der Nachricht wurde keine Webadresse erkannt.":"No web address was found in the message.",
 "Live-Prüfung abgebrochen. Es wurden keine URLs übermittelt.":"Live check cancelled. No URLs were sent.","Live-Prüfung nicht möglich:":"Live check unavailable:","Es wurde kein Ergebnis vorgetäuscht. Du kannst weiterhin die lokale Prüfung verwenden.":"No result was fabricated. You can still use the local check.",
 "KI-Test erfolgreich. Anbieter:":"AI test successful. Provider:","Risikoeinschätzung:":"Risk assessment:","Es wurde nur ein künstlicher Beispieltext gesendet.":"Only a synthetic sample message was sent.","KI-Test fehlgeschlagen:":"AI test failed:","Die kostenlose Schnittstelle kann vorübergehend nicht verfügbar sein oder Browser-Anfragen blockieren. Die lokale Prüfung funktioniert unabhängig davon.":"The free service may be temporarily unavailable or block browser requests. Local checking works independently.",
@@ -2485,10 +2485,10 @@ THREE ANALYSIS METHODS
 - External websites, public registries, search engines, threat feeds and AI providers are NOT queried.
 - The app does not maintain a live global database of scam messages. Similarity means similarity to locally encoded patterns, not a confirmed match to every known scam.
 
-2. AI ANALYSIS — POLLINATIONS
-- After explicit confirmation, the entered message text (up to 12,000 characters) is sent to https://text.pollinations.ai/openai.
-- The AI returns a risk level, explanation, findings and recommendations; Scam Lens combines these with local rules.
-- Source: Google Gemini API only. This app does not run a worldwide web search or query all languages' websites and databases during this step.
+2. AI ANALYSIS — GOOGLE GEMINI API
+- After explicit confirmation, the entered message text (up to 18,000 characters) is sent from this browser to Google's Gemini API using the API key entered in technical settings.
+- Model/API: gemini-3.5-flash-lite via the Google Gemini Interactions API. The app does not perform a worldwide web search or query all websites/databases during this step.
+- The API key is supplied in the request header and is not stored in the repository by the app. Google receives the approved message text; its own privacy and service terms apply.
 - AI output can be wrong or incomplete. Do not submit passwords, payment details or other secrets.
 
 3. LIVE LINK CHECK — PHISHUNT.IO
@@ -2513,11 +2513,11 @@ DREI ANALYSEVERFAHREN
 - Es werden dabei KEINE externen Websites, öffentlichen Register, Suchmaschinen, Bedrohungsdatenbanken oder KI-Anbieter live abgefragt.
 - Die App enthält keine laufend aktualisierte globale Datenbank für Betrugsnachrichten. Ähnlichkeit bedeutet Ähnlichkeit zu lokal hinterlegten Mustern, nicht einen bestätigten Treffer in allen bekannten Betrugsfällen.
 
-2. KI-ANALYSE — POLLINATIONS
-- Nach ausdrücklicher Zustimmung wird der eingegebene Nachrichtentext (bis zu 12.000 Zeichen) an https://text.pollinations.ai/openai übertragen.
-- Die KI liefert Risikostufe, Erklärung, Hinweise und Empfehlungen. Scam Lens führt diese mit der lokalen Regelprüfung zusammen.
-- Quelle: ausschließlich Google Gemini API. Bei diesem Schritt führt die App keine weltweite Websuche aus und fragt nicht sämtliche Websites oder Datenbanken aller Sprachen ab.
-- KI-Ergebnisse können falsch oder unvollständig sein. Keine Passwörter, Zahlungsdaten oder andere Geheimnisse übermitteln.
+2. KI-ANALYSE — GOOGLE GEMINI API
+- Nach ausdrücklicher Zustimmung wird der eingegebene Nachrichtentext (bis zu 18.000 Zeichen) aus diesem Browser direkt an die Google-Gemini-API übertragen. Verwendet wird der API-Schlüssel aus den technischen Einstellungen.
+- Modell/API: gemini-3.5-flash-lite über die Google Gemini Interactions API. In diesem Schritt erfolgt keine weltweite Websuche und keine Abfrage sämtlicher Websites oder Datenbanken.
+- Der API-Schlüssel wird im Anfrage-Header übermittelt und von der App nicht im Repository gespeichert. Google erhält den freigegebenen Nachrichtentext; es gelten die Datenschutz- und Nutzungsbedingungen des Anbieters.
+- KI-Ergebnisse können falsch oder unvollständig sein. Übermittle keine Passwörter, Zahlungsdaten oder andere Geheimnisse.
 
 3. LIVE-LINKPRÜFUNG — PHISHUNT.IO
 - Nach ausdrücklicher Zustimmung werden bis zu fünf aus der Nachricht erkannte URLs einzeln an https://phishunt.io/api/v1/analyze?url=... übertragen.
@@ -2531,7 +2531,7 @@ WEITERE HINWEISE
 - Verfügbarkeit, Ergebnisse, Datenspeicherung und Datenschutz externer Anbieter werden von diesen Anbietern bestimmt. Prüfe deren aktuelle Datenschutzinformationen.
 - Eine Quellenliste, die behauptet, alle Websites weltweit und alle Sprachen zu durchsuchen, wäre nicht zutreffend. Diese Version verwendet nur die oben beschriebenen Quellen.
 `;
- const blob=new Blob([guide],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=en?"Scam-Lens-User-Guide-v7.4.txt":"Scam-Lens-Gebrauchsanweisung-v7.4.txt";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ const blob=new Blob([guide],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=en?"Scam-Lens-User-Guide-v8.4.txt":"Scam-Lens-Gebrauchsanweisung-v8.4.txt";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 
 $("usageGuideSpeak").addEventListener("click", () => {
