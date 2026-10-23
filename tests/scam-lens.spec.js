@@ -96,6 +96,38 @@ test('AI test and AI report handle a mocked Gemini response without a real API k
   await expect(page.locator('#riskTitle')).toContainText('Hohes Risiko');
 });
 
+test('Gemini parser handles response text split across content parts', async ({ page }) => {
+  await openApp(page);
+  const output = JSON.stringify({
+    risk: 'high',
+    summary: 'Mock response split into multiple content parts.',
+    findings: [{ title: 'Urgency', why: 'The message pressures the recipient.' }],
+    recommendations: ['Do not click the link.'],
+    provider: 'Mock Gemini'
+  });
+  const splitAt = output.indexOf('"findings"');
+  const splitResponse = {
+    steps: [{
+      type: 'model_output',
+      content: [
+        { type: 'text', text: output.slice(0, splitAt) },
+        { type: 'text', text: output.slice(splitAt) }
+      ]
+    }]
+  };
+  await page.route('https://generativelanguage.googleapis.com/v1beta/interactions', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(splitResponse)
+    })
+  );
+  await page.locator('#operatorSettings summary').click();
+  await page.locator('#geminiKey').fill('test-key-not-real');
+  await page.locator('#testAI').click();
+  await expect(page.locator('#backendStatus')).toContainText('KI-Test erfolgreich');
+});
+
 test('live URL checker reports the mocked external response and handles consent', async ({ page }) => {
   await openApp(page);
   await page.route('https://phishunt.io/api/v1/analyze**', route =>
