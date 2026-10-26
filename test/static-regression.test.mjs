@@ -1,0 +1,123 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+
+const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const hasId = (id) => new RegExp("\\bid=[\"']" + id + "[\"']").test(html);
+
+test('HTML element IDs are unique', () => {
+  const ids = [...html.matchAll(/\bid=["']([^"']+)["']/g)].map((match) => match[1]);
+  assert.equal(ids.length, new Set(ids).size, 'duplicate HTML IDs can break controls and result rendering');
+});
+
+test('core input, analysis, link-check and report controls remain present', () => {
+  for (const id of ['appLanguage', 'sourceText', 'sourceCamera', 'sourceFile', 'file', 'msg', 'aiStart', 'liveLinkCheck', 'check', 'reportSpeak', 'reportStop', 'report', 'riskbox', 'analysisProgress']) {
+    assert.ok(hasId(id), 'required control #' + id + ' is missing');
+  }
+});
+
+test('German and English language options remain available', () => {
+  const selector = html.match(/<select\b[^>]*\bid=["']appLanguage["'][^>]*>([\s\S]*?)<\/select>/i);
+  assert.ok(selector, 'language selector is missing');
+  assert.match(selector[1], /<option\b[^>]*value=["']de["']/i);
+  assert.match(selector[1], /<option\b[^>]*value=["']en["']/i);
+});
+
+test('file upload retains supported formats and the 15 MB limit', () => {
+  const input = html.match(/<input\b(?=[^>]*\bid=["']file["'])[^>]*>/i);
+  assert.ok(input, 'file input is missing');
+  for (const type of ['image/*', '.pdf', '.txt', '.eml', '.html', '.htm', '.msg', '.oft', '.mbox', '.mht', '.mhtml', '.ics', '.vcf']) {
+    assert.ok(input[0].includes(type), 'supported upload type ' + type + ' is missing');
+  }
+  assert.match(html, /file\.size\s*>\s*15\s*\*\s*1024\s*\*\s*1024/);
+  assert.match(html, /Maximal 15 MB pro Datei/);
+});
+
+test('OCR integration and its load-error path remain present', () => {
+  assert.match(html, /tesseract\.js@5/);
+  assert.match(html, /window\.Tesseract\.recognize\(chosenFile/);
+  assert.match(html, /OCR-Bibliothek konnte nicht geladen werden/);
+});
+
+test('local and AI analysis entry points remain present', () => {
+  assert.match(html, /function localAnalysis\(text\)/);
+  assert.match(html, /async function scamLensGeminiAI\(text, language\)/);
+});
+
+test('AI analysis requires explicit confirmation before sending text to Gemini', () => {
+  const start = html.indexOf('$("aiStart").addEventListener("click", async () => {');
+  const end = html.indexOf('$("reportSpeak").addEventListener', start);
+  assert.ok(start >= 0 && end > start, 'AI analysis handler boundaries not found');
+  const handler = html.slice(start, end);
+  const consent = handler.indexOf('window.confirm(');
+  const request = handler.indexOf('await scamLensGeminiAI(text, language)');
+  assert.ok(consent >= 0 && request > consent, 'external AI request must remain after consent');
+});
+
+test('live link check asks consent and caps Phishunt requests at five URLs', () => {
+  const start = html.indexOf('$("liveLinkCheck").addEventListener("click", async () => {');
+  const end = html.indexOf('$("testAI").addEventListener', start);
+  assert.ok(start >= 0 && end > start, 'live link-check handler boundaries not found');
+  const handler = html.slice(start, end);
+  const consent = handler.indexOf('window.confirm(');
+  const request = handler.indexOf('https://phishunt.io/api/v1/analyze?url=');
+  assert.match(handler, /extracted\.slice\(0,\s*5\)/);
+  assert.ok(consent >= 0 && request > consent, 'Phishunt request must remain after consent');
+});
+
+test('report speech controls remain available', () => {
+  assert.match(html, /\$\("reportSpeak"\)\.addEventListener/);
+  assert.match(html, /\$\("reportStop"\)\.addEventListener/);
+  assert.match(html, /window\.speechSynthesis\.speak\(utterance\)/);
+});
+
+test('all target=_blank anchors include noopener and noreferrer', () => {
+  const anchors = [...html.matchAll(/<a\b[^>]*target=["']_blank["'][^>]*>/gi)].map((match) => match[0]);
+  assert.ok(anchors.length > 0, 'expected at least one external target=_blank link');
+  for (const anchor of anchors) {
+    const rel = (anchor.match(/\brel=["']([^"']+)["']/i) || [])[1] || '';
+    const tokens = rel.toLowerCase().split(/\s+/);
+    assert.ok(tokens.includes('noopener') && tokens.includes('noreferrer'), 'unsafe target=_blank anchor: ' + anchor.slice(0, 160));
+  }
+});
+test('selected-file upload rejects files over 15 MB before preview and OCR', () => {
+  const start = html.indexOf('$("file").addEventListener("change", async () => {');
+  const end = html.indexOf('function localAnalysis(text)', start);
+  assert.ok(start >= 0 && end > start, 'main file-selection handler boundaries not found');
+  const handler = html.slice(start, end);
+  const guard = handler.indexOf('if (chosenFile.size > 15 * 1024 * 1024) {');
+  assert.ok(guard >= 0, 'main file-selection handler is missing the 15 MB guard');
+  const message = handler.indexOf('Datei zu groß (maximal 15 MB).', guard);
+  const reset = handler.indexOf('chosenFile = null; $("file").value = ""; return;', guard);
+  const preview = handler.indexOf('URL.createObjectURL(chosenFile)', guard);
+  const ocr = handler.indexOf('window.Tesseract.recognize(chosenFile', guard);
+  assert.ok(message > guard && reset > message, 'oversized selection must show an error and clear the chosen file');
+  assert.ok(preview > reset && ocr > reset, 'oversized selection must be rejected before preview or OCR');
+});
+
+test('camera picker requests rear-facing image capture and resets safely for normal upload', () => {
+  const cameraStart = html.indexOf('$("sourceCamera").addEventListener("click", () => {');
+  const cameraEnd = html.indexOf('});', cameraStart);
+  assert.ok(cameraStart >= 0 && cameraEnd > cameraStart, 'camera button handler boundaries not found');
+  const cameraHandler = html.slice(cameraStart, cameraEnd + 3);
+  const cameraMode = cameraHandler.indexOf('cameraMode = true;');
+  const imageOnly = cameraHandler.indexOf('$("file").accept = "image/*";');
+  const rearCapture = cameraHandler.indexOf('$("file").setAttribute("capture", "environment");');
+  const openPicker = cameraHandler.indexOf('$("file").click();');
+  assert.ok(cameraMode >= 0 && imageOnly > cameraMode, 'camera mode must be enabled and image-only filter set');
+  assert.ok(rearCapture > imageOnly && openPicker > rearCapture, 'rear-facing capture must be configured before opening picker');
+
+  const clickStart = html.indexOf('$("file").addEventListener("click", (event) => {');
+  const clickEnd = html.indexOf('});', clickStart);
+  assert.ok(clickStart >= 0 && clickEnd > clickStart, 'file-picker click handler boundaries not found');
+  const clickHandler = html.slice(clickStart, clickEnd + 3);
+  const guard = clickHandler.indexOf('if (cameraMode || !event.isTrusted) return;');
+  const removeCapture = clickHandler.indexOf('$("file").removeAttribute("capture");');
+  assert.ok(guard >= 0 && removeCapture > guard, 'camera or synthetic picker clicks must not clear capture mode');
+
+  const cancelStart = html.indexOf('$("file").addEventListener("cancel", () => {');
+  const cancelEnd = html.indexOf('});', cancelStart);
+  assert.ok(cancelStart >= 0 && cancelEnd > cancelStart, 'file-picker cancel handler boundaries not found');
+  const cancelHandler = html.slice(cancelStart, cancelEnd + 3);
+  assert.ok(cancelHandler.includes('cameraMode = false;') && cancelHandler.includes('$("file").removeAttribute("capture");'), 'cancel must reset camera mode and capture attribute');
+});

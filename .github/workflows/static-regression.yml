@@ -1,0 +1,26 @@
+name: Scam Lens static regression
+
+on:
+  push:
+    branches:
+      - qa/scam-lens-static-regression-2026-10-26
+  pull_request:
+    branches: [main]
+    paths:
+      - index.html
+      - test/static-regression.test.mjs
+      - .github/workflows/static-regression.yml
+
+permissions:
+  contents: read
+
+jobs:
+  static-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run dependency-free static regression tests
+        run: node --test test/static-regression.test.mjs
