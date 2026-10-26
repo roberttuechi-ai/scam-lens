@@ -94,3 +94,30 @@ test('selected-file upload rejects files over 15 MB before preview and OCR', () 
   assert.ok(message > guard && reset > message, 'oversized selection must show an error and clear the chosen file');
   assert.ok(preview > reset && ocr > reset, 'oversized selection must be rejected before preview or OCR');
 });
+
+test('camera picker requests rear-facing image capture and resets safely for normal upload', () => {
+  const cameraStart = html.indexOf('$("sourceCamera").addEventListener("click", () => {');
+  const cameraEnd = html.indexOf('});', cameraStart);
+  assert.ok(cameraStart >= 0 && cameraEnd > cameraStart, 'camera button handler boundaries not found');
+  const cameraHandler = html.slice(cameraStart, cameraEnd + 3);
+  const cameraMode = cameraHandler.indexOf('cameraMode = true;');
+  const imageOnly = cameraHandler.indexOf('$("file").accept = "image/*";');
+  const rearCapture = cameraHandler.indexOf('$("file").setAttribute("capture", "environment");');
+  const openPicker = cameraHandler.indexOf('$("file").click();');
+  assert.ok(cameraMode >= 0 && imageOnly > cameraMode, 'camera mode must be enabled and image-only filter set');
+  assert.ok(rearCapture > imageOnly && openPicker > rearCapture, 'rear-facing capture must be configured before opening picker');
+
+  const clickStart = html.indexOf('$("file").addEventListener("click", (event) => {');
+  const clickEnd = html.indexOf('});', clickStart);
+  assert.ok(clickStart >= 0 && clickEnd > clickStart, 'file-picker click handler boundaries not found');
+  const clickHandler = html.slice(clickStart, clickEnd + 3);
+  const guard = clickHandler.indexOf('if (cameraMode || !event.isTrusted) return;');
+  const removeCapture = clickHandler.indexOf('$("file").removeAttribute("capture");');
+  assert.ok(guard >= 0 && removeCapture > guard, 'camera or synthetic picker clicks must not clear capture mode');
+
+  const cancelStart = html.indexOf('$("file").addEventListener("cancel", () => {');
+  const cancelEnd = html.indexOf('});', cancelStart);
+  assert.ok(cancelStart >= 0 && cancelEnd > cancelStart, 'file-picker cancel handler boundaries not found');
+  const cancelHandler = html.slice(cancelStart, cancelEnd + 3);
+  assert.ok(cancelHandler.includes('cameraMode = false;') && cancelHandler.includes('$("file").removeAttribute("capture");'), 'cancel must reset camera mode and capture attribute');
+});
