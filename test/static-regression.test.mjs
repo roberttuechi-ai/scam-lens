@@ -80,3 +80,17 @@ test('all target=_blank anchors include noopener and noreferrer', () => {
     assert.ok(tokens.includes('noopener') && tokens.includes('noreferrer'), 'unsafe target=_blank anchor: ' + anchor.slice(0, 160));
   }
 });
+test('selected-file upload rejects files over 15 MB before preview and OCR', () => {
+  const start = html.indexOf('$("file").addEventListener("change", async () => {');
+  const end = html.indexOf('function localAnalysis(text)', start);
+  assert.ok(start >= 0 && end > start, 'main file-selection handler boundaries not found');
+  const handler = html.slice(start, end);
+  const guard = handler.indexOf('if (chosenFile.size > 15 * 1024 * 1024) {');
+  assert.ok(guard >= 0, 'main file-selection handler is missing the 15 MB guard');
+  const message = handler.indexOf('Datei zu groß (maximal 15 MB).', guard);
+  const reset = handler.indexOf('chosenFile = null; $("file").value = ""; return;', guard);
+  const preview = handler.indexOf('URL.createObjectURL(chosenFile)', guard);
+  const ocr = handler.indexOf('window.Tesseract.recognize(chosenFile', guard);
+  assert.ok(message > guard && reset > message, 'oversized selection must show an error and clear the chosen file');
+  assert.ok(preview > reset && ocr > reset, 'oversized selection must be rejected before preview or OCR');
+});
